@@ -13,6 +13,15 @@ const Convenience = Me.imports.convenience;
 const Utils = Me.imports.utils;
 
 let showLog = false;
+
+const Position = {
+    BEFORE_NAME:        0,
+    AFTER_NAME:         1,
+    WITHIN_STATUS_AREA: 2,
+    AFTER_STATUS_AREA:  3,
+    HIDDEN:             4
+}
+
 function LOG(message) {
     log("[no-title-bar]: " + message);
 }
@@ -43,15 +52,15 @@ const Buttons = new Lang.Class({
         this._isEnabled = false;
         this._activeCSS = false;
 
-        this._settingsId = this._settings.connect('changed::show-buttons',
+        this._settingsId = this._settings.connect('changed::button-position',
             Lang.bind(this, function() {
-                if (this._settings.get_boolean('show-buttons'))
+                this._disable();
+
+                if (this._settings.get_enum('button-position') !== Position.HIDDEN)
                     this._enable();
-                else
-                    this._disable();
             }));
 
-        if (this._settings.get_boolean('show-buttons'))
+        if (this._settings.get_enum('button-position') !== Position.HIDDEN)
             this._enable();
         else
             this._disable();
@@ -126,7 +135,26 @@ const Buttons = new Lang.Class({
             }
 
             if (boxes[1].get_children().length) {
-                Main.panel._rightBox.insert_child_at_index(actors[1], Main.panel._rightBox.get_children().length - 1);
+                switch (this._settings.get_enum('button-position')) {
+                    case Position.BEFORE_NAME: {
+                        let activitiesBox = Main.panel.statusArea.activities.actor.get_parent()
+                        let leftBox = activitiesBox.get_parent();
+                        leftBox.insert_child_above(actors[1], activitiesBox);
+                        break;
+                    }
+                    case Position.AFTER_NAME: {
+                        let appMenuBox = Main.panel.statusArea.appMenu.actor.get_parent()
+                        let leftBox = appMenuBox.get_parent();
+                        leftBox.insert_child_above(actors[1], appMenuBox);
+                        break;
+                    }
+                    case Position.WITHIN_STATUS_AREA:
+                        Main.panel._rightBox.insert_child_at_index(actors[1], Main.panel._rightBox.get_children().length - 1);
+                        break;
+                    case Position.AFTER_STATUS_AREA:
+                        Main.panel._rightBox.add(actors[1]);
+                        break;
+                }
             }
 
             this._updateVisibility();

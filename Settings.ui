@@ -26,42 +26,6 @@
             <object class="GtkListBox" id="only_main_monitor_listbox">
               <property name="selection_mode">none</property>
               <child>
-                <object class="GtkListBoxRow" id="only_main_monitor_listboxrow">
-                  <child>
-                    <object class="GtkGrid" id="only_main_monitor_grid">
-                      <property name="margin_left">12</property>
-                      <property name="margin_right">12</property>
-                      <property name="margin_top">12</property>
-                      <property name="margin_bottom">12</property>
-                      <property name="column_spacing">12</property>
-                      <child>
-                        <object class="GtkLabel" id="only_main_monitor_label">
-                          <property name="hexpand">True</property>
-                          <property name="xalign">0</property>
-                          <property name="label" translatable="yes">Remove title bars only on the main monitor</property>
-                          <property name="wrap">True</property>
-                        </object>
-                        <packing>
-                          <property name="left_attach">0</property>
-                          <property name="top_attach">1</property>
-                        </packing>
-                      </child>
-                      <child>
-                        <object class="GtkSwitch" id="only_main_monitor_switch">
-                          <property name="halign">end</property>
-                          <property name="valign">center</property>
-                        </object>
-                        <packing>
-                          <property name="left_attach">1</property>
-                          <property name="top_attach">0</property>
-                          <property name="height">2</property>
-                        </packing>
-                      </child>
-                    </object>
-                  </child>
-                </object>
-              </child>
-              <child>
                 <object class="GtkListBoxRow" id="buttons_listboxrow">
                   <child>
                     <object class="GtkGrid" id="buttons_grid">
@@ -74,7 +38,7 @@
                         <object class="GtkLabel" id="buttons_label">
                           <property name="hexpand">True</property>
                           <property name="xalign">0</property>
-                          <property name="label" translatable="yes">Show buttons on the top bar</property>
+                          <property name="label" translatable="yes">Window control buttons</property>
                           <property name="wrap">True</property>
                         </object>
                         <packing>
@@ -83,9 +47,17 @@
                         </packing>
                       </child>
                       <child>
-                        <object class="GtkSwitch" id="buttons_switch">
-                          <property name="halign">end</property>
+                        <object class="GtkComboBoxText" id="button_position">
+                          <property name="visible">True</property>
+                          <property name="can_focus">False</property>
                           <property name="valign">center</property>
+                          <items>
+                            <item translatable="yes">Before app menu</item>
+                            <item translatable="yes">After app menu</item>
+                            <item translatable="yes">Within status area</item>
+                            <item translatable="yes">After status area</item>
+                            <item translatable="yes">Hidden</item>
+                          </items>
                         </object>
                         <packing>
                           <property name="left_attach">1</property>
@@ -120,6 +92,42 @@
                       </child>
                       <child>
                         <object class="GtkSwitch" id="appmenu_switch">
+                          <property name="halign">end</property>
+                          <property name="valign">center</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">2</property>
+                        </packing>
+                      </child>
+                    </object>
+                  </child>
+                </object>
+              </child>
+              <child>
+                <object class="GtkListBoxRow" id="only_main_monitor_listboxrow">
+                  <child>
+                    <object class="GtkGrid" id="only_main_monitor_grid">
+                      <property name="margin_left">12</property>
+                      <property name="margin_right">12</property>
+                      <property name="margin_top">12</property>
+                      <property name="margin_bottom">12</property>
+                      <property name="column_spacing">12</property>
+                      <child>
+                        <object class="GtkLabel" id="only_main_monitor_label">
+                          <property name="hexpand">True</property>
+                          <property name="xalign">0</property>
+                          <property name="label" translatable="yes">Remove title bars only on the main monitor</property>
+                          <property name="wrap">True</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="top_attach">1</property>
+                        </packing>
+                      </child>
+                      <child>
+                        <object class="GtkSwitch" id="only_main_monitor_switch">
                           <property name="halign">end</property>
                           <property name="valign">center</property>
                         </object>

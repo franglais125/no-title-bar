@@ -29,10 +29,10 @@ function buildPrefsWidget(){
         Gio.SettingsBindFlags.DEFAULT);
 
     // Basic settings tab:
-    settings.bind('show-buttons',
-        buildable.get_object('buttons_switch'),
-        'active',
-        Gio.SettingsBindFlags.DEFAULT);
+    buildable.get_object('button_position').set_active(settings.get_enum('button-position'));
+    buildable.get_object('button_position').connect('changed', Lang.bind (this, function(widget) {
+        settings.set_enum('button-position', widget.get_active());
+    }));
 
     // Basic settings tab:
     settings.bind('change-appmenu',
