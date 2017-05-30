@@ -9,5 +9,17 @@
         <description>If windows are on an external monitor, this setting will ensure the top bar stays visible.</description>
     </key>
 
+    <key name="show-buttons" type="b">
+      <default>true</default>
+        <summary>Only remove the top bar of inwdows in the main monitor.</summary>
+        <description>If windows are on an external monitor, this setting will ensure the top bar stays visible.</description>
+    </key>
+
+    <key name="change-appmenu" type="b">
+      <default>true</default>
+        <summary>Only remove the top bar of inwdows in the main monitor.</summary>
+        <description>If windows are on an external monitor, this setting will ensure the top bar stays visible.</description>
+    </key>
+
   </schema>
 </schemalist>

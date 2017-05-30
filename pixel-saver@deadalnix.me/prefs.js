@@ -28,6 +28,18 @@ function buildPrefsWidget(){
 		'active',
 		Gio.SettingsBindFlags.DEFAULT);
 
+	// Basic settings tab:
+	settings.bind('show-buttons',
+		buildable.get_object('buttons_switch'),
+		'active',
+		Gio.SettingsBindFlags.DEFAULT);
+
+	// Basic settings tab:
+	settings.bind('change-appmenu',
+		buildable.get_object('appmenu_switch'),
+		'active',
+		Gio.SettingsBindFlags.DEFAULT);
+
 	box.show_all();
 
 	return box;
