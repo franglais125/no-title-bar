@@ -247,11 +247,26 @@ let overviewCallbackIDs = [];
 let themeCallbackID = 0;
 let globalCallBackID = 0;
 let settings = null;
+let settingsId = null;
 
-function enable() {
+function create() {
 	// Load settings
 	settings = Convenience.getSettings();
-	
+        settingsId = settings.connect('changed::show-buttons',
+                                  function() {
+                                      if (settings.get_boolean('show-buttons'))
+                                          enable();
+                                      else
+                                          disable();
+                                  });
+
+        if (settings.get_boolean('show-buttons'))
+            enable();
+        else
+            disable();
+}
+
+function enable() {
 	loadTheme();
 	createButtons();
 	
@@ -288,13 +303,23 @@ function disable() {
 		themeCallbackID = 0;
 	}
 	
-	global.screen.disconnect(globalCallBackID);
-	globalCallBackID = 0;
+        if (globalCallBackID) {
+	    global.screen.disconnect(globalCallBackID);
+	    globalCallBackID = 0;
+        }
 	
 	destroyButtons();
 	unloadTheme();
+}
+
+function destroy() {
+        disable();
+
+        if (settingsId) {
+            settings.disconnect(settingsId);
+            settingsId = null;
+        }
 
 	settings.run_dispose();
 	settings = null;
 }
-

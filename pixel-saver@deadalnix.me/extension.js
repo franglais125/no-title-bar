@@ -56,7 +56,7 @@ function init(extensionMeta) {
 }
 
 function enable() {
-	Buttons.enable();
+	Buttons.create();
 	Decoration.enable();
 	AppMenu.enable();
 }
@@ -64,6 +64,6 @@ function enable() {
 function disable() {
 	AppMenu.disable();
 	Decoration.disable();
-	Buttons.disable();
+	Buttons.destroy();
 }
 
