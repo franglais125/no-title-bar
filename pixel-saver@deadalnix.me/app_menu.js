@@ -18,7 +18,8 @@ function WARN(message) {
 	log("[pixel-saver]: " + message);
 }
 
-let appMenu = null;
+let isEnabled = false;
+let appMenu = Main.panel.statusArea.appMenu;
 
 /**
  * AppMenu synchronization
@@ -200,13 +201,27 @@ let focusCallbackID = 0;
 let tooltipCallbackID = 0;
 let globalCallBackID = 0;
 let settings = null;
+let settingsId = null;
 
-function enable() {
+function create() {
 	// Load settings
 	settings = Convenience.getSettings();
+        settingsId = settings.connect('changed::change-appmenu',
+                                  function() {
+                                      if (settings.get_boolean('change-appmenu'))
+                                          enable();
+                                      else
+                                          disable();
+                                  });
 
-	appMenu = Main.panel.statusArea.appMenu;
-	
+        if (settings.get_boolean('change-appmenu'))
+            enable();
+        else
+            disable();
+}
+
+
+function enable() {
 	tooltip = new St.Label({
 		style_class: 'tooltip dash-label',
 		text: '',
@@ -218,6 +233,8 @@ function enable() {
 	focusCallbackID = global.display.connect('notify::focus-window', onFocusChange);
 	tooltipCallbackID = appMenu.actor.connect('notify::hover', onAppMenuHover);
 	globalCallBackID = global.screen.connect('restacked', updateAppMenu);
+
+        isEnabled = true;
 }
 
 function disable() {
@@ -252,7 +269,18 @@ function disable() {
 	tooltip.destroy();
 	tooltip = null;
 
+        isEnabled = false;
+}
+
+function destroy() {
+        if (isEnabled)
+            disable();
+
+        if (settingsId) {
+            settings.disconnect(settingsId);
+            settingsId = null;
+        }
+
 	settings.run_dispose();
 	settings = null;
 }
-

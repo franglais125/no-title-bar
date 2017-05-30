@@ -248,6 +248,7 @@ let themeCallbackID = 0;
 let globalCallBackID = 0;
 let settings = null;
 let settingsId = null;
+let isEnabled = false;
 
 function create() {
 	// Load settings
@@ -284,6 +285,8 @@ function enable() {
 	themeCallbackID = Gtk.Settings.get_default().connect('notify::gtk-theme-name', loadTheme);
 	
 	globalCallBackID = global.screen.connect('restacked', updateVisibility);
+
+        isEnabled = true;
 }
 
 function disable() {
@@ -310,10 +313,13 @@ function disable() {
 	
 	destroyButtons();
 	unloadTheme();
+
+        isEnabled = false;
 }
 
 function destroy() {
-        disable();
+        if (isEnabled)
+            disable();
 
         if (settingsId) {
             settings.disconnect(settingsId);

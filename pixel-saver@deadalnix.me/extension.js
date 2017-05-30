@@ -58,11 +58,11 @@ function init(extensionMeta) {
 function enable() {
 	Buttons.create();
 	Decoration.enable();
-	AppMenu.enable();
+	AppMenu.create();
 }
 
 function disable() {
-	AppMenu.disable();
+	AppMenu.destroy();
 	Decoration.disable();
 	Buttons.destroy();
 }
