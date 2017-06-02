@@ -53,15 +53,15 @@ const Convenience = Me.imports.convenience;
 let settings = null;
 
 let decoration = null;
+let buttons = null;
 
 function init(extensionMeta) {
-	Buttons.init(extensionMeta);
 	AppMenu.init(extensionMeta);
 }
 
 function enable() {
 	settings = Convenience.getSettings();
-	Buttons.create();
+	buttons = new Buttons.Buttons(settings);
 	decoration = new Decoration.Decoration(settings);
 	AppMenu.create();
 }
@@ -70,6 +70,7 @@ function disable() {
 	AppMenu.destroy();
 	decoration.destroy();
 	decoration = null;
-	Buttons.destroy();
+	buttons.destroy();
+	buttons = null;
 }
 

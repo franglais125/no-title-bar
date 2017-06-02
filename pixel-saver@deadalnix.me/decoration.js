@@ -72,7 +72,7 @@ const Decoration = new Lang.Class({
 
 		this.cleanWorkspaces();
 
-		this.forEachWindow(function(win) {
+		this.forEachWindow(Lang.bind(this, function(win) {
 			let state = this.getOriginalState(win);
 			LOG('stopUndecorating: ' + win.title + ' original=' + state);
 			if (state == WindowState.DEFAULT) {
@@ -80,7 +80,7 @@ const Decoration = new Lang.Class({
 			}
 
 			delete win._pixelSaverOriginalState;
-		});
+		}));
 	},
 
 
@@ -344,7 +344,7 @@ const Decoration = new Lang.Class({
 		}
 
 		retry = 3;
-		Mainloop.idle_add(function () {
+		Mainloop.idle_add(Lang.bind(this, function () {
 			let id = this.guessWindowXID(win);
 			if (!id) {
 				if (--retry) {
@@ -361,7 +361,7 @@ const Decoration = new Lang.Class({
 				hide = win.is_on_primary_monitor();
 			this.setHideTitlebar(win, hide);
 			return false;
-		});
+		}));
 
 		return false;
 	},
