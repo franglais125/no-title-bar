@@ -54,20 +54,21 @@ let settings = null;
 
 let decoration = null;
 let buttons = null;
+let appMenu = null;
 
-function init(extensionMeta) {
-	AppMenu.init(extensionMeta);
+function init() {
 }
 
 function enable() {
 	settings = Convenience.getSettings();
 	buttons = new Buttons.Buttons(settings);
 	decoration = new Decoration.Decoration(settings);
-	AppMenu.create();
+	appMenu = new AppMenu.AppMenu(settings);
 }
 
 function disable() {
-	AppMenu.destroy();
+	appMenu.destroy();
+	appMenu = null;
 	decoration.destroy();
 	decoration = null;
 	buttons.destroy();

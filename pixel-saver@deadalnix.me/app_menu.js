@@ -7,7 +7,6 @@ const Tweener = imports.ui.tweener;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
-const Convenience = Me.imports.convenience;
 const Util = Me.imports.util;
 
 function LOG(message) {
@@ -18,269 +17,275 @@ function WARN(message) {
 	log("[pixel-saver]: " + message);
 }
 
-let isEnabled = false;
-let appMenu = Main.panel.statusArea.appMenu;
-
-/**
- * AppMenu synchronization
- */
-function updateAppMenu() {
-	let win = global.display.focus_window;
-	if (!win) {
-		return false;
-	}
-	
-	let title = win.title;
-	
-	// Not the topmost maximized window.
-	if (win !== Util.getWindow()) {
-		let app = Shell.WindowTracker.get_default().get_window_app(win);
-		title = app.get_name();
-	}
-	
-	// Not on the primary monitor
-	if (settings.get_boolean('only-main-monitor') && !win.is_on_primary_monitor()) {
-		let app = Shell.WindowTracker.get_default().get_window_app(win);
-		title = app.get_name();
-	}
-	
-	LOG('Override title ' + title);
-	appMenu._label.set_text(title);
-	tooltip.text = title;
-	
-	return false;
-}
-
-/**
- * Track the focused window's title
- */
-let activeWindow = null;
-let awCallbackID = 0;
-function changeActiveWindow(win) {
-	if (win === activeWindow) {
-		return;
-	}
-	
-	if (activeWindow) {
-		activeWindow.disconnect(awCallbackID);
-	}
-	
-	activeWindow = win;
-	
-	if (win) {
-		awCallbackID = win.connect('notify::title', updateAppMenu);
-		updateAppMenu();
-	}
-}
-
-/**
- * Focus change
- */
-function onFocusChange() {
-	let input_mode_check = (global.stage_input_mode === undefined)
-		? true
-		: global.stage_input_mode == Shell.StageInputMode.FOCUSED;
-	if (!Shell.WindowTracker.get_default().focus_app && input_mode_check) {
-		// If the app has just lost focus to the panel, pretend
-		// nothing happened; otherwise you can't keynav to the
-		// app menu.
-		return false;
-	}
-	
-	changeActiveWindow(global.display.focus_window);
-	return false;
-}
-
-/**
- * tooltip
- */
-let tooltip = null;
-let showTooltip = false;
-
 let SHOW_DELAY = 350;
 let SHOW_DURATION = 0.15;
 let HIDE_DURATION = 0.1;
 
-let tooltipDelayCallbackID = 0;
-let menuCallbackID = 0;
+const AppMenu = new Lang.Class({
+	Name: 'PixelSaver.AppMenu',
 
-function resetMenuCallback() {
-	if (menuCallbackID) {
-		appMenu.menu.disconnect(menuCallbackID);
-		menuCallbackID = 0;
-	}
-}
+	_init: function(settings) {
+		this.wmCallbackIDs = [];
+		this.focusCallbackID = 0;
+		this.tooltipCallbackID = 0;
+		this.globalCallBackID = 0;
+		this.isEnabled = false;
 
-function onAppMenuHover(actor) {
-	let hover = actor.get_hover();
-	if (showTooltip === hover) {
-		return false;
-	}
-	
-	// We are not in the right state, let's fix that.
-	showTooltip = hover;
-	
-	if (showTooltip) {
-		tooltipDelayCallbackID = Mainloop.timeout_add(SHOW_DELAY, function() {
-			if (!showTooltip) {
-				WARN('showTooltip is false and delay callback ran.');
-			}
-			
-			// Something wants us to stop.
-			if (tooltipDelayCallbackID === 0) {
-				return false;
-			}
-			
-			let label = appMenu._label;
-			if (!label.get_clutter_text().get_layout().is_ellipsized()) {
-				// Do not need to hide.
-				tooltipDelayCallbackID = 0;
-				return false;
-			}
-			
-			Main.uiGroup.add_actor(tooltip);
-			
-			resetMenuCallback();
-			menuCallbackID = appMenu.menu.connect('open-state-changed', function(menu, open) {
-				if (open) {
-					Main.uiGroup.remove_actor(tooltip);
-				} else {
-					Main.uiGroup.add_actor(tooltip);
-				}
-			});
-			
-			[px, py] = Main.panel.actor.get_transformed_position();
-			[bx, by] = label.get_transformed_position();
-			[w, h] = label.get_transformed_size();
-			
-			let y = py + Main.panel.actor.get_height() + 3;
-			let x = bx - Math.round((tooltip.get_width() - w)/2);
-			tooltip.opacity = 0;
-			tooltip.set_position(x, y);
-			
-			LOG('show title tooltip');
-			
-			Tweener.removeTweens(tooltip);
-			Tweener.addTween(tooltip, {
-				opacity: 255,
-				time: SHOW_DURATION,
-				transition: 'easeOutQuad',
-			});
-			
+		this.appMenu = Main.panel.statusArea.appMenu;
+
+		this.activeWindow = null;
+		this.awCallbackID = 0;
+
+		// Tooltip
+		this.tooltip = null;
+		this.showTooltip = false;
+
+		this.tooltipDelayCallbackID = 0;
+		this.menuCallbackID = 0;
+
+		// Load settings
+		this.settings = settings;
+		this.settingsId = this.settings.connect('changed::change-appmenu',
+			Lang.bind(this, function() {
+				if (this.settings.get_boolean('change-appmenu'))
+					this.enable();
+				else
+					this.disable();
+			}));
+
+		if (this.settings.get_boolean('change-appmenu'))
+			this.enable();
+		else
+			this.disable();
+	},
+
+	/**
+	 * AppMenu synchronization
+	 */
+	updateAppMenu: function() {
+		let win = global.display.focus_window;
+		if (!win) {
 			return false;
+		}
+
+		let title = win.title;
+
+		// Not the topmost maximized window.
+		if (win !== Util.getWindow()) {
+			let app = Shell.WindowTracker.get_default().get_window_app(win);
+			title = app.get_name();
+		}
+
+		// Not on the primary monitor
+		if (this.settings.get_boolean('only-main-monitor') && !win.is_on_primary_monitor()) {
+			let app = Shell.WindowTracker.get_default().get_window_app(win);
+			title = app.get_name();
+		}
+
+		LOG('Override title ' + title);
+		this.appMenu._label.set_text(title);
+		this.tooltip.text = title;
+
+		return false;
+	},
+
+	/**
+	 * Track the focused window's title
+	 */
+	changeActiveWindow: function (win) {
+		if (win === this.activeWindow) {
+			return;
+		}
+
+		if (this.activeWindow) {
+			this.activeWindow.disconnect(this.awCallbackID);
+		}
+
+		this.activeWindow = win;
+
+		if (win) {
+			this.awCallbackID = win.connect('notify::title', Lang.bind(this, this.updateAppMenu));
+			this.updateAppMenu();
+		}
+	},
+
+	/**
+	 * Focus change
+	 */
+	onFocusChange: function() {
+		let input_mode_check = (global.stage_input_mode === undefined)
+			? true
+			: global.stage_input_mode == Shell.StageInputMode.FOCUSED;
+		if (!Shell.WindowTracker.get_default().focus_app && input_mode_check) {
+			// If the app has just lost focus to the panel, pretend
+			// nothing happened; otherwise you can't keynav to the
+			// app menu.
+			return false;
+		}
+
+		this.changeActiveWindow(global.display.focus_window);
+		return false;
+	},
+
+	/**
+	 * tooltip
+	 */
+
+	resetMenuCallback: function() {
+		if (this.menuCallbackID) {
+			this.appMenu.menu.disconnect(this.menuCallbackID);
+			this.menuCallbackID = 0;
+		}
+	},
+
+	onAppMenuHover: function(actor) {
+		let hover = actor.get_hover();
+		if (this.showTooltip === hover) {
+			return false;
+		}
+
+		// We are not in the right state, let's fix that.
+		this.showTooltip = hover;
+
+		if (this.showTooltip) {
+			this.tooltipDelayCallbackID = Mainloop.timeout_add(SHOW_DELAY, Lang.bind(this, function() {
+				if (!this.showTooltip) {
+					WARN('showTooltip is false and delay callback ran.');
+				}
+
+				// Something wants us to stop.
+				if (this.tooltipDelayCallbackID === 0) {
+					return false;
+				}
+
+				let label = this.appMenu._label;
+				if (!label.get_clutter_text().get_layout().is_ellipsized()) {
+					// Do not need to hide.
+					this.tooltipDelayCallbackID = 0;
+					return false;
+				}
+
+				Main.uiGroup.add_actor(this.tooltip);
+
+				this.resetMenuCallback();
+				this.menuCallbackID = this.appMenu.menu.connect('open-state-changed', function(menu, open) {
+					if (open) {
+						Main.uiGroup.remove_actor(this.tooltip);
+					} else {
+						Main.uiGroup.add_actor(this.tooltip);
+					}
+				});
+
+				[px, py] = Main.panel.actor.get_transformed_position();
+				[bx, by] = label.get_transformed_position();
+				[w, h] = label.get_transformed_size();
+
+				let y = py + Main.panel.actor.get_height() + 3;
+				let x = bx - Math.round((this.tooltip.get_width() - w)/2);
+				this.tooltip.opacity = 0;
+				this.tooltip.set_position(x, y);
+
+				LOG('show title tooltip');
+
+				Tweener.removeTweens(this.tooltip);
+				Tweener.addTween(this.tooltip, {
+					opacity: 255,
+					time: SHOW_DURATION,
+					transition: 'easeOutQuad',
+				});
+
+				return false;
+			}));
+		} else if (this.tooltipDelayCallbackID > 0) {
+			// If the event ran, then we hide.
+			LOG('hide title tooltip');
+
+			this.resetMenuCallback();
+
+			Tweener.removeTweens(this.tooltip);
+			Tweener.addTween(this.tooltip, {
+				opacity: 0,
+				time: HIDE_DURATION,
+				transition: 'easeOutQuad',
+				onComplete: Lang.bind(this, function() {
+					Main.uiGroup.remove_actor(this.tooltip);
+				})
+			});
+
+			this.tooltipDelayCallbackID = 0;
+		}
+
+		return false;
+	},
+
+	enable: function() {
+		this.tooltip = new St.Label({
+			style_class: 'tooltip dash-label',
+			text: '',
+			opacity: 0
 		});
-	} else if (tooltipDelayCallbackID > 0) {
-		// If the event ran, then we hide.
-		LOG('hide title tooltip');
-		
-		resetMenuCallback();
-		
-		Tweener.removeTweens(tooltip);
-		Tweener.addTween(tooltip, {
-			opacity: 0,
-			time: HIDE_DURATION,
-			transition: 'easeOutQuad',
-			onComplete: function() {
-				Main.uiGroup.remove_actor(tooltip);
-			}
+
+		this.wmCallbackIDs = this.wmCallbackIDs.concat(Util.onSizeChange(Lang.bind(this, this.updateAppMenu)));
+
+		this.focusCallbackID = global.display.connect('notify::focus-window', Lang.bind(this, this.onFocusChange));
+		this.tooltipCallbackID = this.appMenu.actor.connect('notify::hover',
+			Lang.bind(this, this.onAppMenuHover));
+		this.globalCallBackID = global.screen.connect('restacked',
+			Lang.bind(this, this.updateAppMenu));
+
+		this.isEnabled = true;
+	},
+
+	disable: function() {
+		this.wmCallbackIDs.forEach(function(id) {
+			global.window_manager.disconnect(id);
 		});
-		
-		tooltipDelayCallbackID = 0;
-	}
-	
-	return false;
-}
 
-/**
- * Subextension hooks
- */
-function init() {}
+		this.wmCallbackIDs = [];
 
-let wmCallbackIDs = [];
-let focusCallbackID = 0;
-let tooltipCallbackID = 0;
-let globalCallBackID = 0;
-let settings = null;
-let settingsId = null;
+		if (this.focusCallbackID) {
+			global.display.disconnect(this.focusCallbackID);
+			this.focusCallbackID = 0;
+		}
 
-function create() {
-	// Load settings
-	settings = Convenience.getSettings();
-        settingsId = settings.connect('changed::change-appmenu',
-                                  function() {
-                                      if (settings.get_boolean('change-appmenu'))
-                                          enable();
-                                      else
-                                          disable();
-                                  });
+		if (this.globalCallBackID) {
+			global.screen.disconnect(this.globalCallBackID);
+			this.globalCallBackID = 0;
+		}
 
-        if (settings.get_boolean('change-appmenu'))
-            enable();
-        else
-            disable();
-}
+		if (this.tooltipCallbackID) {
+			this.appMenu.actor.disconnect(this.tooltipCallbackID);
+			this.tooltipCallbackID = 0;
+		}
 
+		if (this.activeWindow) {
+			this.activeWindow.disconnect(this.awCallbackID);
+			this.awCallbackID = 0;
+			this.activeWindow = null;
+		}
 
-function enable() {
-	tooltip = new St.Label({
-		style_class: 'tooltip dash-label',
-		text: '',
-		opacity: 0
-	});
-	
-	wmCallbackIDs = wmCallbackIDs.concat(Util.onSizeChange(updateAppMenu));
-	
-	focusCallbackID = global.display.connect('notify::focus-window', onFocusChange);
-	tooltipCallbackID = appMenu.actor.connect('notify::hover', onAppMenuHover);
-	globalCallBackID = global.screen.connect('restacked', updateAppMenu);
+		if (this.tooltipDelayCallbackID) {
+			Mainloop.source_remove(this.tooltipDelayCallbackID);
+			this.tooltipDelayCallbackID = 0;
+		}
 
-        isEnabled = true;
-}
+		this.resetMenuCallback();
 
-function disable() {
-	wmCallbackIDs.forEach(function(id) {
-		global.window_manager.disconnect(id);
-	});
-	
-	wmCallbackIDs = [];
-	
-	global.display.disconnect(focusCallbackID);
-	focusCallbackID = 0;
-	
-	global.screen.disconnect(globalCallBackID);
-	globalCallBackID = 0;
-	
-	appMenu.actor.disconnect(tooltipCallbackID);
-	tooltipCallbackID = 0;
-	
-	if (activeWindow) {
-		activeWindow.disconnect(awCallbackID);
-		awCallbackID = 0;
-		activeWindow = null;
-	}
-	
-	if (tooltipDelayCallbackID) {
-		Mainloop.source_remove(tooltipDelayCallbackID);
-		tooltipDelayCallbackID = 0;
-	}
-	
-	resetMenuCallback();
-	
-	tooltip.destroy();
-	tooltip = null;
+		if (this.tooltip) {
+			this.tooltip.destroy();
+			this.tooltip = null;
+		}
 
-        isEnabled = false;
-}
+		this.isEnabled = false;
+	},
 
-function destroy() {
-        if (isEnabled)
-            disable();
+	destroy: function() {
+		 if (this.isEnabled)
+			 this.disable();
 
-        if (settingsId) {
-            settings.disconnect(settingsId);
-            settingsId = null;
-        }
-
-	settings.run_dispose();
-	settings = null;
-}
+		 if (this.settingsId) {
+			 this.settings.disconnect(this.settingsId);
+			 this.settingsId = null;
+		 }
+	},
+});
