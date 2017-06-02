@@ -35,8 +35,8 @@ const Buttons = new Lang.Class({
 
 		this.wmCallbackIDs = [];
 		this.overviewCallbackIDs = [];
-		this.themeCallbackID = null;
-		this.globalCallBackID = null;
+		this.themeCallbackID = 0;
+		this.globalCallBackID = 0;
 		this.settings = settings;
 		this.isEnabled = false;
 		this.activeCSS = false;
@@ -298,13 +298,13 @@ const Buttons = new Lang.Class({
 		this.overviewCallbackIDs = [];
 
 		if (this.themeCallbackID) {
-			Gtk.Settings.get_default().disconnect(0);
-			this.themeCallbackID = null;
+			Gtk.Settings.get_default().disconnect(this.themeCallbackID);
+			this.themeCallbackID = 0;
 		}
 
 		if (this.globalCallBackID) {
 			global.screen.disconnect(this.globalCallBackID);
-			this.globalCallBackID = null;
+			this.globalCallBackID = 0;
 		}
 
 		this.destroyButtons();
@@ -319,7 +319,7 @@ const Buttons = new Lang.Class({
 
 		if (this.settingsId) {
 			this.settings.disconnect(this.settingsId);
-			this.settingsId = null;
+			this.settingsId = 0
 		}
 	}
 });
