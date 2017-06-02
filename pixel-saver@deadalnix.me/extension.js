@@ -48,22 +48,28 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Decoration = Me.imports.decoration;
 const Buttons = Me.imports.buttons;
 const AppMenu = Me.imports.app_menu;
+const Convenience = Me.imports.convenience;
+
+let settings = null;
+
+let decoration = null;
 
 function init(extensionMeta) {
 	Buttons.init(extensionMeta);
-	Decoration.init(extensionMeta);
 	AppMenu.init(extensionMeta);
 }
 
 function enable() {
+	settings = Convenience.getSettings();
 	Buttons.create();
-	Decoration.enable();
+	decoration = new Decoration.Decoration(settings);
 	AppMenu.create();
 }
 
 function disable() {
 	AppMenu.destroy();
-	Decoration.disable();
+	decoration.destroy();
+	decoration = null;
 	Buttons.destroy();
 }
 
