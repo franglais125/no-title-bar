@@ -16,6 +16,7 @@ function LOG(message) {
 	// log("[pixel-saver]: " + message);
 }
 
+let showWarning = false;
 function WARN(message) {
 	log("[pixel-saver]: " + message);
 }
@@ -101,7 +102,8 @@ const Buttons = new Lang.Class({
 
 				if (!callbacks[order[i]]) {
 					// Skip if the button's name is not right...
-					WARN("\'%s\' is not a valid button.".format(order[i]));
+					if (showWarning)
+						WARN("\'%s\' is not a valid button.".format(order[i]));
 					continue;
 				}
 
@@ -156,7 +158,8 @@ const Buttons = new Lang.Class({
 	minimize: function() {
 		let win = Util.getWindow();
 		if (!win || win.minimized) {
-			WARN('impossible to minimize');
+			if (showWarning)
+				WARN('impossible to minimize');
 			return;
 		}
 
@@ -166,7 +169,8 @@ const Buttons = new Lang.Class({
 	maximize: function() {
 		let win = Util.getWindow();
 		if (!win) {
-			WARN('impossible to maximize');
+			if (showWarning)
+				WARN('impossible to maximize');
 			return;
 		}
 
@@ -174,7 +178,8 @@ const Buttons = new Lang.Class({
 		if (win.get_maximized() === MAXIMIZED) {
 			win.unmaximize(MAXIMIZED);
 		} else {
-			WARN('window shoud already be maximized');
+			if (showWarning)
+				WARN('window shoud already be maximized');
 			win.maximize(MAXIMIZED);
 		}
 
@@ -184,7 +189,8 @@ const Buttons = new Lang.Class({
 	close: function() {
 		let win = Util.getWindow();
 		if (!win) {
-			WARN('impossible to close');
+			if (showWarning)
+				WARN('impossible to close');
 			return;
 		}
 

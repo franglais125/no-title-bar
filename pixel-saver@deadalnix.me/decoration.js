@@ -10,6 +10,7 @@ function LOG(message) {
 	// log("[pixel-saver]: " + message);
 }
 
+let showWarning = false;
 function WARN(message) {
 	log("[pixel-saver]: " + message);
 }
@@ -184,7 +185,8 @@ const Decoration = new Lang.Class({
 		}
 
 		// debugging for when people find bugs..
-		WARN("Could not find XID for window with title %s".format(win.title));
+		if (showWarning)
+			WARN("Could not find XID for window with title %s".format(win.title));
 		return null;
 	},
 
@@ -209,7 +211,8 @@ const Decoration = new Lang.Class({
 
 		let xprops = GLib.spawn_command_line_sync(cmd);
 		if (!xprops[0]) {
-			WARN("xprop failed for " + win.title + " with id " + id);
+			if (showWarning)
+				WARN("xprop failed for " + win.title + " with id " + id);
 			return win._pixelSaverOriginalState = State.UNKNOWN;
 		}
 
@@ -235,7 +238,8 @@ const Decoration = new Lang.Class({
 				: WindowState.DEFAULT;
 		}
 
-		WARN("Can't find original state for " + win.title + " with id " + id);
+		if (showWarning)
+			WARN("Can't find original state for " + win.title + " with id " + id);
 
 		// GTK uses the _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED atom to indicate that the
 		// title bar should be hidden when maximized. If we can't find this atom, the
@@ -351,7 +355,8 @@ const Decoration = new Lang.Class({
 					return true;
 				}
 
-				WARN("Finding XID for window %s failed".format(win.title));
+				if (showWarning)
+					WARN("Finding XID for window %s failed".format(win.title));
 				return false;
 			}
 

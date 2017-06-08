@@ -13,6 +13,7 @@ function LOG(message) {
 	// log("[pixel-saver]: " + message);
 }
 
+let showWarning = false;
 function WARN(message) {
 	log("[pixel-saver]: " + message);
 }
@@ -149,7 +150,7 @@ const AppMenu = new Lang.Class({
 
 		if (this.showTooltip) {
 			this.tooltipDelayCallbackID = Mainloop.timeout_add(SHOW_DELAY, Lang.bind(this, function() {
-				if (!this.showTooltip) {
+				if (showWarning && !this.showTooltip) {
 					WARN('showTooltip is false and delay callback ran.');
 				}
 
