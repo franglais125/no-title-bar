@@ -12,8 +12,9 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 const Util = Me.imports.util;
 
+let showLog = false;
 function LOG(message) {
-	// log("[pixel-saver]: " + message);
+	log("[pixel-saver]: " + message);
 }
 
 let showWarning = false;
@@ -75,7 +76,8 @@ const Buttons = new Lang.Class({
 		});
 
 		let order = new Gio.Settings({schema_id: DCONF_META_PATH}).get_string('button-layout');
-		LOG('Buttons layout : ' + order);
+		if (showLog)
+			LOG('Buttons layout : ' + order);
 
 		let orders = order.replace(/ /g, '').split(':');
 
@@ -204,7 +206,8 @@ const Buttons = new Lang.Class({
 		let theme = Gtk.Settings.get_default().gtk_theme_name,
 			cssPath = GLib.build_filenamev([this.extensionPath, 'themes', theme, 'style.css']);
 
-		LOG('Load theme ' + theme);
+		if (showLog)
+			LOG('Load theme ' + theme);
 		if (!GLib.file_test(cssPath, GLib.FileTest.EXISTS)) {
 			cssPath = GLib.build_filenamev([this.extensionPath, 'themes/default/style.css']);
 		}
@@ -229,7 +232,8 @@ const Buttons = new Lang.Class({
 
 	unloadTheme: function() {
 		if (this.activeCSS) {
-			LOG('Unload ' + this.activeCSS);
+			if (showLog)
+				LOG('Unload ' + this.activeCSS);
 
 			let cssFile = Gio.file_new_for_path(this.activeCSS);
 			St.ThemeContext.get_for_stage(global.stage).get_theme().unload_stylesheet(cssFile);

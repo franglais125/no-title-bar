@@ -9,8 +9,9 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Util = Me.imports.util;
 
+let showLog = false;
 function LOG(message) {
-	// log("[pixel-saver]: " + message);
+	log("[pixel-saver]: " + message);
 }
 
 let showWarning = false;
@@ -82,8 +83,8 @@ const AppMenu = new Lang.Class({
 			let app = Shell.WindowTracker.get_default().get_window_app(win);
 			title = app.get_name();
 		}
-
-		LOG('Override title ' + title);
+		if (showLog)
+			LOG('Override title ' + title);
 		this.appMenu._label.set_text(title);
 		this.tooltip.text = title;
 
@@ -186,7 +187,8 @@ const AppMenu = new Lang.Class({
 				this.tooltip.opacity = 0;
 				this.tooltip.set_position(x, y);
 
-				LOG('show title tooltip');
+				if (showLog)
+					LOG('show title tooltip');
 
 				Tweener.removeTweens(this.tooltip);
 				Tweener.addTween(this.tooltip, {
@@ -199,7 +201,8 @@ const AppMenu = new Lang.Class({
 			}));
 		} else if (this.tooltipDelayCallbackID > 0) {
 			// If the event ran, then we hide.
-			LOG('hide title tooltip');
+			if (showLog)
+				LOG('hide title tooltip');
 
 			this.resetMenuCallback();
 

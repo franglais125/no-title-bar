@@ -6,8 +6,9 @@ const Meta = imports.gi.Meta;
 const Util = imports.misc.util;
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 
+let showLog = false;
 function LOG(message) {
-	// log("[pixel-saver]: " + message);
+	log("[pixel-saver]: " + message);
 }
 
 let showWarning = false;
@@ -75,7 +76,8 @@ const Decoration = new Lang.Class({
 
 		this.forEachWindow(Lang.bind(this, function(win) {
 			let state = this.getOriginalState(win);
-			LOG('stopUndecorating: ' + win.title + ' original=' + state);
+			if (showLog)
+				LOG('stopUndecorating: ' + win.title + ' original=' + state);
 			if (state == WindowState.DEFAULT) {
 				this.setHideTitlebar(win, false);
 			}
@@ -153,7 +155,8 @@ const Decoration = new Lang.Class({
 		// may be necessary if the title contains special characters and `x-window`
 		// is not available.
 		let result = GLib.spawn_command_line_sync('xprop -root _NET_CLIENT_LIST');
-		LOG('xprop -root _NET_CLIENT_LIST')
+		if (showLog)
+			LOG('xprop -root _NET_CLIENT_LIST')
 		if (result[0]) {
 			let str = result[1].toString();
 
@@ -166,7 +169,8 @@ const Decoration = new Lang.Class({
 			for (var i = 0; i < windowList.length; ++i) {
 				let cmd = 'xprop -id "' + windowList[i] + '" _NET_WM_NAME _PIXEL_SAVER_ORIGINAL_STATE';
 				let result = GLib.spawn_command_line_sync(cmd);
-				LOG(cmd);
+				if (showLog)
+					LOG(cmd);
 
 				if (result[0]) {
 					let output = result[1].toString();
@@ -176,7 +180,8 @@ const Decoration = new Lang.Class({
 					}
 
 					let title = output.match(/_NET_WM_NAME(\(\w+\))? = "(([^\\"]|\\"|\\\\)*)"/);
-					LOG("Title of XID %s is \"%s\".".format(windowList[i], title[2]));
+					if (showLog)
+						LOG("Title of XID %s is \"%s\".".format(windowList[i], title[2]));
 
 					// Is this our guy?
 					if (title && title[2] == win.title) {
@@ -209,7 +214,8 @@ const Decoration = new Lang.Class({
 
 		let id = this.guessWindowXID(win);
 		let cmd = 'xprop -id ' + id;
-		LOG(cmd);
+		if (showLog)
+			LOG(cmd);
 
 		let xprops = GLib.spawn_command_line_sync(cmd);
 		if (!xprops[0]) {
@@ -233,7 +239,8 @@ const Decoration = new Lang.Class({
 				  '-f', '_PIXEL_SAVER_ORIGINAL_STATE', '32c',
 				  '-set', '_PIXEL_SAVER_ORIGINAL_STATE',
 				  (state ? '0x1' : '0x0')];
-			LOG(cmd.join(' '));
+			if (showLog)
+				LOG(cmd.join(' '));
 			Util.spawn(cmd);
 			return win._pixelSaverOriginalState = state
 				? WindowState.HIDE_TITLEBAR
@@ -265,7 +272,8 @@ const Decoration = new Lang.Class({
 	 * @param {boolean} hide - whether to hide the titlebar or not.
 	 */
 	setHideTitlebar: function(win, hide) {
-		LOG('setHideTitlebar: ' + win.get_title() + ': ' + hide);
+		if (showLog)
+			LOG('setHideTitlebar: ' + win.get_title() + ': ' + hide);
 
 		// Make sure we save the state before altering it.
 		this.getOriginalState(win);
@@ -281,7 +289,8 @@ const Decoration = new Lang.Class({
 			       '-f', '_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED', '32c',
 			       '-set', '_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED',
 			       (hide ? '0x1' : '0x0')];
-		LOG(cmd.join(' '));
+		if (showLog)
+			LOG(cmd.join(' '));
 
 		// Run xprop
 		[success, pid] = GLib.spawn_async(
@@ -365,7 +374,8 @@ const Decoration = new Lang.Class({
 				return false;
 			}
 
-			LOG('onWindowAdded: ' + win.get_title());
+			if (showLog)
+				LOG('onWindowAdded: ' + win.get_title());
 			let hide = true;
 			if (this.settings.get_boolean('only-main-monitor'))
 				hide = win.is_on_primary_monitor();
