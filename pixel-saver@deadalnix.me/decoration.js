@@ -158,6 +158,8 @@ const Decoration = new Lang.Class({
 			let str = result[1].toString();
 
 			// Get the list of window IDs.
+			if (str.match(/0x[0-9a-f]+/g) == null)
+				return null;
 			let windowList = str.match(/0x[0-9a-f]+/g);
 
 			// For each window ID, check if the title matches the desired title.
@@ -272,7 +274,10 @@ const Decoration = new Lang.Class({
 		 * Undecorate with xprop. Use _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED.
 		 * See (eg) mutter/src/window-props.c
 		 */
-		let cmd = ['xprop', '-id', this.guessWindowXID(win),
+		let winXID = this.guessWindowXID(win);
+		if (winXID == null)
+			return;
+		let cmd = ['xprop', '-id', winXID,
 			       '-f', '_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED', '32c',
 			       '-set', '_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED',
 			       (hide ? '0x1' : '0x0')];
