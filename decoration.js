@@ -353,7 +353,8 @@ const Decoration = new Lang.Class({
      * @see undecorate
      */
     onWindowAdded: function(ws, win, retry) {
-        if (win.window_type === Meta.WindowType.DESKTOP) {
+        if (win.window_type === Meta.WindowType.DESKTOP ||
+            win.window_type === Meta.WindowType.MODAL_DIALOG) {
             return false;
         }
 
