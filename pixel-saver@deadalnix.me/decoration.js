@@ -34,6 +34,14 @@ const Decoration = new Lang.Class({
 		this.settings = settings;
 
 		this.enable();
+
+		this.changeMonitorsID = global.screen.connect(
+			'monitors-changed',
+			Lang.bind(this, function() {
+				this.disable();
+				this.enable();
+			})
+		);
 	},
 
 	enable: function() {
@@ -61,7 +69,7 @@ const Decoration = new Lang.Class({
 		}));
 	},
 
-	destroy: function() {
+	disable: function() {
 		if (this.changeWorkspaceID) {
 			global.screen.disconnect(this.changeWorkspaceID);
 			this.changeWorkspaceID = 0;
@@ -86,6 +94,10 @@ const Decoration = new Lang.Class({
 		}));
 	},
 
+	destroy: function() {
+		this.disable();
+		global.screen.disconnect(this.changeMonitorsID);
+	},
 
 	/**
 	 * Guesses the X ID of a window.
