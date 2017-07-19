@@ -11,37 +11,37 @@ const _ = Gettext.gettext;
 let settings;
 
 function init() {
-	settings = Convenience.getSettings(Me);
-	Convenience.initTranslations("pixel-saver");
+    settings = Convenience.getSettings(Me);
+    Convenience.initTranslations("pixel-saver");
 }
 
 function buildPrefsWidget(){
 
-	// Prepare labels and controls
-	let buildable = new Gtk.Builder();
-	buildable.add_from_file( Me.dir.get_path() + '/Settings.ui' );
-	let box = buildable.get_object('prefs_widget');
+    // Prepare labels and controls
+    let buildable = new Gtk.Builder();
+    buildable.add_from_file( Me.dir.get_path() + '/Settings.ui' );
+    let box = buildable.get_object('prefs_widget');
 
-	// Basic settings tab:
-	settings.bind('only-main-monitor',
-		buildable.get_object('only_main_monitor_switch'),
-		'active',
-		Gio.SettingsBindFlags.DEFAULT);
+    // Basic settings tab:
+    settings.bind('only-main-monitor',
+        buildable.get_object('only_main_monitor_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT);
 
-	// Basic settings tab:
-	settings.bind('show-buttons',
-		buildable.get_object('buttons_switch'),
-		'active',
-		Gio.SettingsBindFlags.DEFAULT);
+    // Basic settings tab:
+    settings.bind('show-buttons',
+        buildable.get_object('buttons_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT);
 
-	// Basic settings tab:
-	settings.bind('change-appmenu',
-		buildable.get_object('appmenu_switch'),
-		'active',
-		Gio.SettingsBindFlags.DEFAULT);
+    // Basic settings tab:
+    settings.bind('change-appmenu',
+        buildable.get_object('appmenu_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT);
 
-	box.show_all();
+    box.show_all();
 
-	return box;
+    return box;
 };
 

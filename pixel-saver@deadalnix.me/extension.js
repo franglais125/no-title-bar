@@ -12,13 +12,13 @@
  *
  * 1. Make sure you can *reproduce* the bug reliably.
  * 2. Do 'Ctrl + F2' and 'lg' and see if there are any errors produced by Maximus,
- *	both in the 'Errors' window *and* the 'Extensions' > 'Maximus' > 'Show Errors'
- *	tab (the 'Show Errors' is in GNOME 3.4+ only I think).
+ *    both in the 'Errors' window *and* the 'Extensions' > 'Maximus' > 'Show Errors'
+ *    tab (the 'Show Errors' is in GNOME 3.4+ only I think).
  * 3. Disable all your extensions except Maximus and see if you can still reproduce
- *	the bug. If so, mention this.
+ *    the bug. If so, mention this.
  * 4. If you can't reproduce th bug with all extensions but Maximus disabled, then
- *	gradually enable your extensions one-by-one until you work out which one(s)
- *	together cause the bug, and mention these.
+ *    gradually enable your extensions one-by-one until you work out which one(s)
+ *    together cause the bug, and mention these.
  * 5. Open a new issue at [4].
  * 6. Include how you can reproduce the bug and any relevant information from 2--4.
  * 7. Also include:
@@ -60,18 +60,18 @@ function init() {
 }
 
 function enable() {
-	settings = Convenience.getSettings();
-	buttons = new Buttons.Buttons(settings);
-	decoration = new Decoration.Decoration(settings);
-	appMenu = new AppMenu.AppMenu(settings);
+    settings = Convenience.getSettings();
+    buttons = new Buttons.Buttons(settings);
+    decoration = new Decoration.Decoration(settings);
+    appMenu = new AppMenu.AppMenu(settings);
 }
 
 function disable() {
-	appMenu.destroy();
-	appMenu = null;
-	decoration.destroy();
-	decoration = null;
-	buttons.destroy();
-	buttons = null;
+    appMenu.destroy();
+    appMenu = null;
+    decoration.destroy();
+    decoration = null;
+    buttons.destroy();
+    buttons = null;
 }
 
