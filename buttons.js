@@ -14,12 +14,12 @@ const Util = Me.imports.util;
 
 let showLog = false;
 function LOG(message) {
-    log("[pixel-saver]: " + message);
+    log("[no-title-bar]: " + message);
 }
 
 let showWarning = false;
 function WARN(message) {
-    log("[pixel-saver]: " + message);
+    log("[no-title-bar]: " + message);
 }
 
 /**
@@ -30,7 +30,7 @@ const DCONF_META_PATH = 'org.gnome.desktop.wm.preferences';
 let actors = [], boxes = [];
 
 const Buttons = new Lang.Class({
-    Name: 'PixelSaver.Buttons',
+    Name: 'NoTitleBar.Buttons',
 
     _init: function(settings) {
         this.extensionPath = Me.dir.get_path();

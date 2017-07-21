@@ -8,12 +8,12 @@ const Me = imports.misc.extensionUtils.getCurrentExtension();
 
 let showLog = false;
 function LOG(message) {
-    log("[pixel-saver]: " + message);
+    log("[no-title-bar]: " + message);
 }
 
 let showWarning = false;
 function WARN(message) {
-    log("[pixel-saver]: " + message);
+    log("[no-title-bar]: " + message);
 }
 
 const WindowState = {
@@ -26,7 +26,7 @@ const WindowState = {
 let workspaces = [];
 
 const Decoration = new Lang.Class({
-    Name: 'PixelSaver.Decoration',
+    Name: 'NoTitleBar.Decoration',
 
     _init: function(settings) {
         this.changeWorkspaceID = 0;
@@ -90,7 +90,7 @@ const Decoration = new Lang.Class({
                 this.setHideTitlebar(win, false);
             }
 
-            delete win._pixelSaverOriginalState;
+            delete win._noTitleBarOriginalState;
         }));
     },
 
@@ -120,8 +120,8 @@ const Decoration = new Lang.Class({
      */
     guessWindowXID: function(win) {
         // We cache the result so we don't need to redetect.
-        if (win._pixelSaverWindowID) {
-            return win._pixelSaverWindowID;
+        if (win._noTitleBarWindowID) {
+            return win._noTitleBarWindowID;
         }
 
         /**
@@ -132,7 +132,7 @@ const Decoration = new Lang.Class({
         try {
             let m = win.get_description().match(/0x[0-9a-f]+/);
             if (m && m[0]) {
-                return win._pixelSaverWindowID = m[0];
+                return win._noTitleBarWindowID = m[0];
             }
         } catch (err) { }
 
@@ -152,13 +152,13 @@ const Decoration = new Lang.Class({
                 let regexp = new RegExp('(0x[0-9a-f]+) +"%s"'.format(win.title));
                 let m = str.match(regexp);
                 if (m && m[1]) {
-                    return win._pixelSaverWindowID = m[1];
+                    return win._noTitleBarWindowID = m[1];
                 }
 
                 // Otherwise, just grab the child and hope for the best
                 m = str.split(/child(?:ren)?:/)[1].match(/0x[0-9a-f]+/);
                 if (m && m[0]) {
-                    return win._pixelSaverWindowID = m[0];
+                    return win._noTitleBarWindowID = m[0];
                 }
             }
         }
@@ -179,14 +179,14 @@ const Decoration = new Lang.Class({
 
             // For each window ID, check if the title matches the desired title.
             for (var i = 0; i < windowList.length; ++i) {
-                let cmd = 'xprop -id "' + windowList[i] + '" _NET_WM_NAME _PIXEL_SAVER_ORIGINAL_STATE';
+                let cmd = 'xprop -id "' + windowList[i] + '" _NET_WM_NAME _NO_TITLE_BAR_ORIGINAL_STATE';
                 let result = GLib.spawn_command_line_sync(cmd);
                 if (showLog)
                     LOG(cmd);
 
                 if (result[0]) {
                     let output = result[1].toString();
-                    let isManaged = output.indexOf("_PIXEL_SAVER_ORIGINAL_STATE(CARDINAL)") > -1;
+                    let isManaged = output.indexOf("_NO_TITLE_BAR_ORIGINAL_STATE(CARDINAL)") > -1;
                     if (isManaged) {
                         continue;
                     }
@@ -211,17 +211,17 @@ const Decoration = new Lang.Class({
 
     /**
      * Get the value of _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED before
-     * pixel saver did its magic.
+     * no-title-bar did its magic.
      * 
      * @param {Meta.Window} win - the window to check the property
      */
     getOriginalState: function (win) {
-        if (win._pixelSaverOriginalState !== undefined) {
-            return win._pixelSaverOriginalState;
+        if (win._noTitleBarOriginalState !== undefined) {
+            return win._noTitleBarOriginalState;
         }
 
         if (!win.decorated) {
-            return win._pixelSaverOriginalState = WindowState.UNDECORATED;
+            return win._noTitleBarOriginalState = WindowState.UNDECORATED;
         }
 
         let id = this.guessWindowXID(win);
@@ -233,13 +233,13 @@ const Decoration = new Lang.Class({
         if (!xprops[0]) {
             if (showWarning)
                 WARN("xprop failed for " + win.title + " with id " + id);
-            return win._pixelSaverOriginalState = State.UNKNOWN;
+            return win._noTitleBarOriginalState = State.UNKNOWN;
         }
 
         let str = xprops[1].toString();
-        let m = str.match(/^_PIXEL_SAVER_ORIGINAL_STATE\(CARDINAL\) = ([0-9]+)$/m);
+        let m = str.match(/^_NO_TITLE_BAR_ORIGINAL_STATE\(CARDINAL\) = ([0-9]+)$/m);
         if (m) {
-            return win._pixelSaverOriginalState = !!m[1]
+            return win._noTitleBarOriginalState = !!m[1]
                 ? WindowState.HIDE_TITLEBAR
                 : WindowState.DEFAULT;
         }
@@ -248,13 +248,13 @@ const Decoration = new Lang.Class({
         if (m) {
             let state = !!m[1];
             cmd = ['xprop', '-id', id,
-                  '-f', '_PIXEL_SAVER_ORIGINAL_STATE', '32c',
-                  '-set', '_PIXEL_SAVER_ORIGINAL_STATE',
+                  '-f', '_NO_TITLE_BAR_ORIGINAL_STATE', '32c',
+                  '-set', '_NO_TITLE_BAR_ORIGINAL_STATE',
                   (state ? '0x1' : '0x0')];
             if (showLog)
                 LOG(cmd.join(' '));
             Util.spawn(cmd);
-            return win._pixelSaverOriginalState = state
+            return win._noTitleBarOriginalState = state
                 ? WindowState.HIDE_TITLEBAR
                 : WindowState.DEFAULT;
         }
@@ -265,7 +265,7 @@ const Decoration = new Lang.Class({
         // GTK uses the _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED atom to indicate that the
         // title bar should be hidden when maximized. If we can't find this atom, the
         // window uses the default behavior
-        return win._pixelSaverOriginalState = WindowState.DEFAULT;
+        return win._noTitleBarOriginalState = WindowState.DEFAULT;
     },
 
     /**
@@ -350,7 +350,7 @@ const Decoration = new Lang.Class({
         // If the window is simply switching workspaces, it will trigger a
         // window-added signal. We don't want to reprocess it then because we already
         // have.
-        if (win._pixelSaverOriginalState !== undefined) {
+        if (win._noTitleBarOriginalState !== undefined) {
             return false;
         }
 
@@ -415,7 +415,7 @@ const Decoration = new Lang.Class({
             workspaces.push(ws);
             // we need to add a Mainloop.idle_add, or else in onWindowAdded the
             // window's maximized state is not correct yet.
-            ws._pixelSaverWindowAddedId = ws.connect('window-added', Lang.bind(this, function (ws, win) {
+            ws._noTitleBarWindowAddedId = ws.connect('window-added', Lang.bind(this, function (ws, win) {
                 Mainloop.idle_add(Lang.bind(this, function () { return this.onWindowAdded(ws, win); }));
             }));
         }
@@ -429,8 +429,8 @@ const Decoration = new Lang.Class({
     cleanWorkspaces: function() {
         // disconnect window-added from workspaces
         workspaces.forEach(function(ws) {
-            ws.disconnect(ws._pixelSaverWindowAddedId);
-            delete ws._pixelSaverWindowAddedId;
+            ws.disconnect(ws._noTitleBarWindowAddedId);
+            delete ws._noTitleBarWindowAddedId;
         });
 
         workspaces = [];

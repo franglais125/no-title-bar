@@ -1,7 +1,7 @@
 <schemalist gettext-domain="gnome-shell-extensions">
 
-  <schema id="org.gnome.shell.extensions.pixel-saver"
-      path="/org/gnome/shell/extensions/pixel-saver/">
+  <schema id="org.gnome.shell.extensions.no-title-bar"
+      path="/org/gnome/shell/extensions/no-title-bar/">
 
     <key name="only-main-monitor" type="b">
       <default>true</default>

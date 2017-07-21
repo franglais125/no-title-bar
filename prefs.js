@@ -5,14 +5,14 @@ const Lang = imports.lang;
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 
-const Gettext = imports.gettext.domain('pixel-saver');
+const Gettext = imports.gettext.domain('no-title-bar');
 const _ = Gettext.gettext;
 
 let settings;
 
 function init() {
     settings = Convenience.getSettings(Me);
-    Convenience.initTranslations("pixel-saver");
+    Convenience.initTranslations('no-title-bar');
 }
 
 function buildPrefsWidget(){

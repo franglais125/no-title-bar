@@ -8,7 +8,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 
 function getSettings() {
     let extension = ExtensionUtils.getCurrentExtension();
-    let schema = 'org.gnome.shell.extensions.pixel-saver';
+    let schema = 'org.gnome.shell.extensions.no-title-bar';
 
     const GioSSS = Gio.SettingsSchemaSource;
 

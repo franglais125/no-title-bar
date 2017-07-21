@@ -11,12 +11,12 @@ const Util = Me.imports.util;
 
 let showLog = false;
 function LOG(message) {
-    log("[pixel-saver]: " + message);
+    log("[no-title-bar]: " + message);
 }
 
 let showWarning = false;
 function WARN(message) {
-    log("[pixel-saver]: " + message);
+    log("[no-title-bar]: " + message);
 }
 
 let SHOW_DELAY = 350;
@@ -24,7 +24,7 @@ let SHOW_DURATION = 0.15;
 let HIDE_DURATION = 0.1;
 
 const AppMenu = new Lang.Class({
-    Name: 'PixelSaver.AppMenu',
+    Name: 'NoTitleBar.AppMenu',
 
     _init: function(settings) {
         this.wmCallbackIDs = [];
