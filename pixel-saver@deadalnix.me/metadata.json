@@ -1,7 +1,7 @@
 {
-    "uuid": "pixel-saver@deadalnix.me",
-    "name": "Pixel Saver",
-    "description": "Pixel Saver is designed to save pixel by fusing activity bar and title bar in a natural way",
-    "url": "https://github.com/deadalnix/pixel-saver",
+    "uuid": "no-title-bar@franglais125.gmail.com",
+    "name": "No Title Bar",
+    "description": "No Title Bar removes the top bar, moves the window title and buttons to the top panel.",
+    "url": "https://github.com/franglais125/no-title-bar",
     "shell-version": ["3.18", "3.20", "3.22", "3.24"]
 }
