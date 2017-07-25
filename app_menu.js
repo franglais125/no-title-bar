@@ -7,7 +7,7 @@ const Tweener = imports.ui.tweener;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
-const Util = Me.imports.util;
+const Utils = Me.imports.utils;
 
 let showLog = false;
 function LOG(message) {
@@ -73,7 +73,7 @@ const AppMenu = new Lang.Class({
         let title = win.title;
 
         // Not the topmost maximized window.
-        if (win !== Util.getWindow()) {
+        if (win !== Utils.getWindow()) {
             let app = Shell.WindowTracker.get_default().get_window_app(win);
             title = app.get_name();
         }
@@ -229,7 +229,7 @@ const AppMenu = new Lang.Class({
             opacity: 0
         });
 
-        this.wmCallbackIDs = this.wmCallbackIDs.concat(Util.onSizeChange(Lang.bind(this, this.updateAppMenu)));
+        this.wmCallbackIDs = this.wmCallbackIDs.concat(Utils.onSizeChange(Lang.bind(this, this.updateAppMenu)));
 
         this.focusCallbackID = global.display.connect('notify::focus-window', Lang.bind(this, this.onFocusChange));
         this.tooltipCallbackID = this.appMenu.actor.connect('notify::hover',

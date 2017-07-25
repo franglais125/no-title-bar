@@ -10,7 +10,7 @@ const St = imports.gi.St;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
-const Util = Me.imports.util;
+const Utils = Me.imports.utils;
 
 let showLog = false;
 function LOG(message) {
@@ -158,7 +158,7 @@ const Buttons = new Lang.Class({
     },
 
     minimize: function() {
-        let win = Util.getWindow();
+        let win = Utils.getWindow();
         if (!win || win.minimized) {
             if (showWarning)
                 WARN('impossible to minimize');
@@ -169,7 +169,7 @@ const Buttons = new Lang.Class({
     },
 
     maximize: function() {
-        let win = Util.getWindow();
+        let win = Utils.getWindow();
         if (!win) {
             if (showWarning)
                 WARN('impossible to maximize');
@@ -189,7 +189,7 @@ const Buttons = new Lang.Class({
     },
 
     close: function() {
-        let win = Util.getWindow();
+        let win = Utils.getWindow();
         if (!win) {
             if (showWarning)
                 WARN('impossible to close');
@@ -249,7 +249,7 @@ const Buttons = new Lang.Class({
         let visible = !Main.overview.visible;
         if (visible) {
             visible = false;
-            let win = Util.getWindow();
+            let win = Utils.getWindow();
             if (win) {
                 visible = win.decorated;
                 // If still visible, check if on primary monitor
@@ -286,7 +286,7 @@ const Buttons = new Lang.Class({
         this.wmCallbackIDs.push(wm.connect('minimize', Lang.bind(this, this.updateVisibility)));
         this.wmCallbackIDs.push(wm.connect('unminimize', Lang.bind(this, this.updateVisibility)));
 
-        this.wmCallbackIDs = this.wmCallbackIDs.concat(Util.onSizeChange(Lang.bind(this, this.updateVisibility)));
+        this.wmCallbackIDs = this.wmCallbackIDs.concat(Utils.onSizeChange(Lang.bind(this, this.updateVisibility)));
 
         this.themeCallbackID = Gtk.Settings.get_default().connect('notify::gtk-theme-name', Lang.bind(this, this.loadTheme));
 
