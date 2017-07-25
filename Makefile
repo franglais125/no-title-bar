@@ -3,6 +3,7 @@
 UUID = no-title-bar@franglais125.gmail.com
 BASE_MODULES = app_menu.js convenience.js extension.js prefs.js buttons.js decoration.js metadata.json Settings.ui util.js
 INSTALLNAME = no-title-bar@franglais125.gmail.com
+MSGSRC = $(wildcard po/*.po)
 ifeq ($(strip $(DESTDIR)),)
 	INSTALLBASE = $(HOME)/.local/share/gnome-shell/extensions
 	RMTMP = echo Not deleting tmp as installation is local
@@ -26,11 +27,27 @@ all: extension
 
 clean:
 	rm -f ./schemas/gschemas.compiled
+	rm -f ./po/*.mo
 
 extension: ./schemas/gschemas.compiled $(MSGSRC:.po=.mo)
 
 ./schemas/gschemas.compiled: ./schemas/org.gnome.shell.extensions.no-title-bar.gschema.xml
 	glib-compile-schemas ./schemas/
+
+potfile: ./po/no-title-bar.pot
+
+mergepo: potfile
+	for l in $(MSGSRC); do \
+		msgmerge -U $$l ./po/no-title-bar.pot; \
+	done;
+
+./po/no-title-bar.pot: Settings.ui
+	mkdir -p po
+	intltool-extract --type=gettext/glade Settings.ui
+	xgettext -k_ -kN_ --join-existing -o po/no-title-bar.pot Settings.ui.h
+
+./po/%.mo: ./po/%.po
+	msgfmt -c $< -o $@
 
 install: install-local
 
@@ -56,4 +73,11 @@ _build: all
 	mkdir -p _build/schemas
 	cp schemas/*.xml _build/schemas/
 	cp schemas/gschemas.compiled _build/schemas/
+	mkdir -p _build/locale
+	for l in $(MSGSRC:.po=.mo) ; do \
+		lf=_build/locale/`basename $$l .mo`; \
+		mkdir -p $$lf; \
+		mkdir -p $$lf/LC_MESSAGES; \
+		cp $$l $$lf/LC_MESSAGES/no-title-bar.mo; \
+	done;
 	sed -i 's/"version": -1/"version": "$(VERSION)"/'  _build/metadata.json;
