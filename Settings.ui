@@ -74,7 +74,7 @@
                         <object class="GtkLabel" id="buttons_label">
                           <property name="hexpand">True</property>
                           <property name="xalign">0</property>
-                          <property name="label" translatable="yes">Show buttons on the top bar.</property>
+                          <property name="label" translatable="yes">Show buttons on the top bar</property>
                           <property name="wrap">True</property>
                         </object>
                         <packing>
