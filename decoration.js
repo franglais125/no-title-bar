@@ -239,14 +239,15 @@ const Decoration = new Lang.Class({
         let str = xprops[1].toString();
         let m = str.match(/^_NO_TITLE_BAR_ORIGINAL_STATE\(CARDINAL\) = ([0-9]+)$/m);
         if (m) {
-            return win._noTitleBarOriginalState = !!m[1]
+            let state = !!parseInt(m[1]);
+            return win._noTitleBarOriginalState = state
                 ? WindowState.HIDE_TITLEBAR
                 : WindowState.DEFAULT;
         }
 
         m = str.match(/^_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED(\(CARDINAL\))? = ([0-9]+)$/m);
         if (m) {
-            let state = !!m[1];
+            let state = !!parseInt(m[2]);
             cmd = ['xprop', '-id', id,
                   '-f', '_NO_TITLE_BAR_ORIGINAL_STATE', '32c',
                   '-set', '_NO_TITLE_BAR_ORIGINAL_STATE',
