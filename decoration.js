@@ -313,7 +313,7 @@ const Decoration = new Lang.Class({
             LOG(cmd.join(' '));
 
         // Run xprop
-        GLib.spawn_async(
+        [success, pid] = GLib.spawn_async(
             null,
             cmd,
             null,
