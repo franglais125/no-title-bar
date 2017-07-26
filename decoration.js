@@ -34,36 +34,36 @@ const Decoration = new Lang.Class({
     Name: 'NoTitleBar.Decoration',
 
     _init: function(settings) {
-        this.changeWorkspaceID = 0;
-        this.windowEnteredID = 0;
-        this.settings = settings;
+        this._changeWorkspaceID = 0;
+        this._windowEnteredID = 0;
+        this._settings = settings;
 
         this._shellVersion = Config.PACKAGE_VERSION;
 
-        this.enable();
+        this._enable();
 
-        this.changeMonitorsID = global.screen.connect(
+        this._changeMonitorsID = global.screen.connect(
             'monitors-changed',
             Lang.bind(this, function() {
-                this.disable();
-                this.enable();
+                this._disable();
+                this._enable();
             })
         );
 
-        this._onlyMainMonitorID = this.settings.connect(
+        this._onlyMainMonitorID = this._settings.connect(
             'changed::only-main-monitor',
             Lang.bind(this, function() {
-                this.disable();
-                this.enable();
+                this._disable();
+                this._enable();
             })
         );
 
     },
 
-    enable: function() {
+    _enable: function() {
         // Connect events
-        this.changeWorkspaceID = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.onChangeNWorkspaces));
-        this.windowEnteredID   = global.screen.connect('window-entered-monitor', Lang.bind(this, this.windowEnteredMonitor));
+        this._changeWorkspaceID = global.screen.connect('notify::n-workspaces', Lang.bind(this, this._onChangeNWorkspaces));
+        this._windowEnteredID   = global.screen.connect('window-entered-monitor', Lang.bind(this, this._windowEnteredMonitor));
 
         /**
          * Go through already-maximised windows & undecorate.
@@ -76,34 +76,34 @@ const Decoration = new Lang.Class({
          * these windows will have onMaximise called twice on them.
          */
         Mainloop.idle_add(Lang.bind(this, function () {
-            this.forEachWindow(Lang.bind(this, function(win) {
-                this.onWindowAdded(null, win);
+            this._forEachWindow(Lang.bind(this, function(win) {
+                this._onWindowAdded(null, win);
             }));
 
-            this.onChangeNWorkspaces();
+            this._onChangeNWorkspaces();
             return false;
         }));
     },
 
-    disable: function() {
-        if (this.changeWorkspaceID) {
-            global.screen.disconnect(this.changeWorkspaceID);
-            this.changeWorkspaceID = 0;
+    _disable: function() {
+        if (this._changeWorkspaceID) {
+            global.screen.disconnect(this._changeWorkspaceID);
+            this._changeWorkspaceID = 0;
         }
 
-        if (this.windowEnteredID) {
-            global.screen.disconnect(this.windowEnteredID);
-            this.windowEnteredID = 0;
+        if (this._windowEnteredID) {
+            global.screen.disconnect(this._windowEnteredID);
+            this._windowEnteredID = 0;
         }
 
-        this.cleanWorkspaces();
+        this._cleanWorkspaces();
 
-        this.forEachWindow(Lang.bind(this, function(win) {
-            let state = this.getOriginalState(win);
+        this._forEachWindow(Lang.bind(this, function(win) {
+            let state = this._getOriginalState(win);
             if (showLog)
                 LOG('stopUndecorating: ' + win.title + ' original=' + state);
             if (state == WindowState.DEFAULT) {
-                this.setHideTitlebar(win, false);
+                this._setHideTitlebar(win, false);
             }
 
             delete win._noTitleBarOriginalState;
@@ -111,9 +111,9 @@ const Decoration = new Lang.Class({
     },
 
     destroy: function() {
-        this.disable();
-        global.screen.disconnect(this.changeMonitorsID);
-        this.settings.disconnect(this._onlyMainMonitorID);
+        this._disable();
+        global.screen.disconnect(this._changeMonitorsID);
+        this._settings.disconnect(this._onlyMainMonitorID);
     },
 
     /**
@@ -135,7 +135,7 @@ const Decoration = new Lang.Class({
      * @param {Meta.Window} win - the window to guess the XID of. You wil get better
      * success if the window's actor (`win.get_compositor_private()`) exists.
      */
-    guessWindowXID: function(win) {
+    _guessWindowXID: function(win) {
         // We cache the result so we don't need to redetect.
         if (win._noTitleBarWindowID) {
             return win._noTitleBarWindowID;
@@ -232,7 +232,7 @@ const Decoration = new Lang.Class({
      * 
      * @param {Meta.Window} win - the window to check the property
      */
-    getOriginalState: function (win) {
+    _getOriginalState: function (win) {
         if (win._noTitleBarOriginalState !== undefined) {
             return win._noTitleBarOriginalState;
         }
@@ -241,7 +241,7 @@ const Decoration = new Lang.Class({
             return win._noTitleBarOriginalState = WindowState.UNDECORATED;
         }
 
-        let id = this.guessWindowXID(win);
+        let id = this._guessWindowXID(win);
         let cmd = 'xprop -id ' + id;
         if (showLog)
             LOG(cmd);
@@ -301,18 +301,18 @@ const Decoration = new Lang.Class({
      * @param {Meta.Window} win - window to set the HIDE_TITLEBAR_WHEN_MAXIMIZED property of.
      * @param {boolean} hide - whether to hide the titlebar or not.
      */
-    setHideTitlebar: function(win, hide) {
+    _setHideTitlebar: function(win, hide) {
         if (showLog)
-            LOG('setHideTitlebar: ' + win.get_title() + ': ' + hide);
+            LOG('_setHideTitlebar: ' + win.get_title() + ': ' + hide);
 
         // Make sure we save the state before altering it.
-        this.getOriginalState(win);
+        this._getOriginalState(win);
 
         /**
          * Undecorate with xprop. Use _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED.
          * See (eg) mutter/src/window-props.c
          */
-        let winXID = this.guessWindowXID(win);
+        let winXID = this._guessWindowXID(win);
         if (winXID == null)
             return;
         let cmd = ['xprop', '-id', winXID,
@@ -363,7 +363,7 @@ const Decoration = new Lang.Class({
      *
      * @see undecorate
      */
-    onWindowAdded: function(ws, win, retry) {
+    _onWindowAdded: function(ws, win, retry) {
         if (win.window_type === Meta.WindowType.DESKTOP ||
             win.window_type === Meta.WindowType.MODAL_DIALOG) {
             return false;
@@ -389,7 +389,7 @@ const Decoration = new Lang.Class({
             }
 
             Mainloop.idle_add(Lang.bind(function () {
-                this.onWindowAdded(ws, win, retry + 1);
+                this._onWindowAdded(ws, win, retry + 1);
                 return false;
             }));
             return false;
@@ -397,7 +397,7 @@ const Decoration = new Lang.Class({
 
         retry = 3;
         Mainloop.idle_add(Lang.bind(this, function () {
-            let id = this.guessWindowXID(win);
+            let id = this._guessWindowXID(win);
             if (!id) {
                 if (--retry) {
                     return true;
@@ -409,11 +409,11 @@ const Decoration = new Lang.Class({
             }
 
             if (showLog)
-                LOG('onWindowAdded: ' + win.get_title());
+                LOG('_onWindowAdded: ' + win.get_title());
             let hide = true;
-            if (this.settings.get_boolean('only-main-monitor'))
+            if (this._settings.get_boolean('only-main-monitor'))
                 hide = win.is_on_primary_monitor();
-            this.setHideTitlebar(win, hide);
+            this._setHideTitlebar(win, hide);
             return false;
         }));
 
@@ -426,19 +426,19 @@ const Decoration = new Lang.Class({
      * We ensure that we are listening to the 'window-added' signal on each of
      * the workspaces.
      *
-     * @see onWindowAdded
+     * @see _onWindowAdded
      */
-    onChangeNWorkspaces: function() {
-        this.cleanWorkspaces();
+    _onChangeNWorkspaces: function() {
+        this._cleanWorkspaces();
 
         let i = global.screen.n_workspaces;
         while (i--) {
             let ws = global.screen.get_workspace_by_index(i);
             workspaces.push(ws);
-            // we need to add a Mainloop.idle_add, or else in onWindowAdded the
+            // we need to add a Mainloop.idle_add, or else in _onWindowAdded the
             // window's maximized state is not correct yet.
             ws._noTitleBarWindowAddedId = ws.connect('window-added', Lang.bind(this, function (ws, win) {
-                Mainloop.idle_add(Lang.bind(this, function () { return this.onWindowAdded(ws, win); }));
+                Mainloop.idle_add(Lang.bind(this, function () { return this._onWindowAdded(ws, win); }));
             }));
         }
 
@@ -448,7 +448,7 @@ const Decoration = new Lang.Class({
     /**
      * Utilities
      */
-    cleanWorkspaces: function() {
+    _cleanWorkspaces: function() {
         // disconnect window-added from workspaces
         workspaces.forEach(function(ws) {
             ws.disconnect(ws._noTitleBarWindowAddedId);
@@ -458,18 +458,18 @@ const Decoration = new Lang.Class({
         workspaces = [];
     },
 
-    forEachWindow: function(callback) {
+    _forEachWindow: function(callback) {
         global.get_window_actors()
             .map(function (w) { return w.meta_window; })
             .filter(function(w) { return w.window_type !== Meta.WindowType.DESKTOP; })
             .forEach(callback);
     },
 
-    windowEnteredMonitor: function(metaScreen, monitorIndex, metaWin) {
+    _windowEnteredMonitor: function(metaScreen, monitorIndex, metaWin) {
         let hide = true;
-        if (this.settings.get_boolean('only-main-monitor'))
+        if (this._settings.get_boolean('only-main-monitor'))
             hide = monitorIndex == Main.layoutManager.primaryIndex;
-        this.setHideTitlebar(metaWin, hide);
+        this._setHideTitlebar(metaWin, hide);
     }
 
 });
