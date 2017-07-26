@@ -49,6 +49,15 @@ const Decoration = new Lang.Class({
                 this.enable();
             })
         );
+
+        this._onlyMainMonitorID = this.settings.connect(
+            'changed::only-main-monitor',
+            Lang.bind(this, function() {
+                this.disable();
+                this.enable();
+            })
+        );
+
     },
 
     enable: function() {
@@ -104,6 +113,7 @@ const Decoration = new Lang.Class({
     destroy: function() {
         this.disable();
         global.screen.disconnect(this.changeMonitorsID);
+        this.settings.disconnect(this._onlyMainMonitorID);
     },
 
     /**
