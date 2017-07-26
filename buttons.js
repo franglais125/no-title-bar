@@ -33,33 +33,33 @@ const Buttons = new Lang.Class({
     Name: 'NoTitleBar.Buttons',
 
     _init: function(settings) {
-        this.extensionPath = Me.dir.get_path();
+        this._extensionPath = Me.dir.get_path();
 
-        this.wmCallbackIDs = [];
-        this.overviewCallbackIDs = [];
-        this.themeCallbackID = 0;
-        this.globalCallBackID = 0;
-        this.settings = settings;
-        this.isEnabled = false;
-        this.activeCSS = false;
+        this._wmCallbackIDs = [];
+        this._overviewCallbackIDs = [];
+        this._themeCallbackID = 0;
+        this._globalCallBackID = 0;
+        this._settings = settings;
+        this._isEnabled = false;
+        this._activeCSS = false;
 
-        this.settingsId = this.settings.connect('changed::show-buttons',
+        this._settingsId = this._settings.connect('changed::show-buttons',
             Lang.bind(this, function() {
-                if (this.settings.get_boolean('show-buttons'))
-                    this.enable();
+                if (this._settings.get_boolean('show-buttons'))
+                    this._enable();
                 else
-                    this.disable();
+                    this._disable();
             }));
 
-        if (this.settings.get_boolean('show-buttons'))
-            this.enable();
+        if (this._settings.get_boolean('show-buttons'))
+            this._enable();
         else
-            this.disable();
+            this._disable();
     },
 
-    createButtons: function() {
+    _createButtons: function() {
         // Ensure we do not create buttons twice.
-        this.destroyButtons();
+        this._destroyButtons();
 
         actors = [
             new St.Bin({ style_class: 'box-bin'}),
@@ -88,9 +88,9 @@ const Buttons = new Lang.Class({
         orders[1] = orders[1].split(',');
 
         const callbacks = {
-            minimize : this.minimize,
-            maximize : this.maximize,
-            close    : this.close
+            minimize : this._minimize,
+            maximize : this._maximize,
+            close    : this._close
         };
 
         for (let bi = 0; bi < boxes.length; ++bi) {
@@ -114,7 +114,7 @@ const Buttons = new Lang.Class({
                     track_hover: true
                 });
 
-                button.connect('button-release-event', this.leftclick(callbacks[order[i]]));
+                button.connect('button-release-event', this._leftclick(callbacks[order[i]]));
                 box.add(button);
             }
         }
@@ -129,12 +129,12 @@ const Buttons = new Lang.Class({
                 Main.panel._rightBox.insert_child_at_index(actors[1], Main.panel._rightBox.get_children().length - 1);
             }
 
-            this.updateVisibility();
+            this._updateVisibility();
             return false;
         }));
     },
 
-    destroyButtons: function() {
+    _destroyButtons: function() {
         actors.forEach(function(actor, i) {
             actor.destroy();
             boxes[i].destroy();
@@ -147,7 +147,7 @@ const Buttons = new Lang.Class({
     /**
      * Buttons actions
      */
-    leftclick: function(callback) {
+    _leftclick: function(callback) {
         return function(actor, event) {
             if (event.get_button() !== 1) {
                 return null;
@@ -157,7 +157,7 @@ const Buttons = new Lang.Class({
         }
     },
 
-    minimize: function() {
+    _minimize: function() {
         let win = Utils.getWindow();
         if (!win || win.minimized) {
             if (showWarning)
@@ -168,7 +168,7 @@ const Buttons = new Lang.Class({
         win.minimize();
     },
 
-    maximize: function() {
+    _maximize: function() {
         let win = Utils.getWindow();
         if (!win) {
             if (showWarning)
@@ -188,7 +188,7 @@ const Buttons = new Lang.Class({
         win.activate(global.get_current_time());
     },
 
-    close: function() {
+    _close: function() {
         let win = Utils.getWindow();
         if (!win) {
             if (showWarning)
@@ -202,21 +202,21 @@ const Buttons = new Lang.Class({
     /**
      * Theming
      */
-    loadTheme: function() {
+    _loadTheme: function() {
         let theme = Gtk.Settings.get_default().gtk_theme_name,
-            cssPath = GLib.build_filenamev([this.extensionPath, 'themes', theme, 'style.css']);
+            cssPath = GLib.build_filenamev([this._extensionPath, 'themes', theme, 'style.css']);
 
         if (showLog)
             LOG('Load theme ' + theme);
         if (!GLib.file_test(cssPath, GLib.FileTest.EXISTS)) {
-            cssPath = GLib.build_filenamev([this.extensionPath, 'themes/default/style.css']);
+            cssPath = GLib.build_filenamev([this._extensionPath, 'themes/default/style.css']);
         }
 
-        if (cssPath === this.activeCSS) {
+        if (cssPath === this._activeCSS) {
             return;
         }
 
-        this.unloadTheme();
+        this._unloadTheme();
 
         // Load the new style
         let cssFile = Gio.file_new_for_path(cssPath);
@@ -227,24 +227,24 @@ const Buttons = new Lang.Class({
             actor.grab_key_focus();
         });
 
-        this.activeCSS = cssPath;
+        this._activeCSS = cssPath;
     },
 
-    unloadTheme: function() {
-        if (this.activeCSS) {
+    _unloadTheme: function() {
+        if (this._activeCSS) {
             if (showLog)
-                LOG('Unload ' + this.activeCSS);
+                LOG('Unload ' + this._activeCSS);
 
-            let cssFile = Gio.file_new_for_path(this.activeCSS);
+            let cssFile = Gio.file_new_for_path(this._activeCSS);
             St.ThemeContext.get_for_stage(global.stage).get_theme().unload_stylesheet(cssFile);
-            this.activeCSS = false;
+            this._activeCSS = false;
         }
     },
 
     /**
      * callbacks
      */
-    updateVisibility: function() {
+    _updateVisibility: function() {
         // If we have a window to control, then we show the buttons.
         let visible = !Main.overview.visible;
         if (visible) {
@@ -253,7 +253,7 @@ const Buttons = new Lang.Class({
             if (win) {
                 visible = win.decorated;
                 // If still visible, check if on primary monitor
-                if (visible && this.settings.get_boolean('only-main-monitor'))
+                if (visible && this._settings.get_boolean('only-main-monitor'))
                     visible = win.is_on_primary_monitor();
             }
         }
@@ -273,63 +273,63 @@ const Buttons = new Lang.Class({
         return false;
     },
 
-    enable: function() {
-        this.loadTheme();
-        this.createButtons();
+    _enable: function() {
+        this._loadTheme();
+        this._createButtons();
 
-        this.overviewCallbackIDs.push(Main.overview.connect('showing', Lang.bind(this, this.updateVisibility)));
-        this.overviewCallbackIDs.push(Main.overview.connect('hidden', Lang.bind(this, this.updateVisibility)));
+        this._overviewCallbackIDs.push(Main.overview.connect('showing', Lang.bind(this, this._updateVisibility)));
+        this._overviewCallbackIDs.push(Main.overview.connect('hidden', Lang.bind(this, this._updateVisibility)));
 
         let wm = global.window_manager;
-        this.wmCallbackIDs.push(wm.connect('switch-workspace', Lang.bind(this, this.updateVisibility)));
-        this.wmCallbackIDs.push(wm.connect('map', Lang.bind(this, this.updateVisibility)));
-        this.wmCallbackIDs.push(wm.connect('minimize', Lang.bind(this, this.updateVisibility)));
-        this.wmCallbackIDs.push(wm.connect('unminimize', Lang.bind(this, this.updateVisibility)));
+        this._wmCallbackIDs.push(wm.connect('switch-workspace', Lang.bind(this, this._updateVisibility)));
+        this._wmCallbackIDs.push(wm.connect('map', Lang.bind(this, this._updateVisibility)));
+        this._wmCallbackIDs.push(wm.connect('minimize', Lang.bind(this, this._updateVisibility)));
+        this._wmCallbackIDs.push(wm.connect('unminimize', Lang.bind(this, this._updateVisibility)));
 
-        this.wmCallbackIDs = this.wmCallbackIDs.concat(Utils.onSizeChange(Lang.bind(this, this.updateVisibility)));
+        this._wmCallbackIDs = this._wmCallbackIDs.concat(Utils.onSizeChange(Lang.bind(this, this._updateVisibility)));
 
-        this.themeCallbackID = Gtk.Settings.get_default().connect('notify::gtk-theme-name', Lang.bind(this, this.loadTheme));
+        this._themeCallbackID = Gtk.Settings.get_default().connect('notify::gtk-theme-name', Lang.bind(this, this._loadTheme));
 
-        this.globalCallBackID = global.screen.connect('restacked', Lang.bind(this, this.updateVisibility));
+        this._globalCallBackID = global.screen.connect('restacked', Lang.bind(this, this._updateVisibility));
 
-        this.isEnabled = true;
+        this._isEnabled = true;
     },
 
-    disable: function() {
-        this.wmCallbackIDs.forEach(function(id) {
+    _disable: function() {
+        this._wmCallbackIDs.forEach(function(id) {
             global.window_manager.disconnect(id);
         });
 
-        this.overviewCallbackIDs.forEach(function(id) {
+        this._overviewCallbackIDs.forEach(function(id) {
             Main.overview.disconnect(id);
         });
 
-        this.wmCallbackIDs = [];
-        this.overviewCallbackIDs = [];
+        this._wmCallbackIDs = [];
+        this._overviewCallbackIDs = [];
 
-        if (this.themeCallbackID) {
-            Gtk.Settings.get_default().disconnect(this.themeCallbackID);
-            this.themeCallbackID = 0;
+        if (this._themeCallbackID) {
+            Gtk.Settings.get_default().disconnect(this._themeCallbackID);
+            this._themeCallbackID = 0;
         }
 
-        if (this.globalCallBackID) {
-            global.screen.disconnect(this.globalCallBackID);
-            this.globalCallBackID = 0;
+        if (this._globalCallBackID) {
+            global.screen.disconnect(this._globalCallBackID);
+            this._globalCallBackID = 0;
         }
 
-        this.destroyButtons();
-        this.unloadTheme();
+        this._destroyButtons();
+        this._unloadTheme();
 
-        this.isEnabled = false;
+        this._isEnabled = false;
     },
 
     destroy: function() {
-        if (this.isEnabled)
-            this.disable();
+        if (this._isEnabled)
+            this._disable();
 
-        if (this.settingsId) {
-            this.settings.disconnect(this.settingsId);
-            this.settingsId = 0
+        if (this._settingsId) {
+            this._settings.disconnect(this._settingsId);
+            this._settingsId = 0
         }
     }
 });
