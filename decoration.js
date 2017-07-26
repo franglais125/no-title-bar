@@ -313,12 +313,13 @@ const Decoration = new Lang.Class({
             LOG(cmd.join(' '));
 
         // Run xprop
-        [success, pid] = GLib.spawn_async(
+        let [success, pid] = GLib.spawn_async(
             null,
             cmd,
             null,
             GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-            null);
+            null
+        );
 
         if (Utils.versionCompare(this._shellVersion, '3.24') < 0) {
             // After xprop completes, unmaximize and remaximize any window
