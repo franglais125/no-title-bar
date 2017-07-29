@@ -80,4 +80,3 @@ _build: all
 		mkdir -p $$lf/LC_MESSAGES; \
 		cp $$l $$lf/LC_MESSAGES/no-title-bar.mo; \
 	done;
-	sed -i 's/"version": -1/"version": "$(VERSION)"/'  _build/metadata.json;

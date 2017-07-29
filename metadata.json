@@ -1,13 +1,13 @@
 {
-    "uuid": "no-title-bar@franglais125.gmail.com",
-    "name": "No Title Bar",
-    "description": "No Title Bar removes the title bar, moves the window title and buttons to the top panel.",
-    "url": "https://github.com/franglais125/no-title-bar",
-    "shell-version": [
-        "3.18",
-        "3.20",
-        "3.22",
-        "3.24"
-    ],
-    "version": -1
+  "uuid": "no-title-bar@franglais125.gmail.com",
+  "name": "No Title Bar",
+  "description": "No Title Bar removes the title bar, moves the window title and buttons to the top panel.",
+  "url": "https://github.com/franglais125/no-title-bar",
+  "shell-version": [
+      "3.18",
+      "3.20",
+      "3.22",
+      "3.24"
+  ],
+  "version": 2
 }
