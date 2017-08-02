@@ -13,7 +13,7 @@
 
     <key name="only-main-monitor" type="b">
       <default>true</default>
-        <summary>Only remove the top bar of inwdows in the main monitor.</summary>
+        <summary>Only remove the top bar of windows in the main monitor.</summary>
         <description>If windows are on an external monitor, this setting will ensure the top bar stays visible.</description>
     </key>
 
@@ -25,8 +25,8 @@
 
     <key name="change-appmenu" type="b">
       <default>true</default>
-        <summary>Only remove the top bar of inwdows in the main monitor.</summary>
-        <description>If windows are on an external monitor, this setting will ensure the top bar stays visible.</description>
+        <summary>Use window title to replace the app-menu label.</summary>
+        <description>The app-menu uses the app-name as the label for the button. Use instead the window title of the focused window.</description>
     </key>
 
   </schema>
