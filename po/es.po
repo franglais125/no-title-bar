@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: No Title Bar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-25 03:54-0400\n"
+"POT-Creation-Date: 2017-08-02 17:55-0400\n"
 "PO-Revision-Date: 2017-07-25 03:54-0400\n"
 "Last-Translator: Fran Glais <franglais125@gmail.com>\n"
 "Language-Team: \n"
@@ -17,30 +17,50 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: Settings.ui.h:1
+msgid "Window control buttons"
+msgstr "Botones de control de las ventanas"
+
+#: Settings.ui.h:2
+msgid "Before app menu"
+msgstr "Antes del menú de aplicación"
+
+#: Settings.ui.h:3
+msgid "After app menu"
+msgstr "Después del menú de aplicación"
+
+#: Settings.ui.h:4
+msgid "Within status area"
+msgstr "Dentro del área de estado"
+
+#: Settings.ui.h:5
+msgid "After status area"
+msgstr "Después del área de estado"
+
+#: Settings.ui.h:6
+msgid "Hidden"
+msgstr "No mostrar"
+
+#: Settings.ui.h:8
 msgid "Remove title bars only on the main monitor"
 msgstr "Quitar barra de título sólo en el monitor principal"
 
-#: Settings.ui.h:2
-msgid "Show buttons on the top bar"
-msgstr "Mostrar botones de control en la barra superior"
-
-#: Settings.ui.h:3
+#: Settings.ui.h:7
 msgid "Replace App Menu name with Window name"
 msgstr "Utilizar el título de la ventana para el menú de la aplicación"
 
-#: Settings.ui.h:4
+#: Settings.ui.h:9
 msgid "Basic settings"
 msgstr "Ajustes básicos"
 
-#: Settings.ui.h:5
+#: Settings.ui.h:10
 msgid "Maintained by"
 msgstr "Mantenido por"
 
-#: Settings.ui.h:6
+#: Settings.ui.h:11
 msgid "Webpage"
 msgstr "Sitio web"
 
-#: Settings.ui.h:7
+#: Settings.ui.h:12
 msgid ""
 "<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
 "See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
@@ -51,6 +71,6 @@ msgstr ""
 "\">Licencia Pública General de GNU, versión 2 o posterior</a> para obtener "
 "más detalles.</span>"
 
-#: Settings.ui.h:9
+#: Settings.ui.h:14
 msgid "About"
 msgstr "Acerca de"
