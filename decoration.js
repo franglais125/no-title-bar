@@ -38,7 +38,9 @@ const Decoration = new Lang.Class({
         this._windowEnteredID = 0;
         this._settings = settings;
 
-        this._shellVersion = Config.PACKAGE_VERSION;
+        // For Gnome Shell < 3.24, we need to unmax and maximize windows again,
+        // to redraw the window with no title bar.
+        this._forceMaxUnmax = Utils.versionCompare(Config.PACKAGE_VERSION, '3.24') < 0;
 
         this._enable();
 
@@ -339,13 +341,9 @@ const Decoration = new Lang.Class({
         // here seems to be an uninvasive way to handle this. This needs
         // to happen _after_ xprop completes.
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, Lang.bind(this, function () {
-            // We only need this workaround for Gnome Shell < 3.24.
-            if (Utils.versionCompare(this._shellVersion, '3.24') >= 0)
-                return;
-
             const MAXIMIZED = Meta.MaximizeFlags.BOTH;
             let flags = win.get_maximized();
-            if (flags == MAXIMIZED) {
+            if (this._forceMaxUnmax && flags == MAXIMIZED) {
                 win.unmaximize(MAXIMIZED);
                 win.maximize(MAXIMIZED);
             }
