@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: No Title Bar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-02 17:55-0400\n"
+"POT-Creation-Date: 2017-08-08 02:21-0400\n"
 "PO-Revision-Date: 2017-07-25 03:54-0400\n"
 "Last-Translator: Fran Glais <franglais125@gmail.com>\n"
 "Language-Team: \n"
@@ -40,27 +40,35 @@ msgstr "Après le menu système"
 msgid "Hidden"
 msgstr "Ne pas afficher"
 
-#: Settings.ui.h:8
-msgid "Remove title bars only on the main monitor"
-msgstr "Masquer les barres des fenêtres seulement dans le moniteur principal"
-
 #: Settings.ui.h:7
+msgid "Automatic theme"
+msgstr "Thème automatique"
+
+#: Settings.ui.h:8
+msgid "Theme"
+msgstr "Thème"
+
+#: Settings.ui.h:9
 msgid "Replace App Menu name with Window name"
 msgstr "Utiliser le nom de la fenêtre pour le menu d'application"
 
-#: Settings.ui.h:9
+#: Settings.ui.h:10
+msgid "Remove title bars only on the main monitor"
+msgstr "Masquer les barres des fenêtres seulement dans le moniteur principal"
+
+#: Settings.ui.h:11
 msgid "Basic settings"
 msgstr "Paramètres simples"
 
-#: Settings.ui.h:10
+#: Settings.ui.h:12
 msgid "Maintained by"
 msgstr "Maintenu par"
 
-#: Settings.ui.h:11
+#: Settings.ui.h:13
 msgid "Webpage"
 msgstr "Page web"
 
-#: Settings.ui.h:12
+#: Settings.ui.h:14
 msgid ""
 "<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
 "See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
@@ -71,6 +79,6 @@ msgstr ""
 "\">Licence Générale Publique GNU version 2 ou plus récente</a> pour plus "
 "d'informations.</span>"
 
-#: Settings.ui.h:14
+#: Settings.ui.h:16
 msgid "About"
 msgstr "À propos"
