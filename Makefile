@@ -44,7 +44,7 @@ mergepo: potfile
 ./po/no-title-bar.pot: Settings.ui
 	mkdir -p po
 	intltool-extract --type=gettext/glade Settings.ui
-	xgettext -k_ -kN_ --join-existing -o po/no-title-bar.pot Settings.ui.h
+	xgettext -k -k_ -kN_ -o po/no-title-bar.pot Settings.ui.h
 
 ./po/%.mo: ./po/%.po
 	msgfmt -c $< -o $@

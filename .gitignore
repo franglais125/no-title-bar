@@ -1,3 +1,4 @@
 *.zip
 po/*.mo
 *~
+po/no-title-bar.pot
