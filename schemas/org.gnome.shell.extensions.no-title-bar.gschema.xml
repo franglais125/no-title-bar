@@ -23,6 +23,12 @@
         <description>Controls whether and where buttons of maximized windows appear in the top panel. Possible values are: "before-app-menu" to display buttons before the application name, "after-app-menu" to display buttons after the application name, "within-status-area" to display buttons within the system status area, "after-status-area" to display buttons after the system status area and "hidden" to not show buttons at all.</description>
     </key>
 
+    <key type="s" name="theme">
+      <default>"default"</default>
+      <summary>Theme</summary>
+      <description>The name of the theme to use (must be one of the folders in [extensionPath]/themes).</description>
+    </key>
+
     <key name="change-appmenu" type="b">
       <default>true</default>
         <summary>Use window title to replace the app-menu label.</summary>

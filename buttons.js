@@ -52,13 +52,14 @@ const Buttons = new Lang.Class({
         this._isEnabled = false;
         this._activeCSS = false;
 
-        this._settingsId = this._settings.connect('changed::button-position',
+        this._settingsId = this._settings.connect(
+            'changed::button-position',
             Lang.bind(this, function() {
                 this._disable();
-
                 if (this._settings.get_enum('button-position') !== Position.HIDDEN)
                     this._enable();
-            }));
+            })
+        );
 
         if (this._settings.get_enum('button-position') !== Position.HIDDEN)
             this._enable();
@@ -231,8 +232,10 @@ const Buttons = new Lang.Class({
      * Theming
      */
     _loadTheme: function() {
-        let theme = Gtk.Settings.get_default().gtk_theme_name,
-            cssPath = GLib.build_filenamev([this._extensionPath, 'themes', theme, 'style.css']);
+        let theme = this._settings.get_string('theme');
+        if (!theme) theme = Gtk.Settings.get_default().gtk_theme_name;
+
+        let cssPath = GLib.build_filenamev([this._extensionPath, 'themes', theme, 'style.css']);
 
         if (showLog)
             LOG('Load theme ' + theme);
