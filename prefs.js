@@ -28,13 +28,23 @@ function buildPrefsWidget(){
     settings.bind('only-main-monitor',
         buildable.get_object('only_main_monitor_switch'),
         'active',
-        Gio.SettingsBindFlags.DEFAULT);
+        Gio.SettingsBindFlags.DEFAULT
+    );
 
     // Buttons:
     buildable.get_object('button_position').set_active(settings.get_enum('button-position'));
     buildable.get_object('button_position').connect('changed', Lang.bind (this, function(widget) {
         settings.set_enum('button-position', widget.get_active());
     }));
+    settings.bind('automatic-theme',
+        buildable.get_object('automatic_theme_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
+    settings.bind('automatic-theme',
+                  buildable.get_object('theme_combobox'),
+                  'sensitive',
+                  Gio.SettingsBindFlags.INVERT_BOOLEAN);
 
     let themes_dir = Gio.file_new_for_path(
             GLib.build_filenamev([extensionPath, 'themes'])

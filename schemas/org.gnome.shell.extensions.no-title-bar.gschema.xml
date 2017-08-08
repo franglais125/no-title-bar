@@ -27,6 +27,12 @@
       <default>"default"</default>
       <summary>Theme</summary>
       <description>The name of the theme to use (must be one of the folders in [extensionPath]/themes).</description>
+  </key>
+
+    <key name="automatic-theme" type="b">
+      <default>true</default>
+        <summary>Detect and use Gtk theme.</summary>
+        <description>Try to automatically detect the Gtk theme in use. If tis fails, the default one is used instead.</description>
     </key>
 
     <key name="change-appmenu" type="b">

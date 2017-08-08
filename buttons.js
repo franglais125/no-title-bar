@@ -232,8 +232,12 @@ const Buttons = new Lang.Class({
      * Theming
      */
     _loadTheme: function() {
-        let theme = this._settings.get_string('theme');
-        if (!theme) theme = Gtk.Settings.get_default().gtk_theme_name;
+        let theme;
+        if (this._settings.get_boolean('automatic-theme')) {
+            theme = Gtk.Settings.get_default().gtk_theme_name;
+        } else {
+            theme = this._settings.get_string('theme');
+        }
 
         let cssPath = GLib.build_filenamev([this._extensionPath, 'themes', theme, 'style.css']);
 
