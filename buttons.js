@@ -41,7 +41,7 @@ const DCONF_META_PATH = 'org.gnome.desktop.wm.preferences';
 
 let actors = [], boxes = [];
 
-const Buttons = new Lang.Class({
+var Buttons = new Lang.Class({
     Name: 'NoTitleBar.Buttons',
 
     _init: function(settings) {

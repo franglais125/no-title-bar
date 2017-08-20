@@ -27,7 +27,7 @@ let SHOW_DELAY = 350;
 let SHOW_DURATION = 0.15;
 let HIDE_DURATION = 0.1;
 
-const AppMenu = new Lang.Class({
+var AppMenu = new Lang.Class({
     Name: 'NoTitleBar.AppMenu',
 
     _init: function(settings) {

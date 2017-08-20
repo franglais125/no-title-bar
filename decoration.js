@@ -43,7 +43,7 @@ const WindowState = {
 let appSys = Shell.AppSystem.get_default();
 let workspaces = [];
 
-const Decoration = new Lang.Class({
+var Decoration = new Lang.Class({
     Name: 'NoTitleBar.Decoration',
 
     _init: function(settings) {
