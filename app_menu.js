@@ -11,12 +11,16 @@ const Utils = Me.imports.utils;
 
 let showLog = false;
 function LOG(message) {
-    log("[no-title-bar]: " + message);
+    if (showLog) {
+        log("[no-title-bar]: " + message);
+    }
 }
 
 let showWarning = false;
 function WARN(message) {
-    log("[no-title-bar]: " + message);
+    if (showWarning) {
+        log("[no-title-bar]: " + message);
+    }
 }
 
 let SHOW_DELAY = 350;
@@ -83,8 +87,7 @@ const AppMenu = new Lang.Class({
             let app = Shell.WindowTracker.get_default().get_window_app(win);
             title = app.get_name();
         }
-        if (showLog)
-            LOG('Override title ' + title);
+        LOG('Override title ' + title);
         this._appMenu._label.set_text(title);
         this._tooltip.text = title;
 
@@ -151,7 +154,7 @@ const AppMenu = new Lang.Class({
 
         if (this._showTooltip) {
             this._tooltipDelayCallbackID = Mainloop.timeout_add(SHOW_DELAY, Lang.bind(this, function() {
-                if (showWarning && !this._showTooltip) {
+                if (!this._showTooltip) {
                     WARN('showTooltip is false and delay callback ran.');
                 }
 
@@ -187,8 +190,7 @@ const AppMenu = new Lang.Class({
                 this._tooltip.opacity = 0;
                 this._tooltip.set_position(x, y);
 
-                if (showLog)
-                    LOG('show title tooltip');
+                LOG('show title tooltip');
 
                 Tweener.removeTweens(this._tooltip);
                 Tweener.addTween(this._tooltip, {
@@ -201,8 +203,7 @@ const AppMenu = new Lang.Class({
             }));
         } else if (this._tooltipDelayCallbackID > 0) {
             // If the event ran, then we hide.
-            if (showLog)
-                LOG('hide title tooltip');
+            LOG('hide title tooltip');
 
             this._resetMenuCallback();
 

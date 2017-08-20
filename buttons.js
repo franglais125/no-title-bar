@@ -12,8 +12,6 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 const Utils = Me.imports.utils;
 
-let showLog = false;
-
 const Position = {
     BEFORE_NAME:        0,
     AFTER_NAME:         1,
@@ -22,13 +20,18 @@ const Position = {
     HIDDEN:             4
 }
 
+let showLog = false;
 function LOG(message) {
-    log("[no-title-bar]: " + message);
+    if (showLog) {
+        log("[no-title-bar]: " + message);
+    }
 }
 
 let showWarning = false;
 function WARN(message) {
-    log("[no-title-bar]: " + message);
+    if (showWarning) {
+        log("[no-title-bar]: " + message);
+    }
 }
 
 /**
@@ -86,8 +89,7 @@ const Buttons = new Lang.Class({
         });
 
         let order = new Gio.Settings({schema_id: DCONF_META_PATH}).get_string('button-layout');
-        if (showLog)
-            LOG('Buttons layout : ' + order);
+        LOG('Buttons layout : ' + order);
 
         let orders = order.replace(/ /g, '').split(':');
 
@@ -114,8 +116,7 @@ const Buttons = new Lang.Class({
 
                 if (!callbacks[order[i]]) {
                     // Skip if the button's name is not right...
-                    if (showWarning)
-                        WARN("\'%s\' is not a valid button.".format(order[i]));
+                    WARN("\'%s\' is not a valid button.".format(order[i]));
                     continue;
                 }
 
@@ -189,8 +190,7 @@ const Buttons = new Lang.Class({
     _minimize: function() {
         let win = Utils.getWindow();
         if (!win || win.minimized) {
-            if (showWarning)
-                WARN('impossible to minimize');
+            WARN('impossible to minimize');
             return;
         }
 
@@ -200,8 +200,7 @@ const Buttons = new Lang.Class({
     _maximize: function() {
         let win = Utils.getWindow();
         if (!win) {
-            if (showWarning)
-                WARN('impossible to maximize');
+            WARN('impossible to maximize');
             return;
         }
 
@@ -209,8 +208,7 @@ const Buttons = new Lang.Class({
         if (win.get_maximized() === MAXIMIZED) {
             win.unmaximize(MAXIMIZED);
         } else {
-            if (showWarning)
-                WARN('window shoud already be maximized');
+            WARN('window shoud already be maximized');
             win.maximize(MAXIMIZED);
         }
 
@@ -220,8 +218,7 @@ const Buttons = new Lang.Class({
     _close: function() {
         let win = Utils.getWindow();
         if (!win) {
-            if (showWarning)
-                WARN('impossible to close');
+            WARN('impossible to close');
             return;
         }
 
@@ -241,8 +238,7 @@ const Buttons = new Lang.Class({
 
         let cssPath = GLib.build_filenamev([this._extensionPath, 'themes', theme, 'style.css']);
 
-        if (showLog)
-            LOG('Load theme ' + theme);
+        LOG('Load theme ' + theme);
         if (!GLib.file_test(cssPath, GLib.FileTest.EXISTS)) {
             cssPath = GLib.build_filenamev([this._extensionPath, 'themes/default/style.css']);
         }
@@ -267,8 +263,7 @@ const Buttons = new Lang.Class({
 
     _unloadTheme: function() {
         if (this._activeCSS) {
-            if (showLog)
-                LOG('Unload ' + this._activeCSS);
+            LOG('Unload ' + this._activeCSS);
 
             let cssFile = Gio.file_new_for_path(this._activeCSS);
             St.ThemeContext.get_for_stage(global.stage).get_theme().unload_stylesheet(cssFile);
