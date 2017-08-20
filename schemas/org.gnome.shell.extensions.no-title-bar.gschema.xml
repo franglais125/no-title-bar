@@ -8,6 +8,12 @@
       <value value="4" nick="hidden" />
   </enum>
 
+  <enum id="org.gnome.shell.extensions.no-title-bar.ignoreListType">
+      <value value="0" nick="disabled" />
+      <value value="1" nick="whitelist" />
+      <value value="2" nick="blacklist" />
+  </enum>
+
   <schema id="org.gnome.shell.extensions.no-title-bar"
       path="/org/gnome/shell/extensions/no-title-bar/">
 
@@ -39,6 +45,18 @@
       <default>true</default>
         <summary>Use window title to replace the app-menu label.</summary>
         <description>The app-menu uses the app-name as the label for the button. Use instead the window title of the focused window.</description>
+    </key>
+
+    <key name="ignore-list-type" enum="org.gnome.shell.extensions.no-title-bar.ignoreListType">
+      <default>'disabled'</default>
+        <summary>Choose from disabled, whitelist or blacklist.</summary>
+        <description>Disabled: no filtering applied. Whitelist: remove title bar for applications on this list. Blacklist: remove title bar from all applications except the ones on this list.</description>
+    </key>
+
+    <key type="s" name="ignore-list">
+      <default>""</default>
+      <summary>List of applications in the white/black-list.</summary>
+      <description></description>
     </key>
 
   </schema>

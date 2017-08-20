@@ -4,11 +4,13 @@ const Mainloop = imports.mainloop;
 
 const GLib = imports.gi.GLib;
 const Meta = imports.gi.Meta;
+const Shell = imports.gi.Shell;
 
 const Config = imports.misc.config;
 const Util = imports.misc.util;
 
 const Me = imports.misc.extensionUtils.getCurrentExtension();
+const Prefs = Me.imports.prefs;
 const Utils = Me.imports.utils;
 
 let showLog = false;
@@ -25,6 +27,12 @@ function WARN(message) {
     }
 }
 
+const IgnoreList = {
+    DISABLED:  0,
+    WHITELIST: 1,
+    BLACKLIST: 2,
+}
+
 const WindowState = {
     DEFAULT: 'default',
     HIDE_TITLEBAR: 'hide_titlebar',
@@ -32,6 +40,7 @@ const WindowState = {
     UNKNOWN: 'unknown'
 }
 
+let appSys = Shell.AppSystem.get_default();
 let workspaces = [];
 
 const Decoration = new Lang.Class({
@@ -64,6 +73,21 @@ const Decoration = new Lang.Class({
             })
         );
 
+        this._ignoreListID = this._settings.connect(
+            'changed::ignore-list',
+            Lang.bind(this, function() {
+                this._disable();
+                this._enable();
+            })
+        );
+
+        this._ignoreListTypeID = this._settings.connect(
+            'changed::ignore-list-type',
+            Lang.bind(this, function() {
+                this._disable();
+                this._enable();
+            })
+        );
     },
 
     _enable: function() {
@@ -119,6 +143,8 @@ const Decoration = new Lang.Class({
         this._disable();
         global.screen.disconnect(this._changeMonitorsID);
         this._settings.disconnect(this._onlyMainMonitorID);
+        this._settings.disconnect(this._ignoreListID);
+        this._settings.disconnect(this._ignoreListTypeID);
     },
 
     /**
@@ -283,6 +309,40 @@ const Decoration = new Lang.Class({
         return win._noTitleBarOriginalState = WindowState.DEFAULT;
     },
 
+    _filterBlacklist: function(win) {
+        if (this._settings.get_enum('ignore-list-type') === IgnoreList.DISABLED) {
+            return true;
+        }
+
+        let index_type = -1; // Exclude packages
+        if (this._settings.get_enum('ignore-list-type') === IgnoreList.WHITELIST) {
+            index_type = 0;
+        }
+
+        let ignoreList = this._settings.get_string('ignore-list');
+        ignoreList = Prefs.splitEntries(ignoreList);
+
+        let filterOut = false;
+
+        let appList = Utils.getAppList();
+        appList.forEach(function(appInfo) {
+            let index = ignoreList.indexOf(appInfo.get_name());
+            if (index > 0)
+                index = 0;
+            if (index !== index_type)
+                return;
+
+            let app = appSys.lookup_app(appInfo.get_id());
+            let windows = app.get_windows();
+            windows.forEach(function(iWin) {
+                if (iWin === win)
+                    filterOut = true;
+            });
+        });
+
+        return filterOut;
+    },
+
     /**
      * Tells the window manager to hide the titlebar on maximised windows.
      *
@@ -300,6 +360,11 @@ const Decoration = new Lang.Class({
      */
     _setHideTitlebar: function(win, hide) {
         LOG('_setHideTitlebar: ' + win.get_title() + ': ' + hide);
+
+        // Check if the window is a black/white-list
+        if (!this._filterBlacklist(win) && hide) {
+            return;
+        }
 
         // Make sure we save the state before altering it.
         this._getOriginalState(win);

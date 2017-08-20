@@ -1,4 +1,5 @@
 const Mainloop = imports.mainloop;
+const Gio = imports.gi.Gio;
 const Meta = imports.gi.Meta;
 
 const MAXIMIZED = Meta.MaximizeFlags.BOTH;
@@ -75,4 +76,17 @@ function versionCompare(v1, v2) {
         return 0;
     }
     return (v1parts.length < v2parts.length) ? -1 : 1;
+}
+
+function getAppList() {
+    let apps = Gio.AppInfo.get_all().filter(function(appInfo) {
+        try {
+            let id = appInfo.get_name(); // catch invalid file encodings
+        } catch(e) {
+            return false;
+        }
+        return appInfo.should_show();
+    });
+
+    return apps;
 }

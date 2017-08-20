@@ -7,6 +7,204 @@
   <property name="step_increment">1</property>
 </object>
 
+<object class="GtkListStore" id="ignore_list_store">
+  <columns>
+    <!-- column-name package name -->
+    <column type="gchararray"/>
+  </columns>
+  <data>
+    <row>
+      <col id="0">dummy</col>
+    </row>
+  </data>
+</object>
+
+<object class="GtkBox" id="ignore_list_add_dialog">
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="margin_left">12</property>
+  <property name="margin_right">12</property>
+  <property name="margin_top">12</property>
+  <property name="margin_bottom">12</property>
+  <property name="orientation">vertical</property>
+  <child>
+    <object class="GtkBox" id="ignore_list_add_box">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="spacing">5</property>
+      <child>
+        <object class="GtkComboBoxText" id="add_combobox">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+          <property name="valign">center</property>
+        </object>
+        <packing>
+          <property name="left_attach">1</property>
+          <property name="top_attach">0</property>
+          <property name="height">2</property>
+        </packing>
+      </child>
+    </object>
+    <packing>
+      <property name="expand">False</property>
+      <property name="fill">True</property>
+      <property name="position">0</property>
+    </packing>
+  </child>
+  <child>
+    <object class="GtkSeparator" id="ignore_list_add_separator">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="margin_top">5</property>
+      <property name="margin_bottom">5</property>
+    </object>
+    <packing>
+      <property name="expand">False</property>
+      <property name="fill">False</property>
+      <property name="position">1</property>
+    </packing>
+  </child>
+  <child>
+    <object class="GtkBox" id="ignore_list_add_button_box">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="valign">baseline</property>
+      <property name="vexpand">False</property>
+      <child>
+        <object class="GtkButton" id="ignore_list_add_button_cancel">
+          <property name="label" translatable="yes">Cancel</property>
+          <property name="visible">True</property>
+          <property name="can_focus">True</property>
+          <property name="receives_default">True</property>
+          <property name="halign">start</property>
+          <accelerator key="Escape" signal="clicked"/>
+        </object>
+        <packing>
+          <property name="expand">False</property>
+          <property name="fill">False</property>
+          <property name="position">0</property>
+        </packing>
+      </child>
+      <child>
+        <object class="GtkButton" id="ignore_list_add_button_save">
+          <property name="label" translatable="yes">Save</property>
+          <property name="visible">True</property>
+          <property name="can_focus">True</property>
+          <property name="receives_default">True</property>
+        </object>
+        <packing>
+          <property name="expand">False</property>
+          <property name="fill">True</property>
+          <property name="pack_type">end</property>
+          <property name="position">2</property>
+        </packing>
+      </child>
+    </object>
+    <packing>
+      <property name="expand">False</property>
+      <property name="fill">True</property>
+      <property name="pack_type">end</property>
+      <property name="position">2</property>
+    </packing>
+  </child>
+</object>
+
+<object class="GtkBox" id="ignore_list_edit_dialog">
+  <property name="visible">True</property>
+  <property name="can_focus">False</property>
+  <property name="margin_left">12</property>
+  <property name="margin_right">12</property>
+  <property name="margin_top">12</property>
+  <property name="margin_bottom">12</property>
+  <property name="orientation">vertical</property>
+  <child>
+    <object class="GtkBox" id="ignore_list_edit_box">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="spacing">5</property>
+      <child>
+        <object class="GtkEntry" id="ignore_list_edit_entry">
+          <property name="width_request">350</property>
+          <property name="visible">True</property>
+          <property name="can_focus">True</property>
+          <property name="hexpand">True</property>
+          <property name="secondary_icon_name">edit-clear-symbolic</property>
+          <property name="primary_icon_activatable">False</property>
+          <property name="primary_icon_sensitive">False</property>
+          <property name="secondary_icon_tooltip_text" translatable="yes">Clear entry</property>
+          <property name="placeholder_text" translatable="no">linux-image-amd64</property>
+        </object>
+        <packing>
+          <property name="expand">False</property>
+          <property name="fill">True</property>
+          <property name="position">0</property>
+        </packing>
+      </child>
+    </object>
+    <packing>
+      <property name="expand">False</property>
+      <property name="fill">True</property>
+      <property name="position">0</property>
+    </packing>
+  </child>
+  <child>
+    <object class="GtkSeparator" id="ignore_list_edit_separator">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="margin_top">5</property>
+      <property name="margin_bottom">5</property>
+    </object>
+    <packing>
+      <property name="expand">False</property>
+      <property name="fill">False</property>
+      <property name="position">1</property>
+    </packing>
+  </child>
+  <child>
+    <object class="GtkBox" id="ignore_list_edit_button_box">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="valign">baseline</property>
+      <property name="vexpand">False</property>
+      <child>
+        <object class="GtkButton" id="ignore_list_edit_button_cancel">
+          <property name="label" translatable="yes">Cancel</property>
+          <property name="visible">True</property>
+          <property name="can_focus">True</property>
+          <property name="receives_default">True</property>
+          <property name="halign">start</property>
+          <accelerator key="Escape" signal="clicked"/>
+        </object>
+        <packing>
+          <property name="expand">False</property>
+          <property name="fill">False</property>
+          <property name="position">0</property>
+        </packing>
+      </child>
+      <child>
+        <object class="GtkButton" id="ignore_list_edit_button_save">
+          <property name="label" translatable="yes">Save</property>
+          <property name="visible">True</property>
+          <property name="can_focus">True</property>
+          <property name="receives_default">True</property>
+        </object>
+        <packing>
+          <property name="expand">False</property>
+          <property name="fill">True</property>
+          <property name="pack_type">end</property>
+          <property name="position">2</property>
+        </packing>
+      </child>
+    </object>
+    <packing>
+      <property name="expand">False</property>
+      <property name="fill">True</property>
+      <property name="pack_type">end</property>
+      <property name="position">2</property>
+    </packing>
+  </child>
+</object>
+
 <object class="GtkNotebook" id="prefs_widget">
   <property name="expand">true</property>
 
@@ -259,6 +457,162 @@
   </child>
 
   <child>
+    <object class="GtkBox" id="ignore_list_box">
+      <property name="margin_left">12</property>
+      <property name="margin_right">12</property>
+      <property name="margin_top">12</property>
+      <property name="margin_bottom">12</property>
+      <property name="orientation">vertical</property>
+      <property name="spacing">12</property>
+      <child>
+        <object class="GtkFrame" id="ignore_list_frame">
+          <property name="label_xalign">0</property>
+          <property name="shadow_type">in</property>
+          <child>
+            <object class="GtkGrid" id="ignore_list_grid">
+              <property name="margin_left">12</property>
+              <property name="margin_right">12</property>
+              <property name="margin_top">12</property>
+              <property name="margin_bottom">12</property>
+              <property name="column_spacing">12</property>
+              <child>
+                <object class="GtkLabel" id="ignore_list_label">
+                  <property name="visible">True</property>
+                  <property name="can_focus">False</property>
+                  <property name="hexpand">True</property>
+                  <property name="xalign">0</property>
+                  <property name="label" translatable="yes">List type</property>
+                </object>
+                <packing>
+                  <property name="left_attach">0</property>
+                  <property name="top_attach">0</property>
+                </packing>
+              </child>
+              <child>
+                <object class="GtkComboBoxText" id="ignore_list_type">
+                  <property name="visible">True</property>
+                  <property name="can_focus">False</property>
+                  <property name="valign">center</property>
+                  <items>
+                    <item translatable="yes">Disabled</item>
+                    <item translatable="yes">Whitelist</item>
+                    <item translatable="yes">Blacklist</item>
+                  </items>
+                </object>
+                <packing>
+                  <property name="left_attach">1</property>
+                  <property name="top_attach">0</property>
+                  <property name="height">2</property>
+                </packing>
+              </child>
+            </object>
+          </child>
+        </object>
+      </child>
+      <child>
+        <object class="GtkScrolledWindow" id="ignore_list_scrolledwindow">
+          <property name="visible">True</property>
+          <property name="can_focus">True</property>
+          <property name="shadow_type">in</property>
+          <property name="min_content_width">300</property>
+          <property name="min_content_height">250</property>
+          <child>
+            <object class="GtkTreeView" id="ignore_list_treeview">
+              <property name="visible">True</property>
+              <property name="can_focus">True</property>
+              <property name="model">ignore_list_store</property>
+              <property name="reorderable">True</property>
+              <property name="search_column">0</property>
+              <property name="show_expanders">False</property>
+              <property name="level_indentation">12</property>
+              <property name="tooltip_column">1</property>
+              <child internal-child="selection">
+                <object class="GtkTreeSelection" id="treeview_selection"/>
+              </child>
+            </object>
+          </child>
+        </object>
+        <packing>
+          <property name="expand">True</property>
+          <property name="fill">True</property>
+          <property name="position">1</property>
+        </packing>
+      </child>
+      <child>
+        <object class="GtkToolbar" id="ignore_list_toolbar">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+          <property name="toolbar_style">icons</property>
+          <property name="icon_size">1</property>
+          <child>
+            <object class="GtkToolButton" id="ignore_list_toolbutton_add">
+              <property name="visible">True</property>
+              <property name="can_focus">False</property>
+              <property name="icon_name">list-add</property>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">True</property>
+            </packing>
+          </child>
+          <child>
+            <object class="GtkToolButton" id="ignore_list_toolbutton_remove">
+              <property name="visible">True</property>
+              <property name="can_focus">False</property>
+              <property name="icon_name">list-remove</property>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">True</property>
+            </packing>
+          </child>
+          <child>
+            <object class="GtkToolButton" id="ignore_list_toolbutton_edit">
+              <property name="visible">True</property>
+              <property name="can_focus">False</property>
+              <property name="icon_name">gtk-edit</property>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">True</property>
+            </packing>
+          </child>
+        </object>
+      </child>
+      <child>
+        <object class="GtkLabel" id="ignore_list_description">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+          <property name="hexpand">True</property>
+          <property name="xalign">0</property>
+          <property name="max-width-chars">40</property>
+          <property name="label" translatable="yes">Whitelist: only applications on this list will have the title bar removed.
+Blacklist: all applications, except the ones on the list, will have the title bar removed.</property>
+          <property name="wrap">True</property>
+          <property name="use_markup">True</property>
+          <style>
+            <class name="dim-label"/>
+          </style>
+        </object>
+        <packing>
+          <property name="left_attach">0</property>
+          <property name="top_attach">1</property>
+        </packing>
+      </child>
+    </object>
+  </child>
+
+  <child type="tab">
+    <object class="GtkLabel" id="lists_tab_label">
+      <property name="label" translatable="yes">Lists</property>
+    </object>
+    <packing>
+      <property name="position">1</property>
+      <property name="tab_fill">False</property>
+    </packing>
+  </child>
+
+  <child>
     <object class="GtkBox" id="about">
       <property name="margin_top">12</property>
       <property name="margin_bottom">12</property>
@@ -362,7 +716,7 @@ See the &lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;G
       <property name="label" translatable="yes">About</property>
     </object>
       <packing>
-        <property name="position">1</property>
+        <property name="position">2</property>
         <property name="tab_fill">False</property>
       </packing>
   </child>
