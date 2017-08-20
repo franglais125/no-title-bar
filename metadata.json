@@ -1,7 +1,7 @@
 {
   "uuid": "no-title-bar@franglais125.gmail.com",
   "name": "No Title Bar",
-  "description": "No Title Bar removes the title bar, moves the window title and buttons to the top panel.",
+  "description": "No Title Bar removes the title bar, moves the window title and buttons to the top panel.\n\nThis extension depends on some Xorg utilities. To install them:\n\n\u26ab Debian/Ubuntu: apt install x11-utils\n\u26ab Fedora/RHEL: dnf install xorg-x11-utils\n\u26ab Arch: pacman -S xorg-xprop",
   "url": "https://github.com/franglais125/no-title-bar",
   "shell-version": [
       "3.18",
