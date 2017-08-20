@@ -1,0 +1,128 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-20 13:14+0200\n"
+"PO-Revision-Date: 2017-08-20 13:20+0200\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Jonatan Hatakeyama Zeidler <jonatan_zeidler@gmx.de>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.1\n"
+
+#: Settings.ui.h:1
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: Settings.ui.h:2
+msgid "Save"
+msgstr "Speichern"
+
+#: Settings.ui.h:3
+msgid "Clear entry"
+msgstr "Eintrag entfernen"
+
+#: Settings.ui.h:4
+msgid "Window control buttons"
+msgstr "Fenster-Schaltflächen"
+
+#: Settings.ui.h:5
+msgid "Before app menu"
+msgstr "Vor Anwendungsmenü"
+
+#: Settings.ui.h:6
+msgid "After app menu"
+msgstr "Hinter Anwendungsmenü"
+
+#: Settings.ui.h:7
+msgid "Within status area"
+msgstr "Innerhalb des Statusbereichs"
+
+#: Settings.ui.h:8
+msgid "After status area"
+msgstr "Hinter Statusbereichs"
+
+#: Settings.ui.h:9
+msgid "Hidden"
+msgstr "Versteckt"
+
+#: Settings.ui.h:10
+msgid "Automatic theme"
+msgstr "Automatisches Thema"
+
+#: Settings.ui.h:11
+msgid "Theme"
+msgstr "Thema"
+
+#: Settings.ui.h:12
+msgid "Replace App Menu name with Window name"
+msgstr "Anwendungsmenü durch Fenstername ersetzen"
+
+#: Settings.ui.h:13
+msgid "Remove title bars only on the main monitor"
+msgstr "Titelleisten nur auf dem primären Bildschirm entfernen"
+
+#: Settings.ui.h:14
+msgid "Basic settings"
+msgstr "Grundeinstellungen"
+
+#: Settings.ui.h:15
+msgid "List type"
+msgstr "Listentyp"
+
+#: Settings.ui.h:16
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+#: Settings.ui.h:17
+msgid "Whitelist"
+msgstr "Weiße Liste"
+
+#: Settings.ui.h:18
+msgid "Blacklist"
+msgstr "Schwarze Liste"
+
+#: Settings.ui.h:19
+msgid ""
+"Whitelist: only applications on this list will have the title bar "
+"removed.\n"
+"Blacklist: all applications, except the ones on the list, will have the "
+"title bar removed."
+msgstr ""
+"Weiße Liste: Titelleiste wird nur bei Anwendungen auf dieser Liste "
+"entfernt.\n"
+"Schwarze Liste: Titelleiste wird bei allen Anwendungen entfernt, außer "
+"denen auf dieser Liste."
+
+#: Settings.ui.h:21
+msgid "Lists"
+msgstr "Listen"
+
+#: Settings.ui.h:22
+msgid "Maintained by"
+msgstr "Gewartet durch"
+
+#: Settings.ui.h:23
+msgid "Webpage"
+msgstr "Webseite"
+
+#: Settings.ui.h:24
+msgid ""
+"<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
+"See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+"\">GNU General Public License, version 2 or later</a> for details.</span>"
+msgstr ""
+"<span size=\"small\">Für dieses Programm besteht KEINERLEI GARANTIE.\n"
+"Details unter <a href=\"https://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\">GNU General Public License, version 2 or later</a></span>"
+
+#: Settings.ui.h:26
+msgid "About"
+msgstr "Info"
