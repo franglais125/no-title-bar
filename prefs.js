@@ -33,6 +33,13 @@ function buildPrefsWidget(){
         Gio.SettingsBindFlags.DEFAULT
     );
 
+    // Autohide button
+    settings.bind('hide-buttons',
+        buildable.get_object('hide_buttons_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
+
     // Buttons:
     buildable.get_object('button_position').set_active(settings.get_enum('button-position'));
     buildable.get_object('button_position').connect('changed', Lang.bind (this, function(widget) {

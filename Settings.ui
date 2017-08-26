@@ -268,6 +268,42 @@
                 </object>
               </child>
               <child>
+                <object class="GtkListBoxRow" id="hide_buttons_listboxrow">
+                  <child>
+                    <object class="GtkGrid" id="hide_buttons_grid">
+                      <property name="margin_left">12</property>
+                      <property name="margin_right">12</property>
+                      <property name="margin_top">12</property>
+                      <property name="margin_bottom">12</property>
+                      <property name="column_spacing">12</property>
+                      <child>
+                        <object class="GtkLabel" id="hide_buttons_label">
+                          <property name="hexpand">True</property>
+                          <property name="xalign">0</property>
+                          <property name="label" translatable="yes">Autohide buttons</property>
+                          <property name="wrap">True</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="top_attach">1</property>
+                        </packing>
+                      </child>
+                      <child>
+                        <object class="GtkSwitch" id="hide_buttons_switch">
+                          <property name="halign">end</property>
+                          <property name="valign">center</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">2</property>
+                        </packing>
+                      </child>
+                    </object>
+                  </child>
+                </object>
+              </child>
+              <child>
                 <object class="GtkListBoxRow" id="automatic_theme_listboxrow">
                   <child>
                     <object class="GtkGrid" id="automatic_theme_grid">

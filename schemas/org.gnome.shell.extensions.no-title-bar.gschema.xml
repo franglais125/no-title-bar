@@ -47,6 +47,12 @@
         <description>The app-menu uses the app-name as the label for the button. Use instead the window title of the focused window.</description>
     </key>
 
+    <key name="hide-buttons" type="b">
+      <default>true</default>
+        <summary>Autohide buttons.</summary>
+        <description>Works when buttons are set after app menu.</description>
+    </key>
+
     <key name="ignore-list-type" enum="org.gnome.shell.extensions.no-title-bar.ignoreListType">
       <default>'disabled'</default>
         <summary>Choose from disabled, whitelist or blacklist.</summary>
