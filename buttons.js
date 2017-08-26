@@ -34,6 +34,15 @@ function WARN(message) {
     }
 }
 
+// Functions for changing opacity (to act as auto-hiding)
+function b_hidden(box, event) {
+    box.opacity = 0;
+}
+
+function b_shown(box, event) {
+    box.opacity = 255;
+}
+
 /**
  * Buttons
  */
@@ -88,6 +97,21 @@ var Buttons = new Lang.Class({
             actor.add_actor(boxes[i]);
         });
 
+        // Adding buttons into a "container"
+        let container = new St.BoxLayout({track_hover: true, reactive: true});
+        container.add_actor(actors[1]);
+        // Enable/disable "autohide" function when switch is changed from settings
+        this._settings.connect(
+            'changed::hide-buttons',
+            Lang.bind(this, function() {
+                if (this._settings.get_boolean('hide-buttons')) {
+                    this._enableButtonAutohide(container);
+                } else {
+                    this._disableButtonAutohide(container);
+                }
+            })
+        );
+
         let order = new Gio.Settings({schema_id: DCONF_META_PATH}).get_string('button-layout');
         LOG('Buttons layout : ' + order);
 
@@ -141,20 +165,20 @@ var Buttons = new Lang.Class({
                     case Position.BEFORE_NAME: {
                         let activitiesBox = Main.panel.statusArea.activities.actor.get_parent()
                         let leftBox = activitiesBox.get_parent();
-                        leftBox.insert_child_above(actors[1], activitiesBox);
+                        leftBox.insert_child_above(container, activitiesBox);
                         break;
                     }
                     case Position.AFTER_NAME: {
                         let appMenuBox = Main.panel.statusArea.appMenu.actor.get_parent()
                         let leftBox = appMenuBox.get_parent();
-                        leftBox.insert_child_above(actors[1], appMenuBox);
+                        leftBox.insert_child_above(container, appMenuBox);
                         break;
                     }
                     case Position.WITHIN_STATUS_AREA:
-                        Main.panel._rightBox.insert_child_at_index(actors[1], Main.panel._rightBox.get_children().length - 1);
+                        Main.panel._rightBox.insert_child_at_index(container, Main.panel._rightBox.get_children().length - 1);
                         break;
                     case Position.AFTER_STATUS_AREA:
-                        Main.panel._rightBox.add(actors[1]);
+                        Main.panel._rightBox.add(container);
                         break;
                 }
             }
@@ -172,6 +196,17 @@ var Buttons = new Lang.Class({
 
         actors = [];
         boxes = [];
+    },
+
+    _enableButtonAutohide: function(container) {
+        container.opacity = 0;
+        container.connect('enter-event', b_shown);
+        container.connect('leave-event', b_hidden);
+    },
+
+    _disableButtonAutohide: function(container) {
+        container.opacity = 255;
+        container.connect('leave-event', b_shown);
     },
 
     /**
