@@ -112,6 +112,12 @@ var Buttons = new Lang.Class({
             })
         );
 
+        if (this._settings.get_boolean('hide-buttons')) {
+            this._enableButtonAutohide(container);
+        } else {
+            this._disableButtonAutohide(container);
+        }
+
         let order = new Gio.Settings({schema_id: DCONF_META_PATH}).get_string('button-layout');
         LOG('Buttons layout : ' + order);
 
