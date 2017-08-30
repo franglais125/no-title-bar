@@ -6,6 +6,7 @@ const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Meta = imports.gi.Meta;
 const St = imports.gi.St;
+const Tweener = imports.ui.tweener;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
@@ -35,12 +36,18 @@ function WARN(message) {
 }
 
 // Functions for changing opacity (to act as auto-hiding)
-function b_hidden(box, event) {
-    box.opacity = 0;
+function b_hidden(box) {
+  Tweener.addTween(box,
+                   { opacity: 0,
+                     time: 1/6,
+                     transition: 'linear'});
 }
 
-function b_shown(box, event) {
-    box.opacity = 255;
+function b_shown(box) {
+  Tweener.addTween(box,
+                   { opacity: 255,
+                     time: 1/6,
+                     transition: 'linear'});
 }
 
 /**
