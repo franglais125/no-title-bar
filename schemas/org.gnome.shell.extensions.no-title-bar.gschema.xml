@@ -47,6 +47,18 @@
         <description>The app-menu uses the app-name as the label for the button. Use instead the window title of the focused window.</description>
     </key>
 
+    <key name="title-for-snapped" type="b">
+      <default>true</default>
+        <summary>Customize app-menu for vertically maximized windows.</summary>
+        <description>Customize app-menu in the top bar when windows are snapped to the sides, or maximized vertically.</description>
+    </key>
+
+    <key name="buttons-for-snapped" type="b">
+      <default>true</default>
+        <summary>Show buttons for vertically maximized windows.</summary>
+        <description>Show buttons in the top bar when windows are snapped to the sides, or maximized vertically.</description>
+    </key>
+
     <key name="hide-buttons" type="b">
       <default>true</default>
         <summary>Autohide buttons.</summary>

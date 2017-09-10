@@ -304,19 +304,19 @@
                 </object>
               </child>
               <child>
-                <object class="GtkListBoxRow" id="automatic_theme_listboxrow">
+                <object class="GtkListBoxRow" id="snapped_buttons_listboxrow">
                   <child>
-                    <object class="GtkGrid" id="automatic_theme_grid">
+                    <object class="GtkGrid" id="snapped_buttons_grid">
                       <property name="margin_left">12</property>
                       <property name="margin_right">12</property>
                       <property name="margin_top">12</property>
                       <property name="margin_bottom">12</property>
                       <property name="column_spacing">12</property>
                       <child>
-                        <object class="GtkLabel" id="automatic_theme_label">
+                        <object class="GtkLabel" id="snapped_buttons_label">
                           <property name="hexpand">True</property>
                           <property name="xalign">0</property>
-                          <property name="label" translatable="yes">Automatic theme</property>
+                          <property name="label" translatable="yes">Show buttons for snapped windows</property>
                           <property name="wrap">True</property>
                         </object>
                         <packing>
@@ -325,45 +325,8 @@
                         </packing>
                       </child>
                       <child>
-                        <object class="GtkSwitch" id="automatic_theme_switch">
+                        <object class="GtkSwitch" id="snapped_buttons_switch">
                           <property name="halign">end</property>
-                          <property name="valign">center</property>
-                        </object>
-                        <packing>
-                          <property name="left_attach">1</property>
-                          <property name="top_attach">0</property>
-                          <property name="height">2</property>
-                        </packing>
-                      </child>
-                    </object>
-                  </child>
-                </object>
-              </child>
-              <child>
-                <object class="GtkListBoxRow" id="theme_listboxrow">
-                  <child>
-                    <object class="GtkGrid" id="theme_grid">
-                      <property name="margin_left">12</property>
-                      <property name="margin_right">12</property>
-                      <property name="margin_top">12</property>
-                      <property name="margin_bottom">12</property>
-                      <property name="column_spacing">12</property>
-                      <child>
-                        <object class="GtkLabel" id="theme_label">
-                          <property name="hexpand">True</property>
-                          <property name="xalign">0</property>
-                          <property name="label" translatable="yes">Theme</property>
-                          <property name="wrap">True</property>
-                        </object>
-                        <packing>
-                          <property name="left_attach">0</property>
-                          <property name="top_attach">1</property>
-                        </packing>
-                      </child>
-                      <child>
-                        <object class="GtkComboBoxText" id="theme_combobox">
-                          <property name="visible">True</property>
-                          <property name="can_focus">False</property>
                           <property name="valign">center</property>
                         </object>
                         <packing>
@@ -410,6 +373,42 @@
                       </child>
                       <child>
                         <object class="GtkSwitch" id="appmenu_switch">
+                          <property name="halign">end</property>
+                          <property name="valign">center</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">2</property>
+                        </packing>
+                      </child>
+                    </object>
+                  </child>
+                </object>
+              </child>
+              <child>
+                <object class="GtkListBoxRow" id="snapped_appmenu_listboxrow">
+                  <child>
+                    <object class="GtkGrid" id="snapped_appmenu_grid">
+                      <property name="margin_left">12</property>
+                      <property name="margin_right">12</property>
+                      <property name="margin_top">12</property>
+                      <property name="margin_bottom">12</property>
+                      <property name="column_spacing">12</property>
+                      <child>
+                        <object class="GtkLabel" id="snapped_appmenu_label">
+                          <property name="hexpand">True</property>
+                          <property name="xalign">0</property>
+                          <property name="label" translatable="yes">Replace App Menu name for snapped windows</property>
+                          <property name="wrap">True</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="top_attach">1</property>
+                        </packing>
+                      </child>
+                      <child>
+                        <object class="GtkSwitch" id="snapped_appmenu_switch">
                           <property name="halign">end</property>
                           <property name="valign">center</property>
                         </object>
@@ -488,6 +487,111 @@
     </object>
     <packing>
       <property name="position">0</property>
+      <property name="tab_fill">False</property>
+    </packing>
+  </child>
+
+  <child>
+    <object class="GtkBox" id="theme_box">
+      <property name="margin_left">12</property>
+      <property name="margin_right">12</property>
+      <property name="margin_top">12</property>
+      <property name="margin_bottom">12</property>
+      <property name="orientation">vertical</property>
+      <property name="spacing">12</property>
+      <child>
+        <object class="GtkFrame" id="theme_frame">
+          <property name="label_xalign">0</property>
+          <property name="shadow_type">in</property>
+          <child>
+            <object class="GtkListBox" id="theme_listbox">
+              <property name="selection_mode">none</property>
+              <child>
+                <object class="GtkListBoxRow" id="automatic_theme_listboxrow">
+                  <child>
+                    <object class="GtkGrid" id="automatic_theme_grid">
+                      <property name="margin_left">12</property>
+                      <property name="margin_right">12</property>
+                      <property name="margin_top">12</property>
+                      <property name="margin_bottom">12</property>
+                      <property name="column_spacing">12</property>
+                      <child>
+                        <object class="GtkLabel" id="automatic_theme_label">
+                          <property name="hexpand">True</property>
+                          <property name="xalign">0</property>
+                          <property name="label" translatable="yes">Automatic theme</property>
+                          <property name="wrap">True</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="top_attach">1</property>
+                        </packing>
+                      </child>
+                      <child>
+                        <object class="GtkSwitch" id="automatic_theme_switch">
+                          <property name="halign">end</property>
+                          <property name="valign">center</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">2</property>
+                        </packing>
+                      </child>
+                    </object>
+                  </child>
+                </object>
+              </child>
+              <child>
+                <object class="GtkListBoxRow" id="theme_listboxrow">
+                  <child>
+                    <object class="GtkGrid" id="theme_grid">
+                      <property name="margin_left">12</property>
+                      <property name="margin_right">12</property>
+                      <property name="margin_top">12</property>
+                      <property name="margin_bottom">12</property>
+                      <property name="column_spacing">12</property>
+                      <child>
+                        <object class="GtkLabel" id="theme_label">
+                          <property name="hexpand">True</property>
+                          <property name="xalign">0</property>
+                          <property name="label" translatable="yes">Theme</property>
+                          <property name="wrap">True</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="top_attach">1</property>
+                        </packing>
+                      </child>
+                      <child>
+                        <object class="GtkComboBoxText" id="theme_combobox">
+                          <property name="visible">True</property>
+                          <property name="can_focus">False</property>
+                          <property name="valign">center</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">2</property>
+                        </packing>
+                      </child>
+                    </object>
+                  </child>
+                </object>
+              </child>
+            </object>
+          </child>
+        </object>
+      </child>
+    </object>
+  </child>
+
+  <child type="tab">
+    <object class="GtkLabel" id="theme_tab_label">
+      <property name="label" translatable="yes">Theme</property>
+    </object>
+    <packing>
+      <property name="position">1</property>
       <property name="tab_fill">False</property>
     </packing>
   </child>
@@ -643,7 +747,7 @@ Blacklist: all applications, except the ones on the list, will have the title ba
       <property name="label" translatable="yes">Lists</property>
     </object>
     <packing>
-      <property name="position">1</property>
+      <property name="position">2</property>
       <property name="tab_fill">False</property>
     </packing>
   </child>
@@ -752,7 +856,7 @@ See the &lt;a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"&gt;G
       <property name="label" translatable="yes">About</property>
     </object>
       <packing>
-        <property name="position">2</property>
+        <property name="position">3</property>
         <property name="tab_fill">False</property>
       </packing>
   </child>

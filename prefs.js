@@ -40,11 +40,37 @@ function buildPrefsWidget(){
         Gio.SettingsBindFlags.DEFAULT
     );
 
+    settings.bind('buttons-for-snapped',
+        buildable.get_object('snapped_buttons_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
+
     // Buttons:
     buildable.get_object('button_position').set_active(settings.get_enum('button-position'));
     buildable.get_object('button_position').connect('changed', Lang.bind (this, function(widget) {
         settings.set_enum('button-position', widget.get_active());
     }));
+
+    // App menu:
+    settings.bind('change-appmenu',
+        buildable.get_object('appmenu_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
+    settings.bind('title-for-snapped',
+        buildable.get_object('snapped_appmenu_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
+    settings.bind('change-appmenu',
+                  buildable.get_object('snapped_appmenu_switch'),
+                  'sensitive',
+                  Gio.SettingsBindFlags.DEFAULT);
+
+    /*
+     * Theme tab:
+     * */
     settings.bind('automatic-theme',
         buildable.get_object('automatic_theme_switch'),
         'active',
@@ -83,12 +109,6 @@ function buildPrefsWidget(){
             }
     }));
     buildable.get_object('theme_combobox').set_active_id(settings.get_string('theme') || 'default');
-
-    // App menu:
-    settings.bind('change-appmenu',
-        buildable.get_object('appmenu_switch'),
-        'active',
-        Gio.SettingsBindFlags.DEFAULT);
 
     /*
      * Ignore list tab:

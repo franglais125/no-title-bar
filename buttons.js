@@ -137,9 +137,9 @@ var Buttons = new Lang.Class({
         orders[1] = orders[1].split(',');
 
         const callbacks = {
-            minimize : this._minimize,
-            maximize : this._maximize,
-            close    : this._close
+            minimize : Lang.bind(this, this._minimize),
+            maximize : Lang.bind(this, this._maximize),
+            close    : Lang.bind(this, this._close)
         };
 
         for (let bi = 0; bi < boxes.length; ++bi) {
@@ -252,7 +252,8 @@ var Buttons = new Lang.Class({
     },
 
     _minimize: function() {
-        let win = Utils.getWindow();
+        let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
+        let win = Utils.getWindow(includeSnapped);
         if (!win || win.minimized) {
             WARN('impossible to minimize');
             return;
@@ -262,7 +263,8 @@ var Buttons = new Lang.Class({
     },
 
     _maximize: function() {
-        let win = Utils.getWindow();
+        let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
+        let win = Utils.getWindow(includeSnapped);
         if (!win) {
             WARN('impossible to maximize');
             return;
@@ -280,7 +282,8 @@ var Buttons = new Lang.Class({
     },
 
     _close: function() {
-        let win = Utils.getWindow();
+        let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
+        let win = Utils.getWindow(includeSnapped);
         if (!win) {
             WARN('impossible to close');
             return;
@@ -343,7 +346,8 @@ var Buttons = new Lang.Class({
         let visible = !Main.overview.visible;
         if (visible) {
             visible = false;
-            let win = Utils.getWindow();
+            let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
+            let win = Utils.getWindow(includeSnapped);
             if (win) {
                 visible = win.decorated;
                 // If still visible, check if on primary monitor

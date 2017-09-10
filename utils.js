@@ -3,8 +3,9 @@ const Gio = imports.gi.Gio;
 const Meta = imports.gi.Meta;
 
 const MAXIMIZED = Meta.MaximizeFlags.BOTH;
+const VERTICAL = Meta.MaximizeFlags.VERTICAL;
 
-function getWindow() {
+function getWindow(includeSnapped) {
     // get all window in stacking order.
     let windows = global.display.sort_windows_by_stacking(
         global.screen.get_active_workspace().list_windows().filter(function (w) {
@@ -15,7 +16,16 @@ function getWindow() {
     let i = windows.length;
     while (i--) {
         let window = windows[i];
-        if (window.get_maximized() === MAXIMIZED && !window.minimized) {
+        if (window.minimized) {
+            continue;
+        }
+
+        let max_state = window.get_maximized();
+        if (max_state === MAXIMIZED) {
+            return window;
+        }
+
+        if (max_state === VERTICAL && includeSnapped) {
             return window;
         }
     }
