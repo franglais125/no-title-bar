@@ -105,24 +105,24 @@ var Buttons = new Lang.Class({
         });
 
         // Adding buttons into a "container"
-        let container = new St.BoxLayout({track_hover: true, reactive: true});
-        container.add_actor(actors[1]);
+        this._container = new St.BoxLayout({track_hover: true, reactive: true});
+        this._container.add_actor(actors[1]);
         // Enable/disable "autohide" function when switch is changed from settings
         this._settings.connect(
             'changed::hide-buttons',
             Lang.bind(this, function() {
                 if (this._settings.get_boolean('hide-buttons')) {
-                    this._enableButtonAutohide(container);
+                    this._enableButtonAutohide();
                 } else {
-                    this._disableButtonAutohide(container);
+                    this._disableButtonAutohide();
                 }
             })
         );
 
         if (this._settings.get_boolean('hide-buttons')) {
-            this._enableButtonAutohide(container);
+            this._enableButtonAutohide();
         } else {
-            this._disableButtonAutohide(container);
+            this._disableButtonAutohide();
         }
 
         let order = new Gio.Settings({schema_id: DCONF_META_PATH}).get_string('button-layout');
@@ -178,20 +178,20 @@ var Buttons = new Lang.Class({
                     case Position.BEFORE_NAME: {
                         let activitiesBox = Main.panel.statusArea.activities.actor.get_parent()
                         let leftBox = activitiesBox.get_parent();
-                        leftBox.insert_child_above(container, activitiesBox);
+                        leftBox.insert_child_above(this._container, activitiesBox);
                         break;
                     }
                     case Position.AFTER_NAME: {
                         let appMenuBox = Main.panel.statusArea.appMenu.actor.get_parent()
                         let leftBox = appMenuBox.get_parent();
-                        leftBox.insert_child_above(container, appMenuBox);
+                        leftBox.insert_child_above(this._container, appMenuBox);
                         break;
                     }
                     case Position.WITHIN_STATUS_AREA:
-                        Main.panel._rightBox.insert_child_at_index(container, Main.panel._rightBox.get_children().length - 1);
+                        Main.panel._rightBox.insert_child_at_index(this._container, Main.panel._rightBox.get_children().length - 1);
                         break;
                     case Position.AFTER_STATUS_AREA:
-                        Main.panel._rightBox.add(container);
+                        Main.panel._rightBox.add(this._container);
                         break;
                 }
             }
@@ -209,17 +209,33 @@ var Buttons = new Lang.Class({
 
         actors = [];
         boxes = [];
+
+        if (this._container) {
+            this._disableButtonAutohide();
+            this._container.destroy();
+        }
     },
 
-    _enableButtonAutohide: function(container) {
-        container.opacity = 0;
-        container.connect('enter-event', b_shown);
-        container.connect('leave-event', b_hidden);
+    _enableButtonAutohide: function() {
+        this._disableButtonAutohide();
+
+        this._container.opacity = 0;
+
+        this._containerEnterId = this._container.connect('enter-event', b_shown);
+        this._containerLeaveId = this._container.connect('leave-event', b_hidden);
     },
 
-    _disableButtonAutohide: function(container) {
-        container.opacity = 255;
-        container.connect('leave-event', b_shown);
+    _disableButtonAutohide: function() {
+        this._container.opacity = 255;
+
+        if (this._containerEnterId) {
+            this._container.disconnect(this._containerEnterId);
+            this._containerEnterId = 0;
+        }
+        if (this._containerLeaveId) {
+            this._container.disconnect(this._containerLeaveId);
+            this._containerLeaveId = 0;
+        }
     },
 
     /**
