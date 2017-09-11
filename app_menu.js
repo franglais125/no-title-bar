@@ -45,6 +45,7 @@ var AppMenu = new Lang.Class({
         // Tooltip
         this._tooltip = null;
         this._showTooltip = false;
+        this._tooltipIsShown = false;
 
         this._tooltipDelayCallbackID = 0;
         this._menuCallbackID = 0;
@@ -171,14 +172,19 @@ var AppMenu = new Lang.Class({
                     return false;
                 }
 
-                Main.uiGroup.add_actor(this._tooltip);
+                if (!this._tooltipIsShown) {
+                    Main.uiGroup.add_actor(this._tooltip);
+                    this._tooltipIsShown = true;
+                }
 
                 this._resetMenuCallback();
                 this._menuCallbackID = this._appMenu.menu.connect('open-state-changed', function(menu, open) {
-                    if (open) {
+                    if (open && this._tooltipIsShown) {
                         Main.uiGroup.remove_actor(this._tooltip);
-                    } else {
+                        this._tooltipIsShown = false;
+                    } else if (!this._tooltipIsShown) {
                         Main.uiGroup.add_actor(this._tooltip);
+                        this._tooltipIsShown = true;
                     }
                 });
 
@@ -214,7 +220,10 @@ var AppMenu = new Lang.Class({
                 time: HIDE_DURATION,
                 transition: 'easeOutQuad',
                 onComplete: Lang.bind(this, function() {
-                    Main.uiGroup.remove_actor(this._tooltip);
+                    if (this._tooltipIsShown) {
+                        Main.uiGroup.remove_actor(this._tooltip);
+                        this._tooltipIsShown = false;
+                    }
                 })
             });
 
