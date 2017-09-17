@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-20 13:14+0200\n"
-"PO-Revision-Date: 2017-08-20 13:20+0200\n"
+"POT-Creation-Date: 2017-09-17 09:51+0200\n"
+"PO-Revision-Date: 2017-09-17 10:04+0200\n"
+"Last-Translator: Jonatan Hatakeyama Zeidler <jonatan_zeidler@gmx.de>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: Jonatan Hatakeyama Zeidler <jonatan_zeidler@gmx.de>\n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.0.1\n"
 
 #: Settings.ui.h:1
@@ -54,75 +54,86 @@ msgid "Hidden"
 msgstr "Versteckt"
 
 #: Settings.ui.h:10
-msgid "Automatic theme"
-msgstr "Automatisches Thema"
+msgid "Autohide buttons"
+msgstr "Schaltflächen automatisch ausblenden"
 
 #: Settings.ui.h:11
-msgid "Theme"
-msgstr "Thema"
+msgid "Show buttons for snapped windows"
+msgstr "Schaltflächen bei eingerasteten Fenstern anzeigen"
 
 #: Settings.ui.h:12
 msgid "Replace App Menu name with Window name"
 msgstr "Anwendungsmenü durch Fenstername ersetzen"
 
 #: Settings.ui.h:13
+msgid "Replace App Menu name for snapped windows"
+msgstr "Anwendungsmenü bei eingerasteten Fenstern ersetzen"
+
+#: Settings.ui.h:14
 msgid "Remove title bars only on the main monitor"
 msgstr "Titelleisten nur auf dem primären Bildschirm entfernen"
 
-#: Settings.ui.h:14
+#: Settings.ui.h:15
 msgid "Basic settings"
 msgstr "Grundeinstellungen"
 
-#: Settings.ui.h:15
+#: Settings.ui.h:16
+msgid "Automatic theme"
+msgstr "Automatisches Thema"
+
+#: Settings.ui.h:17
+msgid "Theme"
+msgstr "Thema"
+
+#: Settings.ui.h:18
 msgid "List type"
 msgstr "Listentyp"
 
-#: Settings.ui.h:16
+#: Settings.ui.h:19
 msgid "Disabled"
 msgstr "Deaktiviert"
 
-#: Settings.ui.h:17
+#: Settings.ui.h:20
 msgid "Whitelist"
 msgstr "Weiße Liste"
 
-#: Settings.ui.h:18
+#: Settings.ui.h:21
 msgid "Blacklist"
 msgstr "Schwarze Liste"
 
-#: Settings.ui.h:19
+#: Settings.ui.h:22
 msgid ""
-"Whitelist: only applications on this list will have the title bar "
-"removed.\n"
+"Whitelist: only applications on this list will have the title bar removed.\n"
 "Blacklist: all applications, except the ones on the list, will have the "
 "title bar removed."
 msgstr ""
 "Weiße Liste: Titelleiste wird nur bei Anwendungen auf dieser Liste "
 "entfernt.\n"
-"Schwarze Liste: Titelleiste wird bei allen Anwendungen entfernt, außer "
-"denen auf dieser Liste."
+"Schwarze Liste: Titelleiste wird bei allen Anwendungen entfernt, außer denen "
+"auf dieser Liste."
 
-#: Settings.ui.h:21
+#: Settings.ui.h:24
 msgid "Lists"
 msgstr "Listen"
 
-#: Settings.ui.h:22
+#: Settings.ui.h:25
 msgid "Maintained by"
 msgstr "Gewartet durch"
 
-#: Settings.ui.h:23
+#: Settings.ui.h:26
 msgid "Webpage"
 msgstr "Webseite"
 
-#: Settings.ui.h:24
+#: Settings.ui.h:27
 msgid ""
 "<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
 "See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 "\">GNU General Public License, version 2 or later</a> for details.</span>"
 msgstr ""
 "<span size=\"small\">Für dieses Programm besteht KEINERLEI GARANTIE.\n"
-"Details unter <a href=\"https://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\">GNU General Public License, version 2 or later</a></span>"
+"Details unter <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0."
+"html\">GNU General Public License, Version 2 oder später</a></span>"
 
-#: Settings.ui.h:26
+#: Settings.ui.h:29
 msgid "About"
 msgstr "Info"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: No Title Bar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 02:21-0400\n"
+"POT-Creation-Date: 2017-09-17 09:50+0200\n"
 "PO-Revision-Date: 2017-07-25 03:54-0400\n"
 "Last-Translator: Fran Glais <franglais125@gmail.com>\n"
 "Language-Team: \n"
@@ -17,58 +17,110 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: Settings.ui.h:1
+msgid "Cancel"
+msgstr ""
+
+#: Settings.ui.h:2
+msgid "Save"
+msgstr ""
+
+#: Settings.ui.h:3
+msgid "Clear entry"
+msgstr ""
+
+#: Settings.ui.h:4
 msgid "Window control buttons"
 msgstr "Botones de control de las ventanas"
 
-#: Settings.ui.h:2
+#: Settings.ui.h:5
 msgid "Before app menu"
 msgstr "Antes del menú de aplicación"
 
-#: Settings.ui.h:3
+#: Settings.ui.h:6
 msgid "After app menu"
 msgstr "Después del menú de aplicación"
 
-#: Settings.ui.h:4
+#: Settings.ui.h:7
 msgid "Within status area"
 msgstr "Dentro del área de estado"
 
-#: Settings.ui.h:5
+#: Settings.ui.h:8
 msgid "After status area"
 msgstr "Después del área de estado"
 
-#: Settings.ui.h:6
+#: Settings.ui.h:9
 msgid "Hidden"
 msgstr "No mostrar"
 
-#: Settings.ui.h:7
-msgid "Automatic theme"
-msgstr "Tema automático"
+#: Settings.ui.h:10
+msgid "Autohide buttons"
+msgstr ""
 
-#: Settings.ui.h:8
-msgid "Theme"
-msgstr "Tema"
+#: Settings.ui.h:11
+msgid "Show buttons for snapped windows"
+msgstr ""
 
-#: Settings.ui.h:9
+#: Settings.ui.h:12
 msgid "Replace App Menu name with Window name"
 msgstr "Utilizar el título de la ventana para el menú de la aplicación"
 
-#: Settings.ui.h:10
+#: Settings.ui.h:13
+#, fuzzy
+msgid "Replace App Menu name for snapped windows"
+msgstr "Utilizar el título de la ventana para el menú de la aplicación"
+
+#: Settings.ui.h:14
 msgid "Remove title bars only on the main monitor"
 msgstr "Quitar barra de título sólo en el monitor principal"
 
-#: Settings.ui.h:11
+#: Settings.ui.h:15
 msgid "Basic settings"
 msgstr "Ajustes básicos"
 
-#: Settings.ui.h:12
+#: Settings.ui.h:16
+msgid "Automatic theme"
+msgstr "Tema automático"
+
+#: Settings.ui.h:17
+msgid "Theme"
+msgstr "Tema"
+
+#: Settings.ui.h:18
+msgid "List type"
+msgstr ""
+
+#: Settings.ui.h:19
+msgid "Disabled"
+msgstr ""
+
+#: Settings.ui.h:20
+msgid "Whitelist"
+msgstr ""
+
+#: Settings.ui.h:21
+msgid "Blacklist"
+msgstr ""
+
+#: Settings.ui.h:22
+msgid ""
+"Whitelist: only applications on this list will have the title bar removed.\n"
+"Blacklist: all applications, except the ones on the list, will have the "
+"title bar removed."
+msgstr ""
+
+#: Settings.ui.h:24
+msgid "Lists"
+msgstr ""
+
+#: Settings.ui.h:25
 msgid "Maintained by"
 msgstr "Mantenido por"
 
-#: Settings.ui.h:13
+#: Settings.ui.h:26
 msgid "Webpage"
 msgstr "Sitio web"
 
-#: Settings.ui.h:14
+#: Settings.ui.h:27
 msgid ""
 "<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
 "See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
@@ -79,6 +131,6 @@ msgstr ""
 "\">Licencia Pública General de GNU, versión 2 o posterior</a> para obtener "
 "más detalles.</span>"
 
-#: Settings.ui.h:16
+#: Settings.ui.h:29
 msgid "About"
 msgstr "Acerca de"
