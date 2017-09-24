@@ -1,3 +1,4 @@
+const Clutter = imports.gi.Clutter;
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
 const Gtk = imports.gi.Gtk;
@@ -370,6 +371,57 @@ var Buttons = new Lang.Class({
 
         return false;
     },
+    _enableDragOnPanel: function() {
+        this._originalFunction = Main.panel._onButtonPress;
+
+        Main.panel._onButtonPress = function(actor, event) {
+            if (Main.modalCount > 0)
+                return Clutter.EVENT_PROPAGATE;
+
+            if (event.get_source() != actor)
+                return Clutter.EVENT_PROPAGATE;
+
+            let button = event.get_button();
+            if (button != 1)
+                return Clutter.EVENT_PROPAGATE;
+
+            let focusWindow = Utils.getWindow(true);
+            if (!focusWindow)
+                return Clutter.EVENT_PROPAGATE;
+
+            let dragWindow = focusWindow.is_attached_dialog() ? focusWindow.get_transient_for()
+                                                              : focusWindow;
+            if (!dragWindow)
+                return Clutter.EVENT_PROPAGATE;
+
+            let rect = dragWindow.get_frame_rect();
+            let [stageX, stageY] = event.get_coords();
+
+            let allowDrag = dragWindow.maximized_vertically &&
+                            stageX > rect.x && stageX < rect.x + rect.width;
+
+            if (!allowDrag)
+                return Clutter.EVENT_PROPAGATE;
+
+            global.display.begin_grab_op(global.screen,
+                                         dragWindow,
+                                         Meta.GrabOp.MOVING,
+                                         false, /* pointer grab */
+                                         true, /* frame action */
+                                         button,
+                                         event.get_state(),
+                                         event.get_time(),
+                                         stageX, stageY);
+
+            return Clutter.EVENT_STOP;
+        };
+
+        Main.panel.actor.connect('button-press-event', Lang.bind(Main.panel, Main.panel._onButtonPress));
+    },
+    _disableDragOnPanel: function() {
+        Main.panel._onButtonPress = this._originalFunction;
+        Main.panel.actor.connect('button-press-event', Lang.bind(Main.panel, Main.panel._onButtonPress));
+    },
 
     _enable: function() {
         this._loadTheme();
@@ -389,6 +441,8 @@ var Buttons = new Lang.Class({
         this._themeCallbackID = Gtk.Settings.get_default().connect('notify::gtk-theme-name', Lang.bind(this, this._loadTheme));
 
         this._globalCallBackID = global.screen.connect('restacked', Lang.bind(this, this._updateVisibility));
+
+        this._enableDragOnPanel();
 
         this._isEnabled = true;
     },
@@ -417,6 +471,8 @@ var Buttons = new Lang.Class({
 
         this._destroyButtons();
         this._unloadTheme();
+
+        this._disableDragOnPanel();
 
         this._isEnabled = false;
     },
