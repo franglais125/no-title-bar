@@ -1,0 +1,8 @@
+.tiled-right .titlebar.default-decoration {
+  margin: -200px;
+  opacity: 0;
+}
+.tiled-left .titlebar.default-decoration {
+  margin: -200px;
+  opacity: 0;
+}

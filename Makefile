@@ -1,7 +1,7 @@
 # Basic Makefile
 
 UUID = no-title-bar@franglais125.gmail.com
-BASE_MODULES = app_menu.js convenience.js extension.js prefs.js buttons.js decoration.js metadata.json Settings.ui utils.js
+BASE_MODULES = app_menu.js convenience.js extension.js prefs.js buttons.js decoration.js metadata.json Settings.ui stylesheet-tiled.css stylesheet.css utils.js
 INSTALLNAME = no-title-bar@franglais125.gmail.com
 MSGSRC = $(wildcard po/*.po)
 ifeq ($(strip $(DESTDIR)),)
