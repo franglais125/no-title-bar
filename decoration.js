@@ -95,6 +95,11 @@ var Decoration = new Lang.Class({
         this._changeWorkspaceID = global.screen.connect('notify::n-workspaces', Lang.bind(this, this._onChangeNWorkspaces));
         this._windowEnteredID   = global.screen.connect('window-entered-monitor', Lang.bind(this, this._windowEnteredMonitor));
 
+
+        // CSS style for Wayland decorations
+        this._userStylesPath  = GLib.get_user_config_dir() + '/gtk-3.0/gtk.css';
+        Mainloop.idle_add(Lang.bind(this, this._addUserStyles));
+
         /**
          * Go through already-maximised windows & undecorate.
          * This needs a delay as the window list is not yet loaded
@@ -137,6 +142,9 @@ var Decoration = new Lang.Class({
 
             delete win._noTitleBarOriginalState;
         }));
+
+        // Remove CSS Styles
+        this._removeUserStyles();
     },
 
     destroy: function() {
@@ -500,6 +508,41 @@ var Decoration = new Lang.Class({
 
         return false;
     },
+
+    /* CSS styles, for Wayland decorations
+     */
+
+    _updateUserStyles: function () {
+        let styleContent = '';
+
+        if (GLib.file_test(this._userStylesPath, GLib.FileTest.EXISTS)) {
+            let fileContent = GLib.file_get_contents(this._userStylesPath);
+
+            if (fileContent[0] == true) {
+                styleContent = fileContent[1].toString();
+                styleContent = styleContent.replace(/@import.*no-title-bar@franglais125\.gmail\.com.*css['"]\);\n/g, '');
+            }
+        }
+
+        return styleContent;
+    },
+
+    _addUserStyles: function () {
+        let styleContent = this._updateUserStyles();
+        let styleFilePath = Me.path + '/stylesheet.css';
+        let styleImport = "@import url('" + styleFilePath + "');\n";
+
+        styleFilePath = Me.path + '/stylesheet-tiled.css';
+        styleImport += "@import url('" + styleFilePath + "');\n";
+
+        GLib.file_set_contents(this._userStylesPath, styleImport + styleContent);
+    },
+
+    _removeUserStyles: function () {
+        let styleContent = this._updateUserStyles();
+        GLib.file_set_contents(this._userStylesPath, styleContent);
+    },
+
 
     /**
      * Utilities
