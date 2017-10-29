@@ -22,20 +22,6 @@ const Position = {
     HIDDEN:             4
 }
 
-let showLog = false;
-function LOG(message) {
-    if (showLog) {
-        log("[no-title-bar]: " + message);
-    }
-}
-
-let showWarning = false;
-function WARN(message) {
-    if (showWarning) {
-        log("[no-title-bar]: " + message);
-    }
-}
-
 // Functions for changing opacity (to act as auto-hiding)
 function b_hidden(box) {
   Tweener.addTween(box,
@@ -127,8 +113,6 @@ var Buttons = new Lang.Class({
         }
 
         let order = new Gio.Settings({schema_id: DCONF_META_PATH}).get_string('button-layout');
-        LOG('Buttons layout : ' + order);
-
         let orders = order.replace(/ /g, '').split(':');
 
         orders[0] = orders[0].split(',');
@@ -154,7 +138,6 @@ var Buttons = new Lang.Class({
 
                 if (!callbacks[order[i]]) {
                     // Skip if the button's name is not right...
-                    WARN("\'%s\' is not a valid button.".format(order[i]));
                     continue;
                 }
 
@@ -256,7 +239,6 @@ var Buttons = new Lang.Class({
         let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
         let win = Utils.getWindow(includeSnapped);
         if (!win || win.minimized) {
-            WARN('impossible to minimize');
             return;
         }
 
@@ -267,7 +249,6 @@ var Buttons = new Lang.Class({
         let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
         let win = Utils.getWindow(includeSnapped);
         if (!win) {
-            WARN('impossible to maximize');
             return;
         }
 
@@ -275,7 +256,6 @@ var Buttons = new Lang.Class({
         if (win.get_maximized() === MAXIMIZED) {
             win.unmaximize(MAXIMIZED);
         } else {
-            WARN('window shoud already be maximized');
             win.maximize(MAXIMIZED);
         }
 
@@ -286,7 +266,6 @@ var Buttons = new Lang.Class({
         let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
         let win = Utils.getWindow(includeSnapped);
         if (!win) {
-            WARN('impossible to close');
             return;
         }
 
@@ -306,7 +285,6 @@ var Buttons = new Lang.Class({
 
         let cssPath = GLib.build_filenamev([this._extensionPath, 'themes', theme, 'style.css']);
 
-        LOG('Load theme ' + theme);
         if (!GLib.file_test(cssPath, GLib.FileTest.EXISTS)) {
             cssPath = GLib.build_filenamev([this._extensionPath, 'themes/default/style.css']);
         }
@@ -331,8 +309,6 @@ var Buttons = new Lang.Class({
 
     _unloadTheme: function() {
         if (this._activeCSS) {
-            LOG('Unload ' + this._activeCSS);
-
             let cssFile = Gio.file_new_for_path(this._activeCSS);
             St.ThemeContext.get_for_stage(global.stage).get_theme().unload_stylesheet(cssFile);
             this._activeCSS = false;
