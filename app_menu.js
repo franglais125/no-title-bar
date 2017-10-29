@@ -243,6 +243,8 @@ var AppMenu = new Lang.Class({
         this._wmCallbackIDs = this._wmCallbackIDs.concat(Utils.onSizeChange(Lang.bind(this, this._updateAppMenu)));
 
         this._focusCallbackID = global.display.connect('notify::focus-window', Lang.bind(this, this._onFocusChange));
+        this._onFocusChange();
+
         this._tooltipCallbackID = this._appMenu.actor.connect('notify::hover',
             Lang.bind(this, this._onAppMenuHover));
         this._globalCallBackID = global.screen.connect('restacked',
