@@ -188,9 +188,9 @@ var AppMenu = new Lang.Class({
                     }
                 });
 
-                [px, py] = Main.panel.actor.get_transformed_position();
-                [bx, by] = label.get_transformed_position();
-                [w, h] = label.get_transformed_size();
+                let [px, py] = Main.panel.actor.get_transformed_position();
+                let [bx, by] = label.get_transformed_position();
+                let [w, h] = label.get_transformed_size();
 
                 let y = py + Main.panel.actor.get_height() + 3;
                 let x = bx - Math.round((this._tooltip.get_width() - w)/2);
