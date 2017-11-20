@@ -160,6 +160,10 @@ var AppMenu = new Lang.Class({
 
                 this._resetMenuCallback();
                 this._menuCallbackID = this._appMenu.menu.connect('open-state-changed', function(menu, open) {
+                    if (!this._tooltip) {
+                        return;
+                    }
+
                     if (open && this._tooltipIsShown) {
                         Main.uiGroup.remove_actor(this._tooltip);
                         this._tooltipIsShown = false;
