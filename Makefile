@@ -12,17 +12,6 @@ else
 	RMTMP = rm -rf ./_build/tmp
 endif
 
-# The command line passed variable VERSION is used to set the version string
-# in the metadata and in the generated zip-file. If no VERSION is passed, the
-# current commit SHA1 is used as version number in the metadata while the
-# generated zip file has no string attached.
-ifdef VERSION
-	VSTRING = _v$(VERSION)
-else
-	VERSION = $(shell git rev-parse HEAD)
-	VSTRING =
-endif
-
 all: extension
 
 clean:
@@ -60,8 +49,8 @@ install-local: _build
 
 zip-file: _build
 	cd _build ; \
-	zip -qr "$(UUID)$(VSTRING).zip" .
-	mv _build/$(UUID)$(VSTRING).zip ./
+	zip -qr "$(UUID).zip" .
+	mv _build/$(UUID).zip ./
 	-rm -fR _build
 
 _build: all
