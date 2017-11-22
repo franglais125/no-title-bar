@@ -395,6 +395,10 @@ var Buttons = new Lang.Class({
         Main.panel.actor.connect('button-press-event', Lang.bind(Main.panel, Main.panel._onButtonPress));
     },
     _disableDragOnPanel: function() {
+        if (!this._originalFunction) {
+            return;
+        }
+
         Main.panel._onButtonPress = this._originalFunction;
         Main.panel.actor.connect('button-press-event', Lang.bind(Main.panel, Main.panel._onButtonPress));
     },
