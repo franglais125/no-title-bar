@@ -81,6 +81,20 @@ var AppMenu = new Lang.Class({
         return false;
     },
 
+    _updateAppMenuWidth: function() {
+        this._restoreAppMenuWidth();
+
+        let width = this._settings.get_int('app-menu-width');
+        if (width > -1)
+            this._appMenu._label.set_style('max-width: ' + width + 'px');
+
+        this._updateAppMenu();
+    },
+
+    _restoreAppMenuWidth: function() {
+        this._appMenu._label.set_style('max-width');
+    },
+
     /**
      * Track the focused window's title
      */
@@ -231,6 +245,13 @@ var AppMenu = new Lang.Class({
         this._globalCallBackID = global.screen.connect('restacked',
             Lang.bind(this, this._updateAppMenu));
 
+        this._labelId = this._settings.connect('changed::app-menu-width',
+            Lang.bind(this, function() {
+                if (this._settings.get_boolean('change-appmenu'))
+                    this._updateAppMenuWidth();
+            }));
+        this._updateAppMenuWidth();
+
         this._isEnabled = true;
     },
 
@@ -273,6 +294,11 @@ var AppMenu = new Lang.Class({
             this._tooltip.destroy();
             this._tooltip = null;
         }
+
+        if (this._labelId) {
+            this._settings.disconnect(this._labelId);
+        }
+        this._restoreAppMenuWidth();
 
         this._isEnabled = false;
     },

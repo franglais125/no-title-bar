@@ -7,6 +7,13 @@
   <property name="step_increment">1</property>
 </object>
 
+<object class="GtkAdjustment" id="label_width_adjustment">
+  <property name="upper">10000</property>
+  <property name="lower">-1</property>
+  <property name="step_increment">10</property>
+  <property name="page_increment">100</property>
+</object>
+
 <object class="GtkListStore" id="ignore_list_store">
   <columns>
     <!-- column-name package name -->
@@ -416,6 +423,69 @@
                           <property name="left_attach">1</property>
                           <property name="top_attach">0</property>
                           <property name="height">2</property>
+                        </packing>
+                      </child>
+                    </object>
+                  </child>
+                </object>
+              </child>
+              <child>
+                <object class="GtkListBoxRow" id="listboxrow_label_width">
+                  <property name="visible">True</property>
+                  <property name="can_focus">True</property>
+                  <child>
+                    <object class="GtkGrid" id="grid_label_width">
+                      <property name="visible">True</property>
+                      <property name="can_focus">False</property>
+                      <property name="margin_left">12</property>
+                      <property name="margin_right">12</property>
+                      <property name="margin_top">12</property>
+                      <property name="margin_bottom">12</property>
+                      <property name="hexpand">True</property>
+                      <property name="row_spacing">6</property>
+                      <property name="column_spacing">32</property>
+                      <child>
+                        <object class="GtkSpinButton" id="label_width_spinbutton">
+                          <property name="visible">True</property>
+                          <property name="can_focus">True</property>
+                          <property name="halign">end</property>
+                          <property name="valign">center</property>
+                          <property name="adjustment">label_width_adjustment</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">2</property>
+                        </packing>
+                      </child>
+                      <child>
+                        <object class="GtkLabel" id="label_width_label">
+                          <property name="visible">True</property>
+                          <property name="can_focus">False</property>
+                          <property name="hexpand">True</property>
+                          <property name="xalign">0</property>
+                          <property name="label" translatable="yes">Maximum label width (px)</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="top_attach">0</property>
+                        </packing>
+                      </child>
+                      <child>
+                        <object class="GtkLabel" id="label_width_description">
+                          <property name="visible">True</property>
+                          <property name="can_focus">False</property>
+                          <property name="hexpand">True</property>
+                          <property name="xalign">0</property>
+                          <property name="label" translatable="yes">Set to -1 to disable</property>
+                          <property name="wrap">True</property>
+                          <style>
+                            <class name="dim-label"/>
+                          </style>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="top_attach">1</property>
                         </packing>
                       </child>
                     </object>

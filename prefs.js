@@ -63,8 +63,17 @@ function buildPrefsWidget(){
         'active',
         Gio.SettingsBindFlags.DEFAULT
     );
+    settings.bind('app-menu-width',
+                        buildable.get_object('label_width_spinbutton'),
+                        'value',
+                        Gio.SettingsBindFlags.DEFAULT);
+
     settings.bind('change-appmenu',
                   buildable.get_object('snapped_appmenu_switch'),
+                  'sensitive',
+                  Gio.SettingsBindFlags.DEFAULT);
+    settings.bind('change-appmenu',
+                  buildable.get_object('label_width_spinbutton'),
                   'sensitive',
                   Gio.SettingsBindFlags.DEFAULT);
 

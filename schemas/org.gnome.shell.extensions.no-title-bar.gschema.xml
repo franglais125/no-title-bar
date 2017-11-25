@@ -47,6 +47,12 @@
         <description>The app-menu uses the app-name as the label for the button. Use instead the window title of the focused window.</description>
     </key>
 
+    <key type="i" name="app-menu-width">
+      <default>-1</default>
+      <summary>Maximum title length</summary>
+      <description>Maximum length allowed for the title of the app-menu, in pixels.</description>
+    </key>
+
     <key name="title-for-snapped" type="b">
       <default>true</default>
         <summary>Customize app-menu for vertically maximized windows.</summary>
