@@ -1,0 +1,138 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Piotr Komur <pkomur@gmail.com>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: No title bar\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-17 09:51+0200\n"
+"PO-Revision-Date: 2018-01-10 13:09+0100\n"
+"Last-Translator: Piotr Komur <pkomur@gmail.com>\n"
+"Language-Team: Piotr Komur\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: Settings.ui.h:1
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: Settings.ui.h:2
+msgid "Save"
+msgstr "Zapisz"
+
+#: Settings.ui.h:3
+msgid "Clear entry"
+msgstr "Usuń"
+
+#: Settings.ui.h:4
+msgid "Window control buttons"
+msgstr "Przyciski sterujące okna"
+
+#: Settings.ui.h:5
+msgid "Before app menu"
+msgstr "Przed menu programu"
+
+#: Settings.ui.h:6
+msgid "After app menu"
+msgstr "Po menu programu"
+
+#: Settings.ui.h:7
+msgid "Within status area"
+msgstr "Wewnątrz obszaru statusu"
+
+#: Settings.ui.h:8
+msgid "After status area"
+msgstr "Za obszarem statusu"
+
+#: Settings.ui.h:9
+msgid "Hidden"
+msgstr "Ukryte"
+
+#: Settings.ui.h:10
+msgid "Autohide buttons"
+msgstr "Automatyczne ukrywanie przycisków"
+
+#: Settings.ui.h:11
+msgid "Show buttons for snapped windows"
+msgstr "Pokaż przyciski dla przylegających okien"
+
+#: Settings.ui.h:12
+msgid "Replace App Menu name with Window name"
+msgstr "Zastąp Menu programu przez nazwę okna"
+
+#: Settings.ui.h:13
+msgid "Replace App Menu name for snapped windows"
+msgstr "Zastąp Menu programu dla przylegających okien"
+
+#: Settings.ui.h:14
+msgid "Remove title bars only on the main monitor"
+msgstr "Zastosuj rozszerzenie tylko dla głównego monitora"
+
+#: Settings.ui.h:15
+msgid "Basic settings"
+msgstr "Ogólne"
+
+#: Settings.ui.h:16
+msgid "Automatic theme"
+msgstr "Automatycznie"
+
+#: Settings.ui.h:17
+msgid "Theme"
+msgstr "Motyw"
+
+#: Settings.ui.h:18
+msgid "List type"
+msgstr "Lista wyjątków"
+
+#: Settings.ui.h:19
+msgid "Disabled"
+msgstr "Brak"
+
+#: Settings.ui.h:20
+msgid "Whitelist"
+msgstr "Biała lista"
+
+#: Settings.ui.h:21
+msgid "Blacklist"
+msgstr "Czarna lista"
+
+#: Settings.ui.h:22
+msgid ""
+"Whitelist: only applications on this list will have the title bar "
+"removed.\n"
+"Blacklist: all applications, except the ones on the list, will have the "
+"title bar removed."
+msgstr ""
+"<b>Biała lista</b> - tylko programy z tej listy będą miały usuniętą belkę "
+"tytułową.\n"
+"<b>Czarna lista</b> - wszystkie programy, z wyjątkiem wymienionych na tej "
+"liście, będą miały usuniętą belkę tytułową."
+
+#: Settings.ui.h:24
+msgid "Lists"
+msgstr "Wyjątki"
+
+#: Settings.ui.h:25
+msgid "Maintained by"
+msgstr "Autor: "
+
+#: Settings.ui.h:26
+msgid "Webpage"
+msgstr "Witryna internetowa"
+
+#: Settings.ui.h:27
+msgid ""
+"<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
+"See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+"\">GNU General Public License, version 2 or later</a> for details.</span>"
+msgstr ""
+
+#: Settings.ui.h:29
+msgid "About"
+msgstr "Informacje"
