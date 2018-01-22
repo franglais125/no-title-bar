@@ -16,7 +16,7 @@ function getWindow(includeSnapped) {
     let i = windows.length;
     while (i--) {
         let window = windows[i];
-        if (window.minimized) {
+        if (window.minimized || window.is_hidden()) {
             continue;
         }
 
