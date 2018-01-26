@@ -1,0 +1,148 @@
+# Hungarian translation of no-title-bar
+# This file is distributed under the same license as the no-title-bar package.
+# Meskó Balázs <mesko.balazs at fsf dot hu>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: no-title-bar master\n"
+"Report-Msgid-Bugs-To: http://otrs.fsf.hu/\n"
+"POT-Creation-Date: 2018-01-26 09:49+0100\n"
+"PO-Revision-Date: 2018-01-26 10:21+0100\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
+"Language-Team: hu\n"
+"X-Generator: Poedit 2.0.3\n"
+
+#: Settings.ui.h:1
+msgid "Cancel"
+msgstr "Mégse"
+
+#: Settings.ui.h:2
+msgid "Save"
+msgstr "Mentés"
+
+#: Settings.ui.h:3
+msgid "Clear entry"
+msgstr "Bejegyzés törlése"
+
+#: Settings.ui.h:4
+msgid "Window control buttons"
+msgstr "Ablakvezérlő gombok"
+
+#: Settings.ui.h:5
+msgid "Before app menu"
+msgstr "Alkalmazásmenü előtt"
+
+#: Settings.ui.h:6
+msgid "After app menu"
+msgstr "Alkalmazásmenü után"
+
+#: Settings.ui.h:7
+msgid "Within status area"
+msgstr "Állapotterületen belül"
+
+#: Settings.ui.h:8
+msgid "After status area"
+msgstr "Állapotterület után"
+
+#: Settings.ui.h:9
+msgid "Hidden"
+msgstr "Rejtett"
+
+#: Settings.ui.h:10
+msgid "Autohide buttons"
+msgstr "Gombok automatikus elrejtése"
+
+#: Settings.ui.h:11
+msgid "Show buttons for snapped windows"
+msgstr "Gombok megjelenítése a képernyő széléhez illesztett ablakoknál"
+
+#: Settings.ui.h:12
+msgid "Replace App Menu name with Window name"
+msgstr "Alkalmazásmenü nevének cseréje az ablak nevére"
+
+#: Settings.ui.h:13
+msgid "Replace App Menu name for snapped windows"
+msgstr "Az alkalmazásnév cseréje a képernyő széléhez illesztett ablakoknál"
+
+#: Settings.ui.h:14
+msgid "Maximum label width (px)"
+msgstr "Címke maximális szélessége (px)"
+
+#: Settings.ui.h:15
+msgid "Set to -1 to disable"
+msgstr "A kikapcsoláshoz állítsa -1-re"
+
+#: Settings.ui.h:16
+msgid "Remove title bars only on the main monitor"
+msgstr "Címsávok eltávolítása csak az elsődleges kijelzőn"
+
+#: Settings.ui.h:17
+msgid "Basic settings"
+msgstr "Alapvető beállítások"
+
+#: Settings.ui.h:18
+msgid "Automatic theme"
+msgstr "Automatikus téma"
+
+#: Settings.ui.h:19
+msgid "Theme"
+msgstr "Téma"
+
+#: Settings.ui.h:20
+msgid "List type"
+msgstr "Lista típusa"
+
+#: Settings.ui.h:21
+msgid "Disabled"
+msgstr "Letiltva"
+
+#: Settings.ui.h:22
+msgid "Whitelist"
+msgstr "Fehérlista"
+
+#: Settings.ui.h:23
+msgid "Blacklist"
+msgstr "Feketelista"
+
+#: Settings.ui.h:24
+msgid ""
+"Whitelist: only applications on this list will have the title bar "
+"removed.\n"
+"Blacklist: all applications, except the ones on the list, will have the "
+"title bar removed."
+msgstr ""
+"Fehérlista: csak a listán szereplő alkalmazások címsora lesz "
+"eltávolítva.\n"
+"Feketelista: minden alkalmazás címsora el lesz távolítva, kivéve a "
+"listán szereplőkét."
+
+#: Settings.ui.h:26
+msgid "Lists"
+msgstr "Listák"
+
+#: Settings.ui.h:27
+msgid "Maintained by"
+msgstr "Karbantartó"
+
+#: Settings.ui.h:28
+msgid "Webpage"
+msgstr "Weboldal"
+
+#: Settings.ui.h:29
+msgid ""
+"<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
+"See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+"\">GNU General Public License, version 2 or later</a> for details.</span>"
+msgstr ""
+"<span size=\"small\">A programhoz SEMMILYEN GARANCIA NEM JÁR.\n"
+"A részletekért lásd a <a href=\"https://www.gnu.org/licenses/old-"
+"licenses/gpl-2.0.html\">GNU General Public License, 2-es vagy úja újabb "
+"verzióját</a>.</span>"
+
+#: Settings.ui.h:31
+msgid "About"
+msgstr "Névjegy"
