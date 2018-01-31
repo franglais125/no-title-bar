@@ -188,7 +188,6 @@ var Buttons = new Lang.Class({
     _destroyButtons: function() {
         actors.forEach(function(actor, i) {
             actor.destroy();
-            boxes[i].destroy();
         });
 
         actors = [];
