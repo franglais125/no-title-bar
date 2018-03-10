@@ -40,6 +40,10 @@ msgstr "Alkalmazásmenü előtt"
 msgid "After app menu"
 msgstr "Alkalmazásmenü után"
 
+#: Settings.ui.h:8
+msgid "Before status area"
+msgstr "Állapotterület előtt"
+
 #: Settings.ui.h:7
 msgid "Within status area"
 msgstr "Állapotterületen belül"

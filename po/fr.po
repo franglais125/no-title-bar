@@ -40,6 +40,10 @@ msgstr "Avant le menu d'application"
 msgid "After app menu"
 msgstr "Après le menu d'application"
 
+#: Settings.ui.h:8
+msgid "Before status area"
+msgstr "Avant le menu système"
+
 #: Settings.ui.h:7
 msgid "Within status area"
 msgstr "Avant le menu système"

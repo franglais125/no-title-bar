@@ -18,8 +18,9 @@ const Position = {
     BEFORE_NAME:        0,
     AFTER_NAME:         1,
     WITHIN_STATUS_AREA: 2,
-    AFTER_STATUS_AREA:  3,
-    HIDDEN:             4
+    BEFORE_STATUS_AREA: 3,
+    AFTER_STATUS_AREA:  4,
+    HIDDEN:             5
 }
 
 // Functions for changing opacity (to act as auto-hiding)
@@ -171,6 +172,9 @@ var Buttons = new Lang.Class({
                         leftBox.insert_child_above(this._container, appMenuBox);
                         break;
                     }
+                    case Position.BEFORE_STATUS_AREA:
+                        Main.panel._rightBox.insert_child_at_index(this._container, 0);
+                        break;
                     case Position.WITHIN_STATUS_AREA:
                         Main.panel._rightBox.insert_child_at_index(this._container, Main.panel._rightBox.get_children().length - 1);
                         break;

@@ -4,8 +4,9 @@
       <value value="0" nick="before-app-menu" />
       <value value="1" nick="after-app-menu" />
       <value value="2" nick="within-status-area" />
-      <value value="3" nick="after-status-area" />
-      <value value="4" nick="hidden" />
+      <value value="3" nick="before-status-area" />
+      <value value="4" nick="after-status-area" />
+      <value value="5" nick="hidden" />
   </enum>
 
   <enum id="org.gnome.shell.extensions.no-title-bar.ignoreListType">

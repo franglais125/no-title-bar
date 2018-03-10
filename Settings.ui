@@ -260,6 +260,7 @@
                             <item translatable="yes">Before app menu</item>
                             <item translatable="yes">After app menu</item>
                             <item translatable="yes">Within status area</item>
+                            <item translatable="yes">Before status area</item>
                             <item translatable="yes">After status area</item>
                             <item translatable="yes">Hidden</item>
                           </items>
