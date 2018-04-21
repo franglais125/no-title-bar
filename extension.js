@@ -31,18 +31,26 @@ let appMenu = null;
 function init() {
 }
 
+var isEnabled = false;
+
 function enable() {
     settings = Convenience.getSettings();
     buttons = new Buttons.Buttons(settings);
     decoration = new Decoration.Decoration(settings);
     appMenu = new AppMenu.AppMenu(settings);
+
+    isEnabled = true;
 }
 
 function disable() {
     appMenu.destroy();
     appMenu = null;
-    decoration.destroy();
-    decoration = null;
+
+    if (!isEnabled) { // This should never be true in practice
+        decoration.destroy();
+        decoration = null;
+    }
+
     buttons.destroy();
     buttons = null;
 }
