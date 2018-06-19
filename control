@@ -1,0 +1,8 @@
+Package: gnome-shell-extension-no-title-bar
+Version: 0~git20180421-1
+Section: universe/gnome 
+Priority: optional
+Architecture: all
+Depends: gnome-shell (>= 3.16)
+Maintainer: Fran Glais <franglais125@gmail.com>
+Description: Get rid of title bar for maximized windows

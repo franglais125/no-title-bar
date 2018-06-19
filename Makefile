@@ -11,12 +11,14 @@ else
 	INSTALLBASE = $(DESTDIR)/usr/share/gnome-shell/extensions
 	RMTMP = rm -rf ./_build/tmp
 endif
+DEBDIR = gnome-shell-extension-no-title-bar_0~git-$(shell git show -s --format=%cd --date=short HEAD | tr -d - )-0/
 
 all: extension
 
 clean:
 	rm -f ./schemas/gschemas.compiled
 	rm -f ./po/*.mo
+	rm -r _build gnome-shell-extension-no-title-bar*
 
 extension: ./schemas/gschemas.compiled $(MSGSRC:.po=.mo)
 
@@ -69,3 +71,15 @@ _build: all
 		mkdir -p $$lf/LC_MESSAGES; \
 		cp $$l $$lf/LC_MESSAGES/no-title-bar.mo; \
 	done;
+
+deb: _build
+	-rm -r $(DEBDIR)
+	mkdir -p $(DEBDIR)/usr/share/doc/gnome-shell-extension-no-title-bar/
+	mkdir -p $(DEBDIR)/usr/share/gnome-shell/extensions/
+	mkdir $(DEBDIR)/DEBIAN
+	cp -a _build $(DEBDIR)/usr/share/gnome-shell/extensions/$(UUID)
+	cp COPYING $(DEBDIR)/usr/share/doc/gnome-shell-extension-no-title-bar/copyright
+	cp README.md $(DEBDIR)/usr/share/doc/gnome-shell-extension-no-title-bar/
+	cp control $(DEBDIR)/DEBIAN/
+	chmod -R go+rX $(DEBDIR)
+	dpkg-deb --build $(DEBDIR)
