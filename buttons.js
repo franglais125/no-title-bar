@@ -340,9 +340,15 @@ var Buttons = new Lang.Class({
             let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
             if (win) {
                 visible = win.decorated;
-                // If still visible, check if on primary monitor
-                if (visible && this._settings.get_boolean('only-main-monitor'))
-                    visible = win.is_on_primary_monitor();
+
+                if (visible) {
+                    visible = !Utils.isWindowIgnored(this._settings, win);
+
+                    // If still visible, check if on primary monitor
+                    if (visible && this._settings.get_boolean('only-main-monitor')) {
+                        visible = win.is_on_primary_monitor();
+                    }
+                }
             }
         }
 

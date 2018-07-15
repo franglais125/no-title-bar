@@ -1,6 +1,12 @@
 const Mainloop = imports.mainloop;
 const Gio = imports.gi.Gio;
 const Meta = imports.gi.Meta;
+const Shell = imports.gi.Shell;
+
+const Me = imports.misc.extensionUtils.getCurrentExtension();
+const Prefs = Me.imports.prefs;
+
+const appSys = Shell.AppSystem.get_default();
 
 const MAXIMIZED = Meta.MaximizeFlags.BOTH;
 const VERTICAL = Meta.MaximizeFlags.VERTICAL;
@@ -107,4 +113,37 @@ function getAppList() {
     });
 
     return apps;
+}
+
+const IgnoreList = {
+    DISABLED: 0,
+    WHITELIST: 1,
+    BLACKLIST: 2,
+}
+
+function getAppInfoOf(window) {
+    return getAppList()
+        .find(function (appInfo) {
+            const app = appSys.lookup_app(appInfo.get_id());
+            return app.get_windows().includes(window);
+        });
+}
+
+function isWindowIgnored(settings, win) {
+    const listType = settings.get_enum('ignore-list-type');
+    if (listType === IgnoreList.DISABLED) return false;
+
+    let ignoreList = settings.get_string('ignore-list');
+    ignoreList = Prefs.splitEntries(ignoreList);
+
+    const appInfo = getAppInfoOf(win);
+    if (!appInfo) return false;
+
+    const isAppInList = ignoreList.includes(appInfo.get_name());
+
+    if (listType === IgnoreList.BLACKLIST) {
+        return isAppInList;
+    } else /* IgnoreList.WHITELIST */ {
+        return !isAppInList;
+    }
 }
