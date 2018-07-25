@@ -245,8 +245,9 @@ var Buttons = new Lang.Class({
     },
 
     _minimize: function() {
+        let onlyPrimaryMonitor = this._settings.get_boolean('only-main-monitor');
         let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
-        let win = Utils.getWindow(includeSnapped);
+        let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
         if (!win || win.minimized) {
             return;
         }
@@ -255,8 +256,9 @@ var Buttons = new Lang.Class({
     },
 
     _maximize: function() {
+        let onlyPrimaryMonitor = this._settings.get_boolean('only-main-monitor');
         let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
-        let win = Utils.getWindow(includeSnapped);
+        let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
         if (!win) {
             return;
         }
@@ -272,8 +274,9 @@ var Buttons = new Lang.Class({
     },
 
     _close: function() {
+        let onlyPrimaryMonitor = this._settings.get_boolean('only-main-monitor');
         let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
-        let win = Utils.getWindow(includeSnapped);
+        let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
         if (!win) {
             return;
         }
@@ -332,8 +335,9 @@ var Buttons = new Lang.Class({
         let visible = !Main.overview.visible;
         if (visible) {
             visible = false;
+            let onlyPrimaryMonitor = this._settings.get_boolean('only-main-monitor');
             let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
-            let win = Utils.getWindow(includeSnapped);
+            let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
             if (win) {
                 visible = win.decorated;
                 // If still visible, check if on primary monitor
@@ -357,6 +361,8 @@ var Buttons = new Lang.Class({
         return false;
     },
     _enableDragOnPanel: function() {
+        let settings = this._settings;
+
         this._originalFunction = Main.panel._onButtonPress;
 
         Main.panel._onButtonPress = function(actor, event) {
@@ -370,7 +376,8 @@ var Buttons = new Lang.Class({
             if (button != 1)
                 return Clutter.EVENT_PROPAGATE;
 
-            let focusWindow = Utils.getWindow(true);
+            let onlyPrimaryMonitor = settings.get_boolean('only-main-monitor');
+            let focusWindow = Utils.getWindow(true, onlyPrimaryMonitor);
             if (!focusWindow)
                 return Clutter.EVENT_PROPAGATE;
 
