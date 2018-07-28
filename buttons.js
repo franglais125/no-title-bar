@@ -14,6 +14,8 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Convenience = Me.imports.convenience;
 const Utils = Me.imports.utils;
 
+const display = Utils.display;
+
 const Position = {
     BEFORE_NAME:        0,
     AFTER_NAME:         1,
@@ -382,7 +384,7 @@ var Buttons = new Lang.Class({
             if (!allowDrag)
                 return Clutter.EVENT_PROPAGATE;
 
-            global.display.begin_grab_op(global.screen,
+            global.display.begin_grab_op(display,
                                          dragWindow,
                                          Meta.GrabOp.MOVING,
                                          false, /* pointer grab */
@@ -423,7 +425,7 @@ var Buttons = new Lang.Class({
 
         this._themeCallbackID = Gtk.Settings.get_default().connect('notify::gtk-theme-name', Lang.bind(this, this._loadTheme));
 
-        this._globalCallBackID = global.screen.connect('restacked', Lang.bind(this, this._updateVisibility));
+        this._globalCallBackID = display.connect('restacked', Lang.bind(this, this._updateVisibility));
 
         this._enableDragOnPanel();
 
@@ -448,7 +450,7 @@ var Buttons = new Lang.Class({
         }
 
         if (this._globalCallBackID) {
-            global.screen.disconnect(this._globalCallBackID);
+            display.disconnect(this._globalCallBackID);
             this._globalCallBackID = 0;
         }
 

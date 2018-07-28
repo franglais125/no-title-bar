@@ -13,6 +13,9 @@ const Me = imports.misc.extensionUtils.getCurrentExtension();
 const Prefs = Me.imports.prefs;
 const Utils = Me.imports.utils;
 
+const ws_manager = Utils.ws_manager;
+const display = Utils.display;
+
 const IgnoreList = {
     DISABLED:  0,
     WHITELIST: 1,
@@ -43,7 +46,7 @@ var Decoration = new Lang.Class({
 
         this._enable();
 
-        this._changeMonitorsID = global.screen.connect(
+        this._changeMonitorsID = Meta.MonitorManager.get().connect(
             'monitors-changed',
             Lang.bind(this, function() {
                 this._disable();
@@ -78,8 +81,8 @@ var Decoration = new Lang.Class({
 
     _enable: function() {
         // Connect events
-        this._changeWorkspaceID = global.screen.connect('notify::n-workspaces', Lang.bind(this, this._onChangeNWorkspaces));
-        this._windowEnteredID   = global.screen.connect('window-entered-monitor', Lang.bind(this, this._windowEnteredMonitor));
+        this._changeWorkspaceID = ws_manager.connect('notify::n-workspaces', Lang.bind(this, this._onChangeNWorkspaces));
+        this._windowEnteredID   = display.connect('window-entered-monitor', Lang.bind(this, this._windowEnteredMonitor));
 
 
         // CSS style for Wayland decorations
@@ -108,12 +111,12 @@ var Decoration = new Lang.Class({
 
     _disable: function() {
         if (this._changeWorkspaceID) {
-            global.screen.disconnect(this._changeWorkspaceID);
+            ws_manager.disconnect(this._changeWorkspaceID);
             this._changeWorkspaceID = 0;
         }
 
         if (this._windowEnteredID) {
-            global.screen.disconnect(this._windowEnteredID);
+            display.disconnect(this._windowEnteredID);
             this._windowEnteredID = 0;
         }
 
@@ -134,7 +137,7 @@ var Decoration = new Lang.Class({
 
     destroy: function() {
         this._disable();
-        global.screen.disconnect(this._changeMonitorsID);
+        Meta.MonitorManager.get().disconnect(this._changeMonitorsID);
         this._settings.disconnect(this._onlyMainMonitorID);
         this._settings.disconnect(this._ignoreListID);
         this._settings.disconnect(this._ignoreListTypeID);
@@ -466,9 +469,9 @@ var Decoration = new Lang.Class({
     _onChangeNWorkspaces: function() {
         this._cleanWorkspaces();
 
-        let i = global.screen.n_workspaces;
+        let i = ws_manager.n_workspaces;
         while (i--) {
-            let ws = global.screen.get_workspace_by_index(i);
+            let ws = ws_manager.get_workspace_by_index(i);
             workspaces.push(ws);
             // we need to add a Mainloop.idle_add, or else in _onWindowAdded the
             // window's maximized state is not correct yet.

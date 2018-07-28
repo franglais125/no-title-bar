@@ -9,6 +9,8 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 
+const display = Utils.display;
+
 let SHOW_DELAY = 350;
 let SHOW_DURATION = 0.15;
 let HIDE_DURATION = 0.1;
@@ -242,7 +244,7 @@ var AppMenu = new Lang.Class({
 
         this._tooltipCallbackID = this._appMenu.actor.connect('notify::hover',
             Lang.bind(this, this._onAppMenuHover));
-        this._globalCallBackID = global.screen.connect('restacked',
+        this._globalCallBackID = display.connect('restacked',
             Lang.bind(this, this._updateAppMenu));
 
         this._labelId = this._settings.connect('changed::app-menu-width',
@@ -268,7 +270,7 @@ var AppMenu = new Lang.Class({
         }
 
         if (this._globalCallBackID) {
-            global.screen.disconnect(this._globalCallBackID);
+            display.disconnect(this._globalCallBackID);
             this._globalCallBackID = 0;
         }
 

@@ -5,10 +5,14 @@ const Meta = imports.gi.Meta;
 const MAXIMIZED = Meta.MaximizeFlags.BOTH;
 const VERTICAL = Meta.MaximizeFlags.VERTICAL;
 
+// global.screen removed in GNOME 3.30
+const ws_manager = global.screen ? global.screen : global.workspace_manager;
+const display = global.screen ? global.screen : global.display;
+
 function getWindow(includeSnapped) {
     // get all window in stacking order.
     let windows = global.display.sort_windows_by_stacking(
-        global.screen.get_active_workspace().list_windows().filter(function (w) {
+        ws_manager.get_active_workspace().list_windows().filter(function (w) {
             return w.get_window_type() !== Meta.WindowType.DESKTOP;
         })
     );
