@@ -66,8 +66,7 @@ var AppMenu = new Lang.Class({
         let title = win.title;
 
         // Not the topmost maximized window.
-        let includeSnapped = this._settings.get_boolean('title-for-snapped');
-        if (win !== Utils.getWindow(includeSnapped)) {
+        if (win !== Utils.getWindow()) {
             let app = Shell.WindowTracker.get_default().get_window_app(win);
             title = app.get_name();
         }

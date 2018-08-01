@@ -312,6 +312,42 @@
                 </object>
               </child>
               <child>
+                <object class="GtkListBoxRow" id="_buttons_for_all_win_listboxrow">
+                  <child>
+                    <object class="GtkGrid" id="_buttons_for_all_win_grid">
+                      <property name="margin_left">12</property>
+                      <property name="margin_right">12</property>
+                      <property name="margin_top">12</property>
+                      <property name="margin_bottom">12</property>
+                      <property name="column_spacing">12</property>
+                      <child>
+                        <object class="GtkLabel" id="_buttons_for_all_win_label">
+                          <property name="hexpand">True</property>
+                          <property name="xalign">0</property>
+                          <property name="label" translatable="yes">Show buttons for all windows</property>
+                          <property name="wrap">True</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">0</property>
+                          <property name="top_attach">1</property>
+                        </packing>
+                      </child>
+                      <child>
+                        <object class="GtkSwitch" id="buttons_for_all_win_switch">
+                          <property name="halign">end</property>
+                          <property name="valign">center</property>
+                        </object>
+                        <packing>
+                          <property name="left_attach">1</property>
+                          <property name="top_attach">0</property>
+                          <property name="height">2</property>
+                        </packing>
+                      </child>
+                    </object>
+                  </child>
+                </object>
+              </child>
+              <child>
                 <object class="GtkListBoxRow" id="snapped_buttons_listboxrow">
                   <child>
                     <object class="GtkGrid" id="snapped_buttons_grid">

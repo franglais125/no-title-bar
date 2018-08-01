@@ -70,6 +70,20 @@ var Buttons = new Lang.Class({
             })
         );
 
+        this._buttonsForAllWinId = this._settings.connect(
+            'changed::buttons-for-all-win',
+            Lang.bind(this, function() {
+                this._updateVisibility();
+            })
+        );
+
+        this._snappedId = this._settings.connect(
+            'changed::buttons-for-snapped',
+            Lang.bind(this, function() {
+                this._updateVisibility();
+            })
+        );
+
         if (this._settings.get_enum('button-position') !== Position.HIDDEN)
             this._enable();
         else
@@ -247,9 +261,7 @@ var Buttons = new Lang.Class({
     },
 
     _minimize: function() {
-        let onlyPrimaryMonitor = this._settings.get_boolean('only-main-monitor');
-        let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
-        let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
+        let win = Utils.getWindow();
         if (!win || win.minimized) {
             return;
         }
@@ -258,9 +270,7 @@ var Buttons = new Lang.Class({
     },
 
     _maximize: function() {
-        let onlyPrimaryMonitor = this._settings.get_boolean('only-main-monitor');
-        let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
-        let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
+        let win = Utils.getWindow();
         if (!win) {
             return;
         }
@@ -276,9 +286,7 @@ var Buttons = new Lang.Class({
     },
 
     _close: function() {
-        let onlyPrimaryMonitor = this._settings.get_boolean('only-main-monitor');
-        let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
-        let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
+        let win = Utils.getWindow();
         if (!win) {
             return;
         }
@@ -337,11 +345,9 @@ var Buttons = new Lang.Class({
         let visible = !Main.overview.visible;
         if (visible) {
             visible = false;
-            let onlyPrimaryMonitor = this._settings.get_boolean('only-main-monitor');
-            let includeSnapped = this._settings.get_boolean('buttons-for-snapped');
-            let win = Utils.getWindow(includeSnapped, onlyPrimaryMonitor);
+            let win = Utils.getWindow();
             if (win) {
-                visible = win.decorated;
+                visible = win.decorated || this._settings.get_boolean('buttons-for-all-win');
 
                 if (visible) {
                     visible = !Utils.isWindowIgnored(this._settings, win);
@@ -384,8 +390,8 @@ var Buttons = new Lang.Class({
             if (button != 1)
                 return Clutter.EVENT_PROPAGATE;
 
-            let onlyPrimaryMonitor = settings.get_boolean('only-main-monitor');
-            let focusWindow = Utils.getWindow(true, onlyPrimaryMonitor);
+            let forceSnapped = true;
+            let focusWindow = Utils.getWindow(forceSnapped);
             if (!focusWindow)
                 return Clutter.EVENT_PROPAGATE;
 
@@ -488,6 +494,16 @@ var Buttons = new Lang.Class({
         if (this._settingsId) {
             this._settings.disconnect(this._settingsId);
             this._settingsId = 0
+        }
+
+        if (this._buttonsForAllWinId) {
+            this._settings.disconnect(this._buttonsForAllWinId);
+            this._buttonsForAllWinId = 0;
+        }
+
+        if (this._snappedId) {
+            this._settings.disconnect(this._snappedId);
+            this._snappedId = 0;
         }
     }
 });

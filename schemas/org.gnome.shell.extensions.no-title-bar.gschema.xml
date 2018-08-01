@@ -60,6 +60,12 @@
         <description>Customize app-menu in the top bar when windows are snapped to the sides, or maximized vertically.</description>
     </key>
 
+    <key name="buttons-for-all-win" type="b">
+      <default>true</default>
+        <summary>Show buttons for all windows.</summary>
+        <description>Show buttons in the top bar even if windows are not maximized, or still have a title bar.</description>
+    </key>
+
     <key name="buttons-for-snapped" type="b">
       <default>true</default>
         <summary>Show buttons for vertically maximized windows.</summary>

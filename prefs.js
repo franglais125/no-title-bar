@@ -40,6 +40,12 @@ function buildPrefsWidget(){
         Gio.SettingsBindFlags.DEFAULT
     );
 
+    settings.bind('buttons-for-all-win',
+        buildable.get_object('buttons_for_all_win_switch'),
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
+
     settings.bind('buttons-for-snapped',
         buildable.get_object('snapped_buttons_switch'),
         'active',

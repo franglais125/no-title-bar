@@ -4,6 +4,7 @@ const Meta = imports.gi.Meta;
 const Shell = imports.gi.Shell;
 
 const Me = imports.misc.extensionUtils.getCurrentExtension();
+const Convenience = Me.imports.convenience;
 const Prefs = Me.imports.prefs;
 
 const appSys = Shell.AppSystem.get_default();
@@ -12,12 +13,31 @@ const MAXIMIZED = Meta.MaximizeFlags.BOTH;
 const VERTICAL = Meta.MaximizeFlags.VERTICAL;
 
 // global.screen removed in GNOME 3.30
-const ws_manager = global.screen ? global.screen : global.workspace_manager;
-const display = global.screen ? global.screen : global.display;
+var ws_manager = global.screen ? global.screen : global.workspace_manager;
+var display = global.screen ? global.screen : global.display;
+
+let settings = null;
+
+function enable() {
+    settings = Convenience.getSettings();
+    return settings;
+}
+
+function disable() {
+    settings.run_dispose();
+    settings = null;
+}
 
 // Get the window to display the title bar for (buttons etc) or to drag from the top panel
-function getWindow(includeSnapped, onlyPrimaryMonitor) {
+function getWindow(forceSnapped) {
+    if (forceSnapped === 'undefined') {
+        forceSnapped = false;
+    }
+
     let primaryMonitor = global.screen.get_primary_monitor()
+    let onlyPrimaryMonitor = settings.get_boolean('only-main-monitor');
+    let includeSnapped = settings.get_boolean('buttons-for-snapped') || forceSnapped;
+    let allWindows = settings.get_boolean('buttons-for-all-win');
 
     // get all window in stacking order.
     let windows = global.display.sort_windows_by_stacking(
@@ -42,6 +62,8 @@ function getWindow(includeSnapped, onlyPrimaryMonitor) {
         if (max_state === VERTICAL && includeSnapped) {
             return window;
         }
+
+        return window;
     }
 
     return null;

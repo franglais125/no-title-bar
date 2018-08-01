@@ -20,9 +20,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Decoration = Me.imports.decoration;
 const Buttons = Me.imports.buttons;
 const AppMenu = Me.imports.app_menu;
-const Convenience = Me.imports.convenience;
-
-let settings = null;
+const Utils = Me.imports.utils;
 
 let decoration = null;
 let buttons = null;
@@ -32,7 +30,8 @@ function init() {
 }
 
 function enable() {
-    settings = Convenience.getSettings();
+    let settings = Utils.enable();
+
     buttons = new Buttons.Buttons(settings);
     decoration = new Decoration.Decoration(settings);
     appMenu = new AppMenu.AppMenu(settings);
@@ -45,5 +44,7 @@ function disable() {
     decoration = null;
     buttons.destroy();
     buttons = null;
+
+    Utils.disable();
 }
 
