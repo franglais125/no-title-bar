@@ -208,14 +208,18 @@ var Buttons = new Lang.Class({
     _enableButtonAutohide: function() {
         this._disableButtonAutohide();
 
-        this._container.opacity = 0;
+        if (this._container) {
+            this._container.opacity = 0;
+        }
 
         this._containerEnterId = this._container.connect('enter-event', b_shown);
         this._containerLeaveId = this._container.connect('leave-event', b_hidden);
     },
 
     _disableButtonAutohide: function() {
-        this._container.opacity = 255;
+        if (this._container) {
+            this._container.opacity = 255;
+        }
 
         if (this._containerEnterId) {
             this._container.disconnect(this._containerEnterId);
