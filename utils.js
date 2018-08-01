@@ -34,7 +34,7 @@ function getWindow(forceSnapped) {
         forceSnapped = false;
     }
 
-    let primaryMonitor = global.screen.get_primary_monitor()
+    let primaryMonitor = display.get_primary_monitor()
     let onlyPrimaryMonitor = settings.get_boolean('only-main-monitor');
     let includeSnapped = settings.get_boolean('buttons-for-snapped') || forceSnapped;
     let allWindows = settings.get_boolean('buttons-for-all-win');
