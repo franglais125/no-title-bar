@@ -63,7 +63,9 @@ function getWindow(forceSnapped) {
             return window;
         }
 
-        return window;
+        if (allWindows) {
+            return window;
+        }
     }
 
     return null;
