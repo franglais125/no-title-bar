@@ -18,15 +18,15 @@ msgstr ""
 
 #: Settings.ui.h:1
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: Settings.ui.h:2
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: Settings.ui.h:3
 msgid "Clear entry"
-msgstr ""
+msgstr "Supprimer l’entrée"
 
 #: Settings.ui.h:4
 msgid "Window control buttons"
@@ -54,24 +54,24 @@ msgstr "Après le menu système"
 
 #: Settings.ui.h:9
 msgid "Hidden"
-msgstr "Ne pas afficher"
+msgstr "Masqués"
 
 #: Settings.ui.h:10
 msgid "Autohide buttons"
-msgstr ""
+msgstr "Masquer automatiquement les boutons"
 
 #: Settings.ui.h:11
 msgid "Show buttons for snapped windows"
-msgstr ""
+msgstr "Afficher les boutons des fenêtres ancrées"
 
 #: Settings.ui.h:12
 msgid "Replace App Menu name with Window name"
-msgstr "Utiliser le nom de la fenêtre pour le menu d'application"
+msgstr "Utiliser le nom de la fenêtre au lieu de celui de l’application"
 
 #: Settings.ui.h:13
 #, fuzzy
 msgid "Replace App Menu name for snapped windows"
-msgstr "Utiliser le nom de la fenêtre pour le menu d'application"
+msgstr "Remplacer le nom de l’application pour les fenêtres ancrées"
 
 #: Settings.ui.h:14
 msgid "Remove title bars only on the main monitor"
@@ -79,7 +79,7 @@ msgstr "Masquer les barres des fenêtres seulement dans le moniteur principal"
 
 #: Settings.ui.h:15
 msgid "Basic settings"
-msgstr "Paramètres simples"
+msgstr "Paramètres de base"
 
 #: Settings.ui.h:16
 msgid "Automatic theme"
@@ -91,19 +91,19 @@ msgstr "Thème"
 
 #: Settings.ui.h:18
 msgid "List type"
-msgstr ""
+msgstr "Type de liste"
 
 #: Settings.ui.h:19
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivé"
 
 #: Settings.ui.h:20
 msgid "Whitelist"
-msgstr ""
+msgstr "Liste blanche"
 
 #: Settings.ui.h:21
 msgid "Blacklist"
-msgstr ""
+msgstr "Liste noire"
 
 #: Settings.ui.h:22
 msgid ""
@@ -111,10 +111,14 @@ msgid ""
 "Blacklist: all applications, except the ones on the list, will have the "
 "title bar removed."
 msgstr ""
+"Liste blanche: seules les applications de cette liste n’auront plus de barre "
+"de titre.\n"
+"Liste noire: toutes les applications, sauf celles de cette liste, n’auront "
+"plus de barre de titre."
 
 #: Settings.ui.h:24
 msgid "Lists"
-msgstr ""
+msgstr "Listes"
 
 #: Settings.ui.h:25
 msgid "Maintained by"
@@ -122,7 +126,7 @@ msgstr "Maintenu par"
 
 #: Settings.ui.h:26
 msgid "Webpage"
-msgstr "Page web"
+msgstr "Site internet"
 
 #: Settings.ui.h:27
 msgid ""
