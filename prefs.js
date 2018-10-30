@@ -353,6 +353,9 @@ function removeEntry(settings) {
 }
 
 function splitEntries(entries) {
+    if (!entries)
+        entries = '';
+
     entries = entries.split('; ');
 
     if (entries.length === 0)
