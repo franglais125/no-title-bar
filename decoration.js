@@ -106,6 +106,8 @@ var Decoration = new Lang.Class({
             this._onChangeNWorkspaces();
             return false;
         }));
+
+        this._isEnabled = true;
     },
 
     _disable: function() {
@@ -132,6 +134,8 @@ var Decoration = new Lang.Class({
 
         // Remove CSS Styles
         this._removeUserStyles();
+
+        this._isEnabled = false;
     },
 
     destroy: function() {
@@ -404,6 +408,12 @@ var Decoration = new Lang.Class({
 
         retry = 3;
         Mainloop.idle_add(Lang.bind(this, function () {
+            // Need to check if the extension is still enabled, as this is added
+            // with "idle" delay
+            if (!this._isEnabled) {
+                return false;
+            }
+
             let id = this._guessWindowXID(win);
             if (!id) {
                 if (--retry) {
